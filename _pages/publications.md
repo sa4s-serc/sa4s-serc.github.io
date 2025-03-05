@@ -19,8 +19,11 @@ We've published in many reputed conferences and journals such as
 </div>
 
 ## Our Recent Publications
+1. Bhatt, Hiya, Sahil, Karthik Vaidhyanathan, Rahul Biju, Deepak Gangadharan, Ramona Trestian, and Purav Shah. "Architecting Digital Twins for Intelligent Transportation Systems." Workshop at the 2025 IEEE International Conference on Software Architecture (ICSA 2025). [arXiv](https://arxiv.org/pdf/2502.17646).
 
-Arun, Shrikara, Tedla, Meghana, and Karthik Vaidhyanathan. "LLMs for Generation of Architectural Components: An Exploratory Empirical Study in the Serverless World" accepted at the 2025 IEEE International Conference on Software Architecture (ICSA 2025). Read the [preprint]({{ site.url }}{{ site.baseurl }}/papers/ICSA_2025_Serverless_LLM.pdf).
+2. Matathammal, Akhila, Kriti Gupta, Larissa Lavanya, Ananya Vishal Halgatti, Priyanshi Gupta, and Karthik Vaidhyanathan. "EdgeMLBalancer: A Self-Adaptive Approach for Dynamic Model Switching on Resource-Constrained Edge Devices." Workshop at the 2025 IEEE International Conference on Software Architecture (ICSA 2025). [arXiv](https://arxiv.org/abs/2502.06493).
+
+3. Arun, Shrikara, Tedla, Meghana, and Karthik Vaidhyanathan. "LLMs for Generation of Architectural Components: An Exploratory Empirical Study in the Serverless World" accepted at the 2025 IEEE International Conference on Software Architecture (ICSA 2025). Read the [preprint]({{ site.url }}{{ site.baseurl }}/papers/ICSA_2025_Serverless_LLM.pdf).
 
 {% bibliography  %}
 
