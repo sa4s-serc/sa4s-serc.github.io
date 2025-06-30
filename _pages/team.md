@@ -15,7 +15,7 @@ Jump to [staff](#staff), [students](#phd-students), [graduated students](#gradua
 ## Faculty
 
 {% assign number_printed = 0 %}
-{% for member in site.data.team_members %}
+{% for member in site.data.people.team_members %}
 {% assign even_odd = number_printed | modulo: 2 %}
 {% if even_odd == 0 %}
 
@@ -64,7 +64,7 @@ Jump to [staff](#staff), [students](#phd-students), [graduated students](#gradua
 
 {% for i in (0..student_groups.size) %}
 {% assign group = student_groups[i] %}
-{% assign group_data = site.data.students[group] %}
+{% assign group_data = site.data.people[group] %}
 {% if group_data == nil %}
 {% continue %}
 {% endif %}
@@ -72,7 +72,7 @@ Jump to [staff](#staff), [students](#phd-students), [graduated students](#gradua
   <h2>{{ group_labels[i] }} Students</h2>
 
 {% assign number_printed = 0 %}
-{% for member in site.data.students[group] %}
+{% for member in site.data.people[group] %}
 
 {% assign even_odd = number_printed | modulo: 2 %}
 {% if even_odd == 0 %}
@@ -135,7 +135,7 @@ Jump to [staff](#staff), [students](#phd-students), [graduated students](#gradua
 ## Research Engineer
 
 {% assign number_printed = 0 %}
-{% for member in site.data.research_engineer %}
+{% for member in site.data.people.research_engineer %}
 
 {% assign even_odd = number_printed | modulo: 2 %}
 
@@ -185,7 +185,7 @@ Jump to [staff](#staff), [students](#phd-students), [graduated students](#gradua
 ## Graduated students
 
 {% assign number_printed = 0 %}
-{% for member in site.data.alumni_members %}
+{% for member in site.data.people.alumni_members %}
 
 {% assign even_odd = number_printed | modulo: 2 %}
 

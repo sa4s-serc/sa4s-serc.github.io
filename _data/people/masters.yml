@@ -1,0 +1,24 @@
+#- name:
+#  photo:
+#  info:
+#  email:
+#  number_educ:
+#  education1:
+#  education2:
+#  education3:
+#  education4:
+
+- name: Chandrasekar S
+  photo: chandrasekar_s.jpeg
+  info: MS by Research, started in May 2024
+  email: chandrasekar.s@research.iiiit.ac.in
+  number_educ: 0
+  alumni: False
+
+- name: Hiya Bhatt
+  photo: hiya_bhatt.jpeg
+  info: MS CSE, started in May 2024
+  email: hiya.bhatt@research.iiiit.ac.in
+  number_educ: 1
+  education1: Best Poster Award - ICSA 2024
+  alumni: False
