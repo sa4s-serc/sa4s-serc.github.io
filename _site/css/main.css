@@ -1418,7 +1418,7 @@ img {
 
 .img-responsive {
   display: block;
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
 }
 
@@ -1436,7 +1436,7 @@ img {
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   display: inline-block;
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
 }
 
@@ -5319,7 +5319,7 @@ a.badge:hover, a.badge:focus {
 .thumbnail > img,
 .thumbnail a > img {
   display: block;
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
@@ -6633,7 +6633,7 @@ button.close {
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
   display: block;
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
   line-height: 1;
 }
