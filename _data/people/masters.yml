@@ -22,3 +22,19 @@
   number_educ: 1
   education1: Best Poster Award - ICSA 2024
   alumni: False
+
+- name: Likhith Kanigolla
+  photo: likhith_kanigolla.jpeg
+  info: MS CSE, started in May 2024
+  email: likhith.kanigolla@research.iiit.ac.in
+  number_educ: 1
+  education1: Best Poster Award - ICSA 2024
+  alumni: False
+
+- name: Sreemaee Akshathala
+  photo: sreemaee_akshathala.jpeg
+  info: MS CSE, started in Aug 2025
+  email: sreemaee.akshathala@research.iiit.ac.in
+  number_educ: 1
+  education1: Worked as an RE earlier on a project with MontyCloud
+  alumni: False

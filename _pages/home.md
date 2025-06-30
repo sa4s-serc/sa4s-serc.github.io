@@ -6,7 +6,7 @@ sitemap: false
 permalink: /
 ---
 
-SA4S research group, SERC works at the intersection of software architecture and machine learning, focusing on building sustainable and self-adaptive software systems. We explore how software architecture principles can be combined with advanced machine learning techniques to tackle the challenges of designing resilient, energy-efficient, and adaptive systems. Our vision is to create systems that are not only functional but also sustainable and adaptable in an ever-changing world. 
+SA4S research group, SERC works at the intersection of software architecture and machine learning, focusing on building sustainable and self-adaptive software systems. We explore how software architecture principles can be combined with advanced machine learning techniques to tackle the challenges of designing resilient, energy-efficient, and adaptive systems. Our vision is to create systems that are not only functional but also sustainable and adaptable in an ever-changing world.
 
 <div markdown="0" id="carousel" class="carousel slide" data-ride="carousel" data-interval="4000" data-pause="hover">
     <!-- Menu -->
@@ -22,13 +22,13 @@ SA4S research group, SERC works at the intersection of software architecture and
     <!-- Items -->
     <div class="carousel-inner" markdown="0">
         <div class="item active">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/pic/icsa24_best_poster.jpeg" alt="Slide 1" />
+            <img src="{{ site.url }}{{ site.baseurl }}/images/pic/icsa24_best_poster.jpeg" alt="Slide 1" style="max-width: 100%"  />
         </div>
         <!-- <div class="item">
             <img src="{{ site.url }}{{ site.baseurl }}/images/pic/ICSA-1.jpeg" alt="Slide 2" />
         </div> -->
         <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/pic/freshers2k24_sa4s.jpg" alt="Slide 3" />
+            <img src="{{ site.url }}{{ site.baseurl }}/images/pic/freshers2k24_sa4s.jpg" alt="Slide 3"  style="max-width: 100%" />
         </div>
     </div>
   <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
@@ -48,7 +48,6 @@ We develop methodologies, frameworks, and tools that allow software to autonomou
   <!-- <img src="{{ site.url }}{{ site.baseurl }}/images/logopic/iiit-new.png" style="width: 210px"> -->
   <img src="{{ site.url }}{{ site.baseurl }}/images/logopic/IIITH_25th-year-celebration.png" style="width: 350px">
 </figure>
-
 
 <!-- Currently, we are located at Leiden University, the birthplace of superconductivity and home to Kamerlingh Onnes, Lorentz, Huygens, Einstein, de Sitter, and others (see e.g. [the wall of signatures from Ehrenfest lecturers](https://www.lorentz.leidenuniv.nl/history/colloquium/muur_heel.html)). -->
 
