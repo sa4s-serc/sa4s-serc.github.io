@@ -1,9 +1,0 @@
-list:
-  - title: "POSEIDON: A New Direction in Managing MEC Networks"
-    date: 2024-10-23
-    excerpt: "POSEIDON combines Deep Reinforcement Learning and traditional optimization techniques to improve MEC network management."
-    author: "Prakhar Jain, Prakhar Singhal, and Divyansh Pandey"
-    cover_image: "/images/blogpic/poseidon_networks.png"
-    categories: [MEC, AI, Deep Reinforcement Learning]
-    tags: [MEC, DeepRL, PPO, NEPTUNE]
-
