@@ -58,20 +58,7 @@ const showcases: ShowcaseItem[] = [
       { icon: '⬆️', value: '0.778', label: 'recall' },
       { icon: '🔢', value: '≈3k', label: 'tokens/service' }
     ]
-  },
-  {
-    id: 'smart-scheduler',
-    title: 'Context-Aware Task Scheduler',
-    subtitle: 'Intelligent workload management',
-    description: 'Advanced scheduling system that learns from historical patterns and real-time context to optimize task execution. Adapts to user behavior, system resources, and environmental conditions for maximum efficiency.',
-    image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop',
-    imageAlt: 'Colorful code visualization on computer screen showing scheduling algorithms',
-    links: {
-      demo: '#',
-      code: '#'
-    }
-  },
-
+  }
 ];
 
 const Showcases = () => {

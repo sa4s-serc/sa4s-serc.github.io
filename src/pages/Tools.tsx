@@ -14,40 +14,6 @@ const Tools = () => {
         demo: 'https://locoml-website.vercel.app/',
         video: 'https://www.youtube.com/watch?v=cdJv43Jsv_c'
       }
-    },
-    {
-      name: 'EnergyOptimizer',
-      tagline: 'ML-Driven Power Management',
-      description: 'Machine learning toolkit for predicting and optimizing energy consumption in distributed systems, reducing carbon footprint by up to 40%.',
-      logo: '⚡',
-      links: {
-        paper: 'https://example.com/paper2',
-        github: 'https://github.com/sa4s/energy-optimizer',
-        demo: 'https://demo.energyoptimizer.org'
-      }
-    },
-    {
-      name: 'CloudAdapt',
-      tagline: 'Intelligent Cloud Resource Manager',
-      description: 'Autonomous cloud resource management system that adapts to workload patterns and optimizes cost-performance trade-offs in real-time.',
-      logo: '☁️',
-      links: {
-        paper: 'https://example.com/paper3',
-        github: 'https://github.com/sa4s/cloudadapt',
-        demo: 'https://demo.cloudadapt.org',
-        video: 'https://youtube.com/watch?v=example3'
-      }
-    },
-    {
-      name: 'SystemMonitor',
-      tagline: 'Adaptive Performance Analytics',
-      description: 'Real-time monitoring and analysis platform that learns system behavior patterns to predict performance issues before they occur.',
-      logo: '📊',
-      links: {
-        paper: 'https://example.com/paper4',
-        github: 'https://github.com/sa4s/system-monitor',
-        demo: 'https://demo.systemmonitor.org'
-      }
     }
   ];
 
