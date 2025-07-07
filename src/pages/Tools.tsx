@@ -1,8 +1,21 @@
 
-import { Github, FileText, Youtube, ArrowRight } from 'lucide-react';
+import { Github, FileText, Youtube, ArrowRight, Download, Mail } from 'lucide-react';
 
 const Tools = () => {
   const tools = [
+    {
+      name: 'SWITCH',
+      tagline: 'An Exemplar for Evaluating Self-Adaptive ML-Enabled Systems',
+      description: 'A web-service platform that lets researchers plug in and evaluate dynamic ML model-switching strategies at runtime—complete with real-time dashboards, experiment management, and adaptation metric logging.',
+      logo: '/images/tools/switch.png',
+      links: {
+        paper: 'https://arxiv.org/pdf/2402.06351',
+        github: 'https://github.com/sa4s-serc/switch',
+        video: 'https://www.youtube.com/watch?v=ZIDE1v3jxeQ&feature=youtu.be',
+        download: 'https://drive.google.com/file/d/14PYAqZZ4mEradS4dh7thO69IawhgdDiY/view?usp=drive_link',
+        email: 'mailto:switchseams2024@gmail.com'
+      }
+    },
     {
       name: 'LoCoML',
       tagline: 'Low-Code Framework for Real-World ML Inference Pipelines',
@@ -23,6 +36,8 @@ const Tools = () => {
       case 'github': return <Github size={16} />;
       case 'demo': return <ArrowRight size={16} />;
       case 'video': return <Youtube size={16} />;
+      case 'download': return <Download size={16} />;
+      case 'email': return <Mail size={16} />;
       default: return <ArrowRight size={16} />;
     }
   };
@@ -33,6 +48,8 @@ const Tools = () => {
       case 'github': return 'GitHub';
       case 'demo': return 'Platform';
       case 'video': return 'Demo';
+      case 'download': return 'Download';
+      case 'email': return 'Email Us';
       default: return 'Link';
     }
   };

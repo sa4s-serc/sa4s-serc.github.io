@@ -23,7 +23,8 @@ const teamMembers: TeamMember[] = [
     education: [
       "Postdoc and Cultore Della Materia (Subject Matter Expert), University of L'Aquila, Italy",
       'PhD in Computer Science from GSSI - Gran Sasso Science Institute, advised by Henry Muccini',
-      'Masters from Amrita University',
+      'M.Tech from Amrita University',
+      'MSc from University of L\'Aquila, Italy',
       'B.Tech in Computer Science from Amrita Vishwa Vidyapeetham',
     ],
   },
