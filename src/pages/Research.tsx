@@ -20,7 +20,7 @@ const researchAreas = [
 ];
 
 const collaborators = [
-    { name: 'Frame Lab, University of L’Aquila', logo: '/images/collabpic/framelab.png' },
+    { name: 'Frame Lab, University of L\'Aquila', logo: '/images/collabpic/framelab.png' },
     { name: 'DeepSE Group, Politechnico di Milano', logo: '/images/collabpic/deepse.png' },
     { name: 'S2 Group, VU', logo: '/images/collabpic/s2.png' },
     { name: 'Middlesex University', logo: '/images/collabpic/middlesex.png' },
