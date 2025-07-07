@@ -30,7 +30,7 @@ const Index = () => {
       <section className="py-12 bg-gray-50/50">
         <div className="container mx-auto px-4">
           <AudioPlayer 
-            src="/LLMs for Architectural Design Decisions.wav" 
+            src="/LLMs for Architectural Design Decisions.mp3" 
             title="LLMs for Architectural Design Decisions"
           />
         </div>
