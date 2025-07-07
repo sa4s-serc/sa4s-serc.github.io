@@ -73,7 +73,7 @@ const AudioPlayer = ({ src, title }: AudioPlayerProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 mt-8">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-semibold text-gray-900">Podcast: {title}</h3>
         <div className="flex items-center space-x-4">

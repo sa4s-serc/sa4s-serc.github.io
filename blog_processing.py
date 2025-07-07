@@ -196,7 +196,7 @@ Please now process the provided PDF file and generate the complete Markdown blog
 def main():
     """Main function to configure and run the converter."""
     # IMPORTANT: Please replace with your actual API key and folder path.
-    API_KEY = "AIzaSyAjFwi2L4vNUcmy5pcIgLe4KINcHg4k1_U"  # <-- Replace with your key
+    API_KEY = ""  # <-- Replace with your key
     PDF_FOLDER = "C:/Users/SRINIVAS/Downloads/test"          # <-- Place your PDFs in this folder
     
     # Create the folder for PDFs if it doesn't exist

@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import FeaturedNews from '../components/FeaturedNews';
 import HighlightCard from '../components/HighlightCard';
 import LogoCloud from '../components/LogoCloud';
+import AudioPlayer from '../components/AudioPlayer';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -24,6 +25,16 @@ const Index = () => {
   return (
     <div>
       <Hero />
+
+      {/* Podcast Player Section */}
+      <section className="py-12 bg-gray-50/50">
+        <div className="container mx-auto px-4">
+          <AudioPlayer 
+            src="/LLMs for Architectural Design Decisions.wav" 
+            title="LLMs for Architectural Design Decisions"
+          />
+        </div>
+      </section>
       
       {/* Featured News Section */}
       <FeaturedNews />
