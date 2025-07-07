@@ -11,7 +11,7 @@ const Header = () => {
     { name: 'News', path: '/news' },
     { name: 'Tools', path: '/tools' },
     { name: 'Showcases', path: '/showcases' },
-    { name: 'Work', path: '/work' },
+    { name: 'Projects', path: '/work' },
     { name: 'Publications', path: '/publications' },
     { name: 'Blogs', path: '/blogs' },
     { name: 'Research', path: '/research' },
