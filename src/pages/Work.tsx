@@ -48,7 +48,61 @@ const projects: Project[] = [
       { name: 'Siddharth Mavani', role: 'BTP Student - started the project' },
       { name: 'Rohan C', role: 'BTP Student - started the project' },
     ]
-  }
+  },
+  {
+    id: 'sa4s',
+    title: 'SA4S',
+    summary: 'SA4S is an architecture-based approach for sustainable data intensive software systems. The project aims to address technical and environmental sustainability challenges faced by modern software systems through an architecture-centric approach. It focuses on determining the sustainability of legacy or green field software systems through the lens of software architecture, considering costs related to maintainability, evolvability, and energy consumption, particularly for IoT and Machine Learning enabled Data Intensive Software Systems (DISS).',
+    members: [
+      { name: 'Shubham Kulkarni', role: 'Masters Student' },
+      { name: 'Arya Marda', role: 'Honours Student' },
+      { name: 'Meghana Tedla', role: 'Honours Student' },
+      { name: 'Akhila Matathammal', role: 'PhD Student' },
+      { name: 'Hiya Bhatt', role: 'External Student' },
+    ]
+  },
+  {
+    id: 'llm-cloudops',
+    title: 'LLM Powered Autonomous CloudOps',
+    summary: 'LLM Powered Autonomous CloudOps is a project focused on developing an LLM powered system for autonomous cloud operations. The project, in collaboration with MontyCloud Inc., aims to automate cloud operations with minimal human support, including performing security checks, compliance checks, running well-architected assessments, and recommending actions to enhance security, reduce cost, and improve reliability. The first version of the product, CloudOps Copilot, is now available.',
+    members: [
+      { name: 'Rudra Dhar', role: 'PhD Student' },
+      { name: 'Sreemaee Akshathala', role: 'Research Engineer' },
+      { name: 'Adyansh Kakran', role: 'DD Student' },
+      { name: 'Amey Karan', role: 'DD Student' },
+      { name: 'Shrikara A', role: 'Honours Student' },
+    ]
+  },
+  {
+    id: 'greensam',
+    title: 'GreenSAM',
+    summary: 'Development of approaches, frameworks and tools for greening software deployments. The goal of the project is to develop approaches, frameworks and tools for greening software deployments. The project is in collaboration with Lloyds Technology Center.',
+    members: [
+      { name: 'Akhila Matathammal', role: 'PhD Student' },
+      { name: 'Shaunak Biswas', role: 'BTP Student' },
+      { name: 'Prakhar Singhal', role: 'BTP Student' },
+    ]
+  },
+  {
+    id: 'model-switching',
+    title: 'Model Switching',
+    summary: 'Enhancing Sustainability at the Edge using model Switching. This is a project as a part of the Qualcomm EdgeAI labs at IIIT Hyderabad.',
+    members: [
+      { name: 'Akhila Matathammal', role: 'PhD Student' },
+      { name: 'Arya Marda', role: 'BTP Student' },
+    ]
+  },
+  {
+    id: 'python-vlabs',
+    title: 'Python - Vlabs',
+    summary: 'Python - Vlabs is a project focused on developing Python lab experiments as part of the Virtual Labs Project. Virtual Labs is a national funded project by MHRD, Government of India that aims to provide a platform for students to learn various engineering concepts in an interactive and engaging manner. This specific project develops additional experiments for teaching advanced topics in Python, including concepts like exception handling, complex data types, higher order functions, and lambda functions.',
+    members: [
+      { name: 'Adyansh Kakran', role: 'DD Student' },
+      { name: 'Prathistha Abrol', role: 'DD Student' },
+      { name: 'Karthik Konar', role: 'Masters Student' },
+      { name: 'Mohit Patni', role: 'External Student' },
+    ]
+  },
 ];
 
 const Work = () => {

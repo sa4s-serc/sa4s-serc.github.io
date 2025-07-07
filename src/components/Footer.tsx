@@ -22,7 +22,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Self-Adaptive Systems for Sustainable Computing Research Group at IIIT-Hyderabad, 
+              Software Architecture for Sustainability Research Group at IIIT-Hyderabad, 
               advancing the frontiers of adaptive and energy-efficient software systems.
             </p>
           </div>
@@ -37,31 +37,12 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Connect</h3>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-200 hover:bg-sa4s-teal-500 hover:text-white rounded-lg flex items-center justify-center transition-all duration-150"
-                aria-label="GitHub"
-              >
-                <Github size={20} />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-gray-200 hover:bg-sa4s-blue-500 hover:text-white rounded-lg flex items-center justify-center transition-all duration-150"
-                aria-label="YouTube"
-              >
-                <Youtube size={20} />
-              </a>
-            </div>
-          </div>
+
         </div>
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            © 2024 SA4S @ SERC, IIIT-Hyderabad. Built with care using modern web technologies.
+            © 2024 SA4S @ SERC, IIIT-Hyderabad.
           </p>
         </div>
       </div>
