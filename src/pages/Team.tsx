@@ -250,9 +250,21 @@ const teamMembers: TeamMember[] = [
     category: 'Alumni',
     education: ['Best Poster Award - ICSA 2024'],
   },
+  {
+    id: 29,
+    name: 'Ch Pavan',
+    role: 'Research Engineer',
+    email: 'pavan.harshit@research.iiit.ac.in',
+    photo: '/team/ch_pavan.jpg',
+    category: 'Research Engineers',
+    education: [
+      'BE in Computer Science from CBIT, Hyderabad',
+      'Currently working on the LLoyds Sustainability project'
+    ],
+  },
 ];
 
-const categories = ['Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Alumni'];
+const categories = ['Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Research Engineers', 'Alumni'];
 
 const Team = () => {
   const [activeCategory, setActiveCategory] = useState('Faculty');

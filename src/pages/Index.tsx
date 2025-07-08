@@ -79,9 +79,9 @@ const Index = () => {
             <HighlightCard
               icon={<FileText size={32} />}
               title="Latest Publication"
-              description="Energy-Aware Microservices Orchestration using Reinforcement Learning - Published in IEEE Transactions on Software Engineering."
+              description="Engineering End-to-End Remote Labs Using IoT-Based Retrofitting - Published in IEEE Access 2025"
               ctaText="Read Paper"
-              ctaAction={handlePublicationClick}
+              ctaAction={() => window.open('https://doi.org/10.1109/ACCESS.2024.3523066', '_blank')}
             />
             
             <HighlightCard
