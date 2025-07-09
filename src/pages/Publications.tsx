@@ -12,6 +12,7 @@ interface Publication {
   pages?: string;
   doi: string;
   publisher?: string;
+  isbn?: string;
 }
 
 interface YearlyPublications {
@@ -134,6 +135,17 @@ const publicationsByYear: YearlyPublications[] = [
         volume: 'abs/2504.19277',
         year: 2025,
         doi: 'https://doi.org/10.48550/ARXIV.2504.19277'
+      },
+      {
+        id: 'DBLP:conf/simultech/ZechVKRB25',
+        authors: ['Zech, Philipp', 'Karthik Vaidhyanathan', 'Lavanya Kanigolla', 'Lars Rahm', 'Andreas Breu'],
+        title: 'Modeling and Simulating IoT Infrastructures',
+        venue: '15th International Conference on Simulation and Modeling Methodologies, Technologies and Applications, SIMULTECH 2025',
+        year: 2025,
+        pages: '93-105',
+        publisher: 'SciTePress',
+        isbn: '978-989-758-759-7',
+        doi: 'https://doi.org/10.5220/0013557400003970'
       }
     ]
   },

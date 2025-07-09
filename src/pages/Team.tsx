@@ -72,11 +72,10 @@ const teamMembers: TeamMember[] = [
   {
     id: 7,
     name: 'Likhith Kanigolla',
-    role: 'MS CSE, started in May 2024',
+    role: 'MS CSE, started in Jan 2025',
     email: 'likhith.kanigolla@research.iiit.ac.in',
     photo: '/team/likhith_kanigolla.jpeg',
-    category: 'Masters Students',
-    education: ['Best Poster Award - ICSA 2024'],
+    category: 'Masters Students'
   },
   {
     id: 8,

@@ -41,12 +41,14 @@ const projects: Project[] = [
       { name: 'Chandrasekar S', role: 'Masters Student - current' },
       { name: 'Maddireddy Kritin', role: 'Honours Student - current' },
       { name: 'Kotekal Methukula Santhosh', role: 'Honours Student - current' },
-      { name: 'Harshit Karwal', role: 'BTP Student - current' },
-      { name: 'Mukta Chanda', role: 'BTP Student - current' },
-      { name: 'Shashwat Dash', role: 'BTP Student - current' },
+      { name: 'Nijesh Raghava', role: 'BTP Student - current' },
+      { name: 'Varanasi Vamseedhar', role: 'BTP Student - current' },
       { name: 'Ayush Agarwal', role: 'BTP Student - started the project' },
       { name: 'Siddharth Mavani', role: 'BTP Student - started the project' },
       { name: 'Rohan C', role: 'BTP Student - started the project' },
+      { name: 'Harshit Karwal', role: 'BTP Student - past' },
+      { name: 'Mukta Chanda', role: 'BTP Student - past' },
+      { name: 'Shashwat Dash', role: 'BTP Student - past' },
     ]
   },
   {
