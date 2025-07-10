@@ -31,7 +31,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <AudioPlayer 
             src="/LLMs for Architectural Design Decisions.mp3" 
-            title="LLMs for Architectural Design Decisions"
+            title="SA4S Research Summary Podcast"
           />
         </div>
       </section>
