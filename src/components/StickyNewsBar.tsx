@@ -2,15 +2,25 @@
 import { useState, useEffect } from 'react';
 import { X, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { allNewsItems } from '../data/newsData';
-
-
+import { getAllNewsItems, NewsItem } from '../data/newsLoader';
 
 const StickyNewsBar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [topNews, setTopNews] = useState<NewsItem[]>([]);
 
-    const topNews = allNewsItems.slice(0, 3);
+  useEffect(() => {
+    const loadTopNews = async () => {
+      try {
+        const allItems = await getAllNewsItems();
+        setTopNews(allItems.slice(0, 3));
+      } catch (error) {
+        console.error('Error loading top news:', error);
+      }
+    };
+
+    loadTopNews();
+  }, []);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -22,7 +32,7 @@ const StickyNewsBar = () => {
     return () => clearInterval(interval);
   }, [isVisible, topNews.length]);
 
-  if (!isVisible) return null;
+  if (!isVisible || topNews.length === 0) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-sa4s-teal-600 text-white z-40 animate-slide-in-right">
