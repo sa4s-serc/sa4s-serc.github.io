@@ -1,5 +1,5 @@
 const r=`---\r
-date: "2025-08-16"\r
+date: "16 August 2025"\r
 headline: "Akhila Matathammal Selected for TCS Research Scholar Program (RSP) Scholarship"\r
 ---\r
 \r

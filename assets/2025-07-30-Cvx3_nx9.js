@@ -1,5 +1,5 @@
 const s=`---\r
-date: "30th July 2025"\r
+date: "30 July 2025"\r
 headline: "Workshop for Students and Faculty from KIET-Kakinada"\r
 ---\r
 \r
