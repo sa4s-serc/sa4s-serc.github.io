@@ -261,6 +261,14 @@ const teamMembers: TeamMember[] = [
       'Currently working on the LLoyds Sustainability project'
     ],
   },
+  {
+    id: 30,
+    name: 'Mahisha Ramesh',
+    role: 'Research Engineer',
+    email: 'mahisha26r@gmail.com',
+    photo: '/team/mahisha_ramesh.jpeg',
+    category: 'Research Engineers',
+  },
 ];
 
 const categories = ['Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Research Engineers', 'Alumni'];
