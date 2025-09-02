@@ -268,6 +268,11 @@ const teamMembers: TeamMember[] = [
     email: 'mahisha26r@gmail.com',
     photo: '/team/mahisha_ramesh.jpeg',
     category: 'Research Engineers',
+    education: [
+      'Mtech in CSE with AI specialisation in IIIT Delhi',
+      'Currently working with MontyCloud company on Project Marvin',
+      'Building agentic AI systems that help Managed Service Providers (MSPs) streamline CloudOps through intelligent memory, context-aware reasoning, and smarter automation.'
+    ],
   },
 ];
 
