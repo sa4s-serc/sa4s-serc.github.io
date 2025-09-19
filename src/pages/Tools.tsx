@@ -1,5 +1,6 @@
 
 import { Github, FileText, Youtube, ArrowRight, Download, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Tools = () => {
   const tools = [
@@ -124,12 +125,12 @@ const Tools = () => {
               Our tools are open-source and we welcome contributions from the community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-sa4s-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition-all duration-150">
+              <Link to="/work" className="bg-white text-sa4s-teal-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition-all duration-150 text-center">
                 View All Projects
-              </button>
-              <button className="border-2 border-white text-white hover:bg-white hover:text-sa4s-teal-600 px-8 py-3 rounded-lg font-medium transition-all duration-150">
-                Collaboration Guidelines
-              </button>
+              </Link>
+              <a href="mailto:karthik.vaidhyanathan@iiit.ac.in" className="border-2 border-white text-white hover:bg-white hover:text-sa4s-teal-600 px-8 py-3 rounded-lg font-medium transition-all duration-150 text-center">
+                Contact Us
+              </a>
             </div>
           </div>
         </div>
@@ -139,3 +140,4 @@ const Tools = () => {
 };
 
 export default Tools;
+
