@@ -18,6 +18,18 @@ const Tools = () => {
       }
     },
     {
+      name: 'ArchBench',
+      tagline: 'LLMs for Software Architecture Tasks',
+      description:
+        'ArchBench is a leaderboard and resource hub for benchmarking LLMs on software architecture tasks, including ADR generation, serverless components, and dynamic services.',
+      logo: '/images/tools/archbench.png',
+      links: {
+        demo: 'https://www.sabench.com/',
+        paper: 'https://www.sabench.com/',
+        email: 'mailto:bassam.adnan@research.iiit.ac.in'
+      }
+    },
+    {
       name: 'LoCoML',
       tagline: 'Low-Code Framework for Real-World ML Inference Pipelines',
       description: 'LoCoML abstracts away engineering complexity with a low-code, drag-and-drop interface—stitching ASR, MT, TTS & OCR into robust 20+-language inference pipelines for the Bhashini Project with just ~2% runtime overhead.',
