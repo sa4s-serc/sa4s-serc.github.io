@@ -278,7 +278,7 @@ const teamMembers: TeamMember[] = [
     id: 31,
     name: 'Aneetta Sara Shany',
     role: 'Junior Research Fellow',
-    email: 'sara18anee@gmail.com',
+    email: 'aneetta.sara@research.iiit.ac.in',
     photo: '/team/aneetta_sara_shany.jpeg',
     category: 'Research Staff',
     education: [
