@@ -285,6 +285,18 @@ const teamMembers: TeamMember[] = [
       'Working on the SustaIND project, focussing on building a software-centric framework for sustainable AI systems',
     ],
   },
+  {
+    id: 32,
+    name: 'Chandrasekar S',
+    role: 'Junior Research Fellow, started in Oct 2025',
+    email: 'chandrasekar.s@research.iiiit.ac.in',
+    photo: '/team/chandrasekar_s.jpeg',
+    category: 'Research Staff',
+    education: [
+      'Working on the SustaIND project, focussing on building a software-centric framework for sustainable AI systems',
+    ],
+  },
+
 ];
 
 const categories = ['All', 'Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Research Staff', 'Alumni'];
