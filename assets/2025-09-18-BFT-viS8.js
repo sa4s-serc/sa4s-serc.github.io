@@ -1,5 +1,5 @@
 const e=`---
-date: "15 September 2025"
+date: "18 September 2025"
 headline: "HarmonE Presented at ECSA 2025 Main Track"
 ---
 
