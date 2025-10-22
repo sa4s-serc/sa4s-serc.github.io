@@ -255,7 +255,7 @@ const teamMembers: TeamMember[] = [
     role: 'Research Engineer',
     email: 'pavan.harshit@research.iiit.ac.in',
     photo: '/team/ch_pavan.jpg',
-    category: 'Research Engineers',
+    category: 'Research Staff',
     education: [
       'BE in Computer Science from CBIT, Hyderabad',
       'Currently working on the LLoyds Sustainability project'
@@ -267,21 +267,34 @@ const teamMembers: TeamMember[] = [
     role: 'Research Engineer',
     email: 'mahisha26r@gmail.com',
     photo: '/team/mahisha_ramesh.jpeg',
-    category: 'Research Engineers',
+    category: 'Research Staff',
     education: [
       'Mtech in CSE with AI specialisation in IIIT Delhi',
       'Currently working with MontyCloud company on Project Marvin',
       'Building agentic AI systems that help Managed Service Providers (MSPs) streamline CloudOps through intelligent memory, context-aware reasoning, and smarter automation.'
     ],
+  },  
+  {
+    id: 31,
+    name: 'Aneetta Sara Shany',
+    role: 'Junior Research Fellow',
+    email: 'sara18anee@gmail.com',
+    photo: '/team/aneetta_sara_shany.jpeg',
+    category: 'Research Staff',
+    education: [
+      'Working on the SustaIND project, focussing on building a software-centric framework for sustainable AI systems',
+    ],
   },
 ];
 
-const categories = ['Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Research Engineers', 'Alumni'];
+const categories = ['All', 'Faculty', 'PhD Students', 'Masters Students', 'Undergraduate Researchers', 'Research Staff', 'Alumni'];
 
 const Team = () => {
-  const [activeCategory, setActiveCategory] = useState('Faculty');
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredMembers = teamMembers.filter(member => member.category === activeCategory);
+  const filteredMembers = activeCategory === 'All'
+    ? teamMembers
+    : teamMembers.filter(member => member.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-white">
