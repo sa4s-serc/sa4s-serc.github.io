@@ -24,6 +24,28 @@ const Index = () => {
 
   return (
     <div>
+      {/* Temporary announcement: DFL Agentic AI certificate course */}
+      <section className="bg-gradient-to-r from-[#0f2f52] via-[#1a578c] to-[#1b6db8] text-white">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+            <div className="text-xs font-semibold uppercase tracking-wide bg-white/15 text-white rounded-full px-3 py-1 w-max">
+              DFL Announcement
+            </div>
+            <div className="text-sm md:text-base flex-1 leading-snug">
+              Division of Flexible Learning: Certificate course “Engineering Agentic AI Systems” (12 weeks, online). Applications close 29 Dec 2025.
+            </div>
+            <a
+              href="https://dfl.iiit.ac.in/programs/cert/aai"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[#f2c400] text-[#0f2f52] font-semibold px-4 py-2 shadow hover:shadow-lg transition"
+            >
+              Apply now
+            </a>
+          </div>
+        </div>
+      </section>
+
       <Hero />
 
       {/* Podcast Player Section */}

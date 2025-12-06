@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
-  
+
   const carouselImages = [
     '/images/home/ICSA-1.jpeg',
     '/images/home/freshers2k24_sa4s.jpg',
@@ -49,7 +49,7 @@ const Hero = () => {
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
               <button 
                 onClick={handleExploreResearch}
                 className="bg-sa4s-teal-600 hover:bg-sa4s-teal-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-150 flex items-center justify-center group"
