@@ -15,6 +15,19 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 'sustaind',
+    title: 'SustAInd',
+    summary: 'SustAInd project focuses on building AI systems that are technically, environmentally and economically sustainable. A software-centric framework is being developed to reduce energy use while maintaining system performance. This project will look at architecture design, runtime management and effective trade-offs. Overall, the project supports organisations in creating AI solutions aligned with India\'s sustainability goals.',
+    members: [
+      { name: 'Aneetta Sara', role: 'Junior Research Fellow' },
+      { name: 'Chandrasekar S', role: 'Junior Research Fellow / Master\'s Student' },
+      { name: 'Akhila Matathammal', role: 'PhD Student' },
+      { name: 'Hiya Bhatt', role: 'Master\'s Student' },
+      { name: 'Shaunak Biswas', role: 'DD Student' },
+      { name: 'Arihant Tripathy', role: 'DD Student' },
+    ]
+  },
+  {
     id: 'llm4adr',
     title: 'LLM4ADR',
     summary: 'LLM4ADR is a research project that aims to generate architecture design decisions in the context of Architecture Decision Records, with Generative AI - LLMs.',
@@ -38,17 +51,17 @@ const projects: Project[] = [
     title: 'LoCoML Platform',
     summary: 'LoCoML is a low-code machine learning platform designed to allow users with limited machine learning knowledge to easily build, update, and deploy models tailored to their specific needs. It incorporates automation features throughout the machine learning pipeline, from data pre-processing to model deployment.',
     members: [
-      { name: 'Chandrasekar S', role: 'Masters Student - current' },
-      { name: 'Maddireddy Kritin', role: 'Honours Student - current' },
-      { name: 'Kotekal Methukula Santhosh', role: 'Honours Student - current' },
-      { name: 'Nijesh Raghava', role: 'BTP Student - current' },
-      { name: 'Varanasi Vamseedhar', role: 'BTP Student - current' },
-      { name: 'Ayush Agarwal', role: 'BTP Student - started the project' },
-      { name: 'Siddharth Mavani', role: 'BTP Student - started the project' },
-      { name: 'Rohan C', role: 'BTP Student - started the project' },
-      { name: 'Harshit Karwal', role: 'BTP Student - past' },
-      { name: 'Mukta Chanda', role: 'BTP Student - past' },
-      { name: 'Shashwat Dash', role: 'BTP Student - past' },
+      { name: 'Chandrasekar S', role: 'Masters Student' },
+      { name: 'Maddireddy Kritin', role: 'Honours Student' },
+      { name: 'Kotekal Methukula Santhosh', role: 'Honours Student' },
+      { name: 'Nijesh Raghava', role: 'BTP Student' },
+      { name: 'Varanasi Vamseedhar', role: 'BTP Student' },
+      { name: 'Ayush Agarwal', role: 'BTP Student' },
+      { name: 'Siddharth Mavani', role: 'BTP Student' },
+      { name: 'Rohan C', role: 'BTP Student' },
+      { name: 'Harshit Karwal', role: 'BTP Student' },
+      { name: 'Mukta Chanda', role: 'BTP Student' },
+      { name: 'Shashwat Dash', role: 'BTP Student' },
     ]
   },
   {
@@ -68,10 +81,12 @@ const projects: Project[] = [
     title: 'LLM Powered Autonomous CloudOps',
     summary: 'LLM Powered Autonomous CloudOps is a project focused on developing an LLM powered system for autonomous cloud operations. The project, in collaboration with MontyCloud Inc., aims to automate cloud operations with minimal human support, including performing security checks, compliance checks, running well-architected assessments, and recommending actions to enhance security, reduce cost, and improve reliability. The first version of the product, CloudOps Copilot, is now available.',
     members: [
+      { name: 'Mahisha Ramesh', role: 'Research Engineer' },
       { name: 'Rudra Dhar', role: 'PhD Student' },
       { name: 'Sreemaee Akshathala', role: 'Research Engineer' },
-      { name: 'Adyansh Kakran', role: 'DD Student' },
       { name: 'Amey Karan', role: 'DD Student' },
+      { name: 'Bassam Adnan', role: 'DD Student' },
+      { name: 'Adyansh Kakran', role: 'DD Student' },
       { name: 'Shrikara A', role: 'Honours Student' },
     ]
   },

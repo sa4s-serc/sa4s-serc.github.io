@@ -282,7 +282,7 @@ const teamMembers: TeamMember[] = [
     photo: '/team/aneetta_sara_shany.jpeg',
     category: 'Research Staff',
     education: [
-      'Working on the SustaIND project, focussing on building a software-centric framework for sustainable AI systems',
+      'Working on the SustAInd project, focussing on building a software-centric framework for sustainable AI systems',
     ],
   },
   {
@@ -293,7 +293,7 @@ const teamMembers: TeamMember[] = [
     photo: '/team/chandrasekar_s.jpeg',
     category: 'Research Staff',
     education: [
-      'Working on the SustaIND project, focussing on building a software-centric framework for sustainable AI systems',
+      'Working on the SustAInd project, focussing on building a software-centric framework for sustainable AI systems',
     ],
   },
 
