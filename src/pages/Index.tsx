@@ -32,7 +32,7 @@ const Index = () => {
               DFL Announcement
             </div>
             <div className="text-sm md:text-base flex-1 leading-snug">
-              Division of Flexible Learning: Certificate course “Engineering Agentic AI Systems” (12 weeks, online). Applications close 29 Dec 2025.
+              Division of Flexible Learning: Agentic AI: From Concepts to Practice. 12-week, online certificate. Applications close 29 Dec 2025.
             </div>
             <a
               href="https://dfl.iiit.ac.in/programs/cert/aai"
