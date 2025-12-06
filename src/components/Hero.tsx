@@ -10,7 +10,8 @@ const Hero = () => {
   const carouselImages = [
     '/images/home/ICSA-1.jpeg',
     '/images/home/freshers2k24_sa4s.jpg',
-    '/images/home/icsa24_best_poster.jpeg'
+    '/images/home/icsa24_best_poster.jpeg',
+    '/images/home/sustaind.png'
   ];
 
   useEffect(() => {

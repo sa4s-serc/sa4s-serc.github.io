@@ -28,7 +28,8 @@ const galleryImages: GalleryImage[] = [
   { id: '14', src: '/gallery/pic2.jpeg', alt: 'Gallery Image 2', caption: 'Gallery Image 2', date: '2024-01-01', event: 'General' },
   { id: '15', src: '/gallery/pic3.jpeg', alt: 'Gallery Image 3', caption: 'Gallery Image 3', date: '2024-01-01', event: 'General' },
   { id: '16', src: '/gallery/pic4.jpeg', alt: 'Gallery Image 4', caption: 'Gallery Image 4', date: '2024-01-01', event: 'General' },
-  { id: '17', src: '/gallery/pic5.jpeg', alt: 'Gallery Image 5', caption: 'Gallery Image 5', date: '2024-01-01', event: 'General' }
+  { id: '17', src: '/gallery/pic5.jpeg', alt: 'Gallery Image 5', caption: 'Gallery Image 5', date: '2024-01-01', event: 'General' },
+  { id: '18', src: '/gallery/sustaind.png', alt: 'SustAInd team', caption: 'SustAInd team', date: '2024-01-01', event: 'Project group' }
 ];
 
 const Gallery = () => {
