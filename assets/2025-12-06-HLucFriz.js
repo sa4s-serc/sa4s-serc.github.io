@@ -1,7 +1,0 @@
-const e=`---
-date: "6 December 2025"
-headline: "Applications open for DFL certificate course: Engineering Agentic AI Systems"
----
-
-The Division of Flexible Learning at IIIT Hyderabad is offering a 12-week online certificate course, **Engineering Agentic AI Systems**, focused on designing, implementing, and operating production-ready agentic AI systems. Applications close **29 December 2025**. Learn more and apply at the official page: [dfl.iiit.ac.in/programs/cert/aai](https://dfl.iiit.ac.in/programs/cert/aai).
-`;export{e as default};
