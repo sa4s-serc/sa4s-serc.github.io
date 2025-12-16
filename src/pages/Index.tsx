@@ -1,5 +1,5 @@
 
-import { Eye, FileText, Users } from 'lucide-react';
+import { Eye, FileText, Users, Globe2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import FeaturedNews from '../components/FeaturedNews';
@@ -46,21 +46,77 @@ const Index = () => {
         </div>
       </section>
 
+      {/* SustAInd cross-promo */}
+      <section className="py-3 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="relative group">
+            {/* Subtle gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl opacity-80"></div>
+
+            {/* Glassmorphism overlay */}
+            <div className="relative backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl shadow-lg overflow-hidden">
+              {/* Subtle shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+
+              <div className="relative flex flex-col items-start gap-3 p-3.5 md:flex-row md:items-center md:justify-between">
+                {/* Left content */}
+                <div className="flex items-center gap-3 flex-1">
+                  {/* Icon */}
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/90 text-emerald-700 shadow group-hover:scale-105 transition-transform duration-200">
+                    <Globe2 size={20} strokeWidth={2.5} />
+                  </span>
+
+                  {/* Text content */}
+                  <div className="flex-1">
+                    <h3 className="text-base md:text-lg font-bold text-white mb-1">
+                      SustAInd
+                    </h3>
+                    <p className="text-xs md:text-sm text-white/85 leading-snug">
+                      Sustainable AI for India: low-carbon, cost-aware, production-ready ML systems.
+                    </p>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <div className="flex w-full md:w-auto">
+                  <a
+                    href="https://sa4s-serc.github.io/sustaind/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group/btn inline-flex flex-1 md:flex-none items-center justify-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow transition-all duration-200 hover:shadow-lg hover:scale-105"
+                  >
+                    <span>Visit SustAInd</span>
+                    <svg
+                      className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform duration-200"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Hero />
 
       {/* Podcast Player Section */}
       <section className="py-12 bg-gray-50/50">
         <div className="container mx-auto px-4">
-          <AudioPlayer 
-            src="/LLMs for Architectural Design Decisions.mp3" 
+          <AudioPlayer
+            src="/LLMs for Architectural Design Decisions.mp3"
             title="SA4S Research Summary Podcast"
           />
         </div>
       </section>
-      
+
       {/* Featured News Section */}
       <FeaturedNews />
-      
+
       {/* Research Highlights Section */}
       <section className="py-16 bg-gray-50/50">
         <div className="container mx-auto px-4">
@@ -70,15 +126,15 @@ const Index = () => {
             </h2>
             <div className="prose text-gray-600 max-w-none">
               <p className="text-lg leading-relaxed mb-6">
-                The SA4S research group at SERC, IIIT-Hyderabad, focuses on developing 
-                intelligent software systems that can adapt to changing environments while 
+                The SA4S research group at SERC, IIIT-Hyderabad, focuses on developing
+                intelligent software systems that can adapt to changing environments while
                 maintaining optimal performance and energy efficiency.
               </p>
               <p className="leading-relaxed">
-                Our interdisciplinary approach combines software engineering, machine learning, 
-                and systems research to create solutions that are both theoretically sound and 
-                practically impactful. We work closely with industry partners to ensure our 
-                innovations address real-world challenges in cloud computing, IoT systems, 
+                Our interdisciplinary approach combines software engineering, machine learning,
+                and systems research to create solutions that are both theoretically sound and
+                practically impactful. We work closely with industry partners to ensure our
+                innovations address real-world challenges in cloud computing, IoT systems,
                 and distributed applications.
               </p>
             </div>
@@ -97,7 +153,7 @@ const Index = () => {
               ctaText="Learn More"
               ctaAction={handleVisionClick}
             />
-            
+
             <HighlightCard
               icon={<FileText size={32} />}
               title="Latest Publication"
@@ -105,7 +161,7 @@ const Index = () => {
               ctaText="Read Paper"
               ctaAction={() => window.open('https://doi.org/10.1109/ACCESS.2024.3523066', '_blank')}
             />
-            
+
             <HighlightCard
               icon={<Users size={32} />}
               title="Join Us"
