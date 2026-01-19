@@ -15,25 +15,24 @@ This achievement highlights our team's innovative research in **Agentic AI**, **
 
 Here are some of the highlighted papers accepted this year:
 
-*   **[Thinking Beyond Rules: How POLARIS Uses Multi-Agentic Reasoning](/blogs/2512.04702v2)**  
-    *A new framework for self-adaptive systems that reason and evolve.*
+*   **[POLARIS: Is Multi-Agentic Reasoning the Next Wave in Engineering Self-Adaptive Systems?](/blogs/2512.04702v2)**  
+    *Accepted at SEAMS 2026 Main Track*
 
-*   **[The Energy Gap in AI Coding Agents](/blogs/2512.09543v2)**  
-    *Why small models fail at efficiency and how to fix it.*
+*   **[SWEnergy: An Empirical Study on Energy Efficiency in Agentic Issue Resolution Frameworks with SLMs](/blogs/2512.09543v2)**  
+    *Accepted at ICSE 2026 Agent Workshop*
 
-*   **[AgentOps Needs a CHANGE](/blogs/2601.06456v1)**  
-    *Moving from static models to evolving, co-adaptive agents.*
+*   **[Architecting AgentOps Needs CHANGE](/blogs/2601.06456v1)**  
+    *Accepted at CAIN 2026 Research Track*
 
-*   **[A New Framework for Evaluating Agentic AI](/blogs/2512.12791v2)**  
-    *Why "Did it Finish?" isn't enough for agent reliability.*
+*   **[Beyond Task Completion: An Assessment Framework for Evaluating Agentic AI Systems](/blogs/2512.12791v2)**  
+    *Accepted at ICSE 2026 Agent Workshop*
 
-*   **[Can AI Write 'Green' Code?](/blogs/2509.10099v1)**  
-    *Testing LLMs against human software experts on energy efficiency.*
+*   **[Generating Energy-Efficient Code via Large-Language Models – Where are we now?](/blogs/2509.10099v1)**  
+    *Accepted at ICSE 2026 Main Track*
 
 ...and **3 more** papers! We will share details on the remaining papers soon.
 
 > "This is a testament to our team's hard work and dedication to pushing the boundaries of software engineering research."
 
 Congratulations to all the authors! 🚀
-
 `;export{e as default};
