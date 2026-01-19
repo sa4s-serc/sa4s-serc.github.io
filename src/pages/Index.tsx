@@ -24,23 +24,22 @@ const Index = () => {
 
   return (
     <div>
-      {/* Temporary announcement: DFL Agentic AI certificate course */}
-      <section className="bg-gradient-to-r from-[#0f2f52] via-[#1a578c] to-[#1b6db8] text-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-            <div className="text-xs font-semibold uppercase tracking-wide bg-white/15 text-white rounded-full px-3 py-1 w-max">
-              DFL Announcement
-            </div>
-            <div className="text-sm md:text-base flex-1 leading-snug">
-              Division of Flexible Learning: Agentic AI: From Concepts to Practice. 12-week, online certificate. Applications close 29 Dec 2025.
-            </div>
+
+      {/* ICSE 2026 Announcement */}
+      <section className="bg-gradient-to-r from-yellow-400 via-green-500 to-blue-600 text-white">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-center gap-3 md:gap-4 text-center md:text-left">
+            <span className="inline-flex items-center bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
+              🇧🇷 Rio 2026
+            </span>
+            <span className="font-medium text-sm md:text-base">
+              🎉 <strong>8 Papers Accepted at ICSE 2026!</strong>
+            </span>
             <a
-              href="https://dfl.iiit.ac.in/programs/cert/aai"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[#f2c400] text-[#0f2f52] font-semibold px-4 py-2 shadow hover:shadow-lg transition"
+              href="/news"
+              className="inline-flex items-center text-sm font-semibold bg-white text-green-700 hover:bg-white/90 px-4 py-1.5 rounded-full transition-all duration-200"
             >
-              Apply now
+              See the Papers →
             </a>
           </div>
         </div>
