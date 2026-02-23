@@ -41,7 +41,7 @@ PROFILE_URL = "https://www.linkedin.com/in/karthikv1392/recent-activity/all/"
 
 # Credentials
 LI_AT_COOKIE = os.getenv("LI_AT_COOKIE", "AQEDATIYq_wBKxgQAAABnIm25WgAAAGcrcNpaE4AjgV9Wb72sOAxOQtIJMej_ch2KktJxhtLGtQxtrpSujbr0bqEOKevsquQzWVq6lPyDUvNbzJj3HwuilwLWOWmOrbWMYvO8qUbPVWh70u3Q5hL8S6Y")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyA9zk9axHnbzwrjED2vjEuQv5KCYdNhP0I")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 
 # --- Date Extraction ---
