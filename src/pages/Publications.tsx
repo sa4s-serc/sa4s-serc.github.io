@@ -114,16 +114,24 @@ function decodeLatex(str: string): string {
 function parseBibContent(bibContent: string): YearlyPublications[] {
   const parsed = bibtexParse.toJSON(bibContent);
   const map: Record<number, Publication[]> = {};
+  const seenTitles = new Set<string>();
 
   for (const entry of parsed) {
     const fields = entry.entryTags;
     const year = parseInt(fields.year, 10);
     if (isNaN(year)) continue;
 
+    const rawTitle = decodeLatex(fields.title || "");
+    const normalizedTitle = rawTitle.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    // Deduplicate identical papers (e.g., conference version vs arXiv preprint)
+    if (!normalizedTitle || seenTitles.has(normalizedTitle)) continue;
+    seenTitles.add(normalizedTitle);
+
     const publication: Publication = {
       id: entry.citationKey,
       authors: parseAuthors(decodeLatex(fields.author || "")),
-      title: decodeLatex(fields.title || ""),
+      title: rawTitle,
       venue: decodeLatex(fields.journal || fields.booktitle || ""),
       volume: decodeLatex(fields.volume || ""),
       year,
