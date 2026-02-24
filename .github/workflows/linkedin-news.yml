@@ -39,3 +39,22 @@ jobs:
         with:
           commit_message: "chore(news): auto-update LinkedIn news entries"
           file_pattern: "src/data/news/*.md processed_posts.json"
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          
+      - name: Install Node dependencies
+        run: pnpm install
+        
+      - name: Build and Deploy site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run deploy
