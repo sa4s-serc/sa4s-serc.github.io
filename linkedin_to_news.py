@@ -192,7 +192,7 @@ def fetch_post_content(activity_id: str) -> dict | None:
 
 
 def fetch_all_posts(activity_ids: list[str], processed_ids: set[str]) -> list[dict]:
-    """Fetches content for all unprocessed activity IDs."""
+    """Fetches content for all unprocessed activity IDs within the last 30 days."""
     logger.info("Stage 2: Fetching post content (public pages)...")
 
     new_posts = []
@@ -200,6 +200,16 @@ def fetch_all_posts(activity_ids: list[str], processed_ids: set[str]) -> list[di
         if aid in processed_ids:
             logger.info(f"  Skipping {aid} (already processed)")
             continue
+
+        # Skip posts older than 30 days to save API calls
+        base_date, _ = extract_date_from_activity_id(aid)
+        try:
+            post_dt = datetime.strptime(base_date, "%Y-%m-%d")
+            if (datetime.now() - post_dt).days > 30:
+                logger.info(f"  ⏭️ Skipping {aid} (older than 30 days, date: {base_date})")
+                continue
+        except Exception:
+            pass
 
         logger.info(f"  Fetching post {aid}...")
         post = fetch_post_content(aid)
@@ -291,8 +301,8 @@ Content:
 
         except Exception as e:
             if "503" in str(e) or "429" in str(e) or "quota" in str(e).lower():
-                logger.warning(f"  Rate limit or 503 error (attempt {attempt+1}/{max_retries}). Waiting 60s...")
-                time.sleep(60)
+                logger.warning(f"  Rate limit or 503 error (attempt {attempt+1}/{max_retries}). Waiting 120s...")
+                time.sleep(120)
             else:
                 logger.error(f"  Gemini error for post {post['activity_id']}: {e}")
                 return None

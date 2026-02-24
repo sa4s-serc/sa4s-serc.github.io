@@ -24,4 +24,3 @@ dist-ssr
 *.sw?
 
 *-lock.*.env
-processed_posts.json
