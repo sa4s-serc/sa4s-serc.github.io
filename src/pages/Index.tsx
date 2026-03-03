@@ -28,8 +28,8 @@ const Index = () => {
       {/* ICSE 2026 Announcement */}
       <section className="bg-gradient-to-r from-yellow-400 via-green-500 to-blue-600 text-white">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex flex-col md:flex-row md:items-center justify-center gap-3 md:gap-4 text-center md:text-left">
-            <span className="inline-flex items-center bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
+          <div className="flex flex-row flex-wrap md:flex-row md:items-center justify-center gap-3 md:gap-4 text-center md:text-left">
+            <span className="inline-flex items-center bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wide whitespace-nowrap">
               🇧🇷 Rio 2026
             </span>
             <span className="font-medium text-sm md:text-base">
@@ -37,7 +37,7 @@ const Index = () => {
             </span>
             <a
               href="/news"
-              className="inline-flex items-center text-sm font-semibold bg-white text-green-700 hover:bg-white/90 px-4 py-1.5 rounded-full transition-all duration-200"
+              className="inline-flex items-center justify-center text-sm font-semibold bg-white text-green-700 hover:bg-white/90 px-4 py-1.5 rounded-full transition-all duration-200"
             >
               See the Papers →
             </a>
@@ -57,11 +57,11 @@ const Index = () => {
               {/* Subtle shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
 
-              <div className="relative flex flex-col items-start gap-3 p-3.5 md:flex-row md:items-center md:justify-between">
+              <div className="relative flex flex-col items-center text-center gap-4 p-4 md:flex-row md:items-center md:text-left md:justify-between">
                 {/* Left content */}
-                <div className="flex items-center gap-3 flex-1">
+                <div className="flex flex-col items-center md:flex-row md:items-center gap-3 flex-1">
                   {/* Icon */}
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/90 text-emerald-700 shadow group-hover:scale-105 transition-transform duration-200">
+                  <span className="inline-flex h-12 w-12 md:h-10 md:w-10 items-center justify-center rounded-lg bg-white/90 text-emerald-700 shadow group-hover:scale-105 transition-transform duration-200 shrink-0">
                     <Globe2 size={20} strokeWidth={2.5} />
                   </span>
 
@@ -77,12 +77,12 @@ const Index = () => {
                 </div>
 
                 {/* CTA Button */}
-                <div className="flex w-full md:w-auto">
+                <div className="flex mt-2 md:mt-0">
                   <a
                     href="https://sa4s-serc.github.io/sustaind/"
                     target="_blank"
                     rel="noreferrer"
-                    className="group/btn inline-flex flex-1 md:flex-none items-center justify-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow transition-all duration-200 hover:shadow-lg hover:scale-105"
+                    className="group/btn inline-flex items-center justify-center gap-1.5 rounded-lg bg-white px-5 py-2.5 md:px-4 md:py-2 text-sm font-semibold text-emerald-700 shadow transition-all duration-200 hover:shadow-lg hover:scale-105"
                   >
                     <span>Visit SustAInd</span>
                     <svg

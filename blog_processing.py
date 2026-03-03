@@ -2,7 +2,8 @@ import os
 import json
 import time
 from pathlib import Path
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import logging
 import fitz  # PyMuPDF
 
@@ -16,14 +17,14 @@ class ResearchPaperConverter:
     It automatically extracts figures with a page-specific naming convention, generates 
     a Markdown article, and checks if a file has already been processed.
     """
-    def __init__(self, api_key: str, model_name: str = "gemini-2.5-pro"):
+    def __init__(self, api_key: str, model_name: str = "gemini-3-flash-preview"):
         """Initializes the converter with the Gemini API key and model."""
         try:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel(model_name)
-            logger.info(f"Gemini model '{model_name}' initialized successfully.")
+            self.client = genai.Client(api_key=api_key)
+            self.model_name = model_name
+            logger.info(f"Gemini client initialized with model '{model_name}'.")
         except Exception as e:
-            logger.critical(f"Failed to configure Gemini. Please check your API key. Error: {e}")
+            logger.critical(f"Failed to initialize Gemini Client. Please check your API key. Error: {e}")
             raise
 
         # Create top-level output directory
@@ -119,15 +120,23 @@ Please now process the provided PDF file and generate the complete Markdown blog
         
         self._extract_and_save_figures(pdf_path, paper_name_base)
 
-        uploaded_file = None
         try:
-            logger.info("Uploading file to Gemini for content generation...")
-            # Using the new File API for better robustness
-            uploaded_file = genai.upload_file(path=pdf_path, display_name=paper_name_base)
+            logger.info("Reading PDF file for inline processing...")
+            # Read PDF content as bytes to send inline (avoids upload hang)
+            with open(pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
             
             prompt = self.create_enhanced_prompt(paper_name_base)
             logger.info("Generating content from the paper...")
-            response = self.model.generate_content([prompt, uploaded_file])
+            
+            # Send PDF inline as a Part with inline_data
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=[
+                    prompt,
+                    types.Part(inline_data=types.Blob(mime_type="application/pdf", data=pdf_bytes))
+                ]
+            )
             
             logger.info("Successfully generated blog post content.")
             return response.text
@@ -135,11 +144,6 @@ Please now process the provided PDF file and generate the complete Markdown blog
         except Exception as e:
             logger.error(f"An error occurred during Gemini processing for {pdf_path}: {e}")
             return None
-            
-        finally:
-            if uploaded_file:
-                logger.info(f"Deleting uploaded file: {uploaded_file.name}")
-                genai.delete_file(uploaded_file.name)
 
     def save_blog_post(self, content: str, paper_name_base: str):
         """Saves the generated blog post content to a .md file."""
@@ -196,8 +200,8 @@ Please now process the provided PDF file and generate the complete Markdown blog
 def main():
     """Main function to configure and run the converter."""
     # IMPORTANT: Please replace with your actual API key and folder path.
-    API_KEY = ""  # <-- Replace with your key
-    PDF_FOLDER = "C:/Users/SRINIVAS/Downloads/test"          # <-- Place your PDFs in this folder
+    API_KEY = "AIzaSyCxtFCD3XIakaC_bhbI_Gve7lOcD43H_cE"  # <-- Replace with your key
+    PDF_FOLDER = "/Users/ch/sa4s-serc.github.io/icse_papers"          # <-- Place your PDFs in this folder
     
     # Create the folder for PDFs if it doesn't exist
     if not Path(PDF_FOLDER).exists():
