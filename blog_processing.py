@@ -200,7 +200,7 @@ Please now process the provided PDF file and generate the complete Markdown blog
 def main():
     """Main function to configure and run the converter."""
     # IMPORTANT: Please replace with your actual API key and folder path.
-    API_KEY = "AIzaSyCxtFCD3XIakaC_bhbI_Gve7lOcD43H_cE"  # <-- Replace with your key
+    API_KEY = ""  # <-- Replace with your key
     PDF_FOLDER = "/Users/ch/sa4s-serc.github.io/icse_papers"          # <-- Place your PDFs in this folder
     
     # Create the folder for PDFs if it doesn't exist
