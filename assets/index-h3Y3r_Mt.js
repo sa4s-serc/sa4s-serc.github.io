@@ -1,0 +1,1 @@
+import{r,v as n,h as s}from"./index-DiEwQuEn.js";var u=n[" useId ".trim().toString()]||(()=>{}),i=0;function v(t){const[e,o]=r.useState(u());return s(()=>{o(a=>a??String(i++))},[t]),t||(e?`radix-${e}`:"")}var c=r.createContext(void 0);function x(t){const e=r.useContext(c);return t||e||"ltr"}export{x as a,v as u};
