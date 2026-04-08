@@ -1,5 +1,5 @@
 const e=`---
-date: "June 2025"
+date: "1 June 2025"
 headline: "Welcoming summer interns to the lab!"
 ---
 
@@ -11,4 +11,5 @@ Preethi PM, Shreenidhi are working on topics related to ML Certification
 
 Subhashree L is focusing on Sustainable Self-Adaptation 
 
-<img src='/images/pic/summer_interns_2025.jpeg' class='img-responsive' alt='Summer Interns 2025'/>`;export{e as default};
+<img src='/images/pic/summer_interns_2025.jpeg' class='img-responsive' alt='Summer Interns 2025'/>
+`;export{e as default};

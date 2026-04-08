@@ -17,7 +17,5 @@ Team at the SAGE-ML booth showcasing our research
 <img src='/images/pic/qualcomm_2.jpg' class='img-responsive' alt='Akhila presenting SAGE-ML research to attendees'/>
 Akhila  presenting the SAGE-ML framework to conference attendees
 
----
-
 *Qualcomm SparQ is a premier conference that brings together researchers and innovators to showcase cutting-edge technologies and foster collaboration in the field of computing and communications.*
 `;export{e as default};

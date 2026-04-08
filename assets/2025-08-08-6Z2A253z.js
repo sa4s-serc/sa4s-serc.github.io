@@ -36,7 +36,5 @@ Dr. Karthik emphasized that the future of AI is not just about intelligence, but
 <img src='/images/pic/nasscom_1.jpg' class='img-responsive' alt='Dr. Karthik Vaidyanathan delivering his session at NASSCOM Tech Developer Confluence 2025'/>
 Dr. Karthik Vaidyanathan presenting "Engineering Agentic AI: From Concepts to Practice"
 
----
-
 *NASSCOM Tech Developer Confluence is a premier platform that brings together developers, technologists, and industry leaders to explore cutting-edge technologies and foster innovation in the tech ecosystem.*
 `;export{e as default};

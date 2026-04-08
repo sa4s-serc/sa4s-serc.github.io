@@ -1,5 +1,4 @@
-const e=`---
-date: "12 October 2025"
+const e=`date: "12 October 2025"
 headline: "Welcoming Chandru and Aneetta as JRFs for SustAInd"
 ---
 
