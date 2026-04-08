@@ -81,7 +81,7 @@ The **Simulation page** is even more impressive. It displays the physical sensor
 Experiments simulating contamination with salt and sand showed the system could accurately track the variance in TDS levels. Crucially, the system was highly responsive, executing a control command (like closing a valve) in approximately **800 milliseconds**.
 
 
-![A line graph showing the variance of TDS values increasing as more containers of soil and sand are added.](/images/blogpic/architecting_digital_twin_for_smart_city_systems_a_case_study_p8_f2.png)
+![A line graph showing the variance of TDS values increasing as more containers of soil and sand are added.](/images/blogpic/architecting_digital_twin_for_smart_city_systems_a_case_study_p8_f1.png)
 
 
 #### Conclusion and Future Directions

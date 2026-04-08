@@ -4,7 +4,7 @@ excerpt: "Imagine your smart city assistant not just answering questions, but bu
 date: "2025-01-01"
 author: "Bassam Adnan, Sathvika Miryala, Aneesh Sambu, Karthik Vaidhyanathan, Martina De Sanctis, Romina Spalazzese"
 category: "AI/ML"
-thumbnail: "/images/blogpic/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction_p4_f1.png"
+thumbnail: "/images/showcases/sas_llm_query.png"
 ---
 
 The promise of the Internet of Things (IoT) has always been a world that seamlessly adapts to our needs. Yet, today's smart systems often feel rigid. They operate from a fixed menu of services, struggling when our goals are vague, change on a whim, or require something entirely new. What if, instead of just using a smart system, we could collaborate with it to create the exact solution we need, right when we need it?
@@ -22,7 +22,7 @@ The core challenge is that user needs are dynamic and context-dependent. A truly
 To solve this, the researchers designed a system that engages the user in a collaborative dialogue. Instead of a single command-and-response, the system uses an LLM-powered **three-pass dialogue framework** to progressively understand and refine the user's goals.
 
 
-![A diagram showing a three-step conversation between a tourist and a travel guide AI, starting with a vague request and ending with a concrete, personalized plan.](/images/blogpic/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction_p3_f1.png)
+![A diagram showing a three-step conversation between a tourist and a travel guide AI, starting with a vague request and ending with a concrete, personalized plan.](/images/showcases/sas_llm_query.png)
 
 
 1.  **Pass 1: Contextual Awareness:** The system first gathers all relevant context. This includes the user's query, time constraints, location, and real-time environmental data from IoT sensors (like weather, traffic, and crowd density).
@@ -34,7 +34,7 @@ To solve this, the researchers designed a system that engages the user in a coll
 This dynamic interaction is powered by a novel software architecture that integrates several key components.
 
 
-![High-level architecture diagram of the system showing user interaction, goal management, knowledge management, and backend generation components.](/images/blogpic/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction_p4_f1.png)
+![High-level architecture diagram of the system showing user interaction, goal management, knowledge management, and backend generation components.](/images/showcases/sas_llm_query.png)
 
 
 -   **Goal Management:** This is the "brain" of the operation, powered by an LLM. It manages the three-pass dialogue to interpret user queries and identify the required services.
@@ -54,7 +54,7 @@ The results were promising:
 However, the study also highlighted a key challenge: **efficiency**. The system relies on providing the LLM with extensive context (all available services, schemas, conversation history). As the number of services grows, the number of input tokens required for processing increases significantly, which impacts both cost and latency.
 
 
-![A line graph showing that as more services are added to the system, the number of input tokens required for processing increases significantly for different LLM models.](/images/blogpic/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction_p8_f1.png)
+![A line graph showing that as more services are added to the system, the number of input tokens required for processing increases significantly for different LLM models.](/images/showcases/sas_llm_query.png)
 
 
 This finding points to a critical area for future work: optimizing context management to make these powerful systems more efficient and scalable.

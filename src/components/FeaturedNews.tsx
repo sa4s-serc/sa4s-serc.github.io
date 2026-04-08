@@ -5,6 +5,42 @@ import { Link } from 'react-router-dom';
 
 import { getAllNewsItems, NewsItem } from '../data/newsLoader';
 
+const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*?\]\(([^)\s]+)[^)]*\)/g;
+const HTML_IMAGE_REGEX = /<img[^>]*src=['"]([^'"]+)['"][^>]*>/i;
+
+function extractPreviewImage(description: string): string | undefined {
+  const markdownMatch = description.match(MARKDOWN_IMAGE_REGEX);
+  if (markdownMatch && markdownMatch.length > 0) {
+    const src = markdownMatch[0].match(/!\[[^\]]*?\]\(([^)\s]+)[^)]*\)/);
+    if (src?.[1]) return src[1];
+  }
+
+  const htmlMatch = description.match(HTML_IMAGE_REGEX);
+  if (htmlMatch?.[1]) {
+    return htmlMatch[1];
+  }
+
+  return undefined;
+}
+
+function toPreviewText(description: string): string {
+  return description
+    .replace(MARKDOWN_IMAGE_REGEX, '')
+    .replace(/<img[^>]*>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^>\s?/gm, '')
+    .replace(/^\s*[-*+]\s+/gm, '')
+    .replace(/^\s*\d+\.\s+/gm, '')
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    .replace(/~~(.*?)~~/g, '$1')
+    .replace(/`{1,3}([^`]*)`{1,3}/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 const FeaturedNews = () => {
   const [featuredNews, setFeaturedNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +74,12 @@ const FeaturedNews = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {featuredNews.map((item, index) => (
+            {featuredNews.map((item, index) => {
+              const description = item.description || '';
+              const imageSrc = extractPreviewImage(description);
+              const previewText = toPreviewText(description);
+
+              return (
               <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
                 <div className="text-sm text-sa4s-teal-600 font-medium mb-2">
                   {item.date}
@@ -46,13 +87,19 @@ const FeaturedNews = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
                   {item.headline}
                 </h3>
-                {item.description && (
+                {imageSrc && (
+                  <img
+                    src={imageSrc}
+                    alt={item.headline}
+                    className="w-full h-40 object-cover rounded-md border border-gray-200 mb-4"
+                    loading="lazy"
+                  />
+                )}
+                {previewText && (
                   <p
                     className="text-gray-600 mb-4 line-clamp-3"
-                  // Display a short preview by stripping any HTML tags and truncating
-                  // to ~100 characters for consistency.
                   >
-                    {item.description.replace(/<[^>]+>/g, '').slice(0, 100)}{item.description.length > 100 ? '…' : ''}
+                    {previewText.slice(0, 140)}{previewText.length > 140 ? '…' : ''}
                   </p>
                 )}
                 <Link
@@ -63,7 +110,7 @@ const FeaturedNews = () => {
                   <ArrowRight className="ml-1 group-hover:translate-x-1 transition-transform duration-150" size={16} />
                 </Link>
               </div>
-            ))}
+            )})}
           </div>
         )}
 

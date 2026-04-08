@@ -4,7 +4,7 @@ excerpt: "A Dagstuhl Seminar convened experts in software architecture and machi
 date: "2023-07-23"
 author: "Grace A. Lewis, Henry Muccini, Ipek Ozkaya, Karthik Vaidhyanathan, Roland Weiss, Liming Zhu"
 category: "AI/ML"
-thumbnail: "/images/blogpic/dagrep.13.7.166_main.png"
+thumbnail: "/placeholder.svg"
 ---
 
 The world is rapidly embracing **Machine Learning (ML)** to automate tasks, improve decision-making, and create advanced user experiences. However, successfully integrating **ML** into complex software systems is proving to be a significant challenge. This blog post summarizes the key insights and research directions identified at a recent Dagstuhl Seminar focused on the intersection of Software Architecture and Machine Learning.

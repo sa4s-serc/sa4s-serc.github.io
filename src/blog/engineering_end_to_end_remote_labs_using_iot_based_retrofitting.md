@@ -46,7 +46,7 @@ This experiment demonstrates the concept of refractive index. A glass rod "disap
 Here, students determine the focal length of a biconvex lens by moving an object and a screen to form a sharp image. In the RLabs version, stepper motors precisely control the position of the object and screen on an optical bench, allowing students to make accurate measurements from afar.
 
 
-![A side-view of the retrofitted focal length experiment, showing the object, lens, screen, and stepper motors on an optical bench.](/images/blogpic/engineering_end_to_end_remote_labs_using_iot_based_retrofitting_p8_f1.png)
+![A side-view of the retrofitted focal length experiment, showing the object, lens, screen, and stepper motors on an optical bench.](/images/blogpic/engineering_end_to_end_remote_labs_using_iot_based_retrofitting_p11_f1.png)
 
 
 #### Miniaturization: Making Labs Portable and Affordable

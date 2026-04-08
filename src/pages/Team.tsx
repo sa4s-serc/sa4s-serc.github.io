@@ -100,7 +100,7 @@ const teamMembers: TeamMember[] = [
     name: 'Prakhar Jain',
     role: 'Undergraduate Researcher, started in May 2023',
     email: 'prakhar.jain@research.iiit.ac.in',
-    photo: '/team/male.png',
+    photo: '/placeholder.svg',
     category: 'Undergraduate Researchers',
   },
   {
@@ -204,7 +204,7 @@ const teamMembers: TeamMember[] = [
     name: 'Vyakhya Gupta',
     role: 'Undergraduate Researcher, started in May 2024',
     email: 'vyakhya.gupta@students.iiit.ac.in',
-    photo: '/team/female.png',
+    photo: '/placeholder.svg',
     category: 'Undergraduate Researchers',
   },
   {

@@ -23,7 +23,7 @@ const StickyNewsBar = () => {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || topNews.length <= 1) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % topNews.length);
@@ -32,7 +32,15 @@ const StickyNewsBar = () => {
     return () => clearInterval(interval);
   }, [isVisible, topNews.length]);
 
+  useEffect(() => {
+    if (topNews.length > 0) {
+      setCurrentIndex(0);
+    }
+  }, [topNews.length]);
+
   if (!isVisible || topNews.length === 0) return null;
+  const safeIndex = Number.isFinite(currentIndex) ? currentIndex % topNews.length : 0;
+  const currentItem = topNews[safeIndex];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-sa4s-teal-600 text-white z-40 animate-slide-in-right">
@@ -40,10 +48,10 @@ const StickyNewsBar = () => {
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center space-x-4 min-w-0 flex-1">
             <div className="text-xs font-medium opacity-90">
-              {topNews[currentIndex].date}
+              {currentItem.date}
             </div>
             <div className="font-medium text-sm truncate">
-              {topNews[currentIndex].headline}
+              {currentItem.headline}
             </div>
           </div>
           

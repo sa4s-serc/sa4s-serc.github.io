@@ -4,7 +4,7 @@ excerpt: "Modern AI systems often struggle to maintain performance under real-wo
 date: "2023-09-11"
 author: "Shubham Kulkarni, Arya Marda, Karthik Vaidhyanathan"
 category: "AI/ML"
-thumbnail: "/images/blogpic/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching_p2_f1.png"
+thumbnail: "/images/blogpic/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching_p4_f1.png"
 ---
 
 Machine Learning-Enabled Systems (MLS) are becoming the backbone of modern technology, from AI assistants like ChatGPT to sophisticated image recognition services. However, a major hurdle prevents many of these powerful systems from reaching production: they are often brittle. Their performance, or **Quality of Service (QoS)**, can plummet when faced with the unpredictable nature of the real world, such as sudden spikes in user traffic or shifts in data patterns.
@@ -26,7 +26,7 @@ Deploying just the 'nano' model might fail to detect crucial objects during low-
 AdaMLS is built upon the well-established **MAPE-K (Monitor-Analyze-Plan-Execute over a Knowledge base)** loop, a standard for creating self-adaptive systems. It cleverly extends this loop to handle the unique challenges of MLS. The system operates in two key phases: an offline learning phase and a runtime adaptation phase.
 
 
-![The architecture of the AdaMLS system, showing the Learning Engine and the runtime MAPE-K loop.](/images/blogpic/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching_p2_f1.png)
+![The architecture of the AdaMLS system, showing the Learning Engine and the runtime MAPE-K loop.](/images/blogpic/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching_p4_f1.png)
 
 
 #### Phase 1: The Learning Engine - Doing the Homework Offline
@@ -76,4 +76,3 @@ By intelligently balancing speed and accuracy, AdaMLS achieved an overall utilit
 AdaMLS offers a powerful blueprint for engineering the next generation of **Machine Learning-Enabled Systems**. It shows that we don't have to settle for a single, compromised ML model. By building systems with self-adaptation capabilities, we can create AI that is more resilient, efficient, and reliable in production.
 
 This work paves the way for systems that can carry a versatile toolkit of models and automatically select the right one for the job at any given moment, revolutionizing how we deploy AI in mission-critical domains.
-```

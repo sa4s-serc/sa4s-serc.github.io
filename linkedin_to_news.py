@@ -40,7 +40,7 @@ PROCESSED_FILE = SCRIPT_DIR / "processed_posts.json"
 PROFILE_URL = "https://www.linkedin.com/in/karthikv1392/recent-activity/all/"
 
 # Credentials
-LI_AT_COOKIE = os.getenv("LI_AT_COOKIE", "AQEDATIYq_wBKxgQAAABnIm25WgAAAGcrcNpaE4AjgV9Wb72sOAxOQtIJMej_ch2KktJxhtLGtQxtrpSujbr0bqEOKevsquQzWVq6lPyDUvNbzJj3HwuilwLWOWmOrbWMYvO8qUbPVWh70u3Q5hL8S6Y")
+LI_AT_COOKIE = os.getenv("LI_AT_COOKIE", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 

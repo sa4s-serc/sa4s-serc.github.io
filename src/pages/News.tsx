@@ -114,7 +114,18 @@ const News = () => {
                     </h1>
                     {selectedItem.description && (
                       <div className="prose max-w-none">
-                        <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                        <ReactMarkdown
+                          rehypePlugins={[rehypeRaw]}
+                          components={{
+                            img: ({ className, ...props }) => (
+                              <img
+                                {...props}
+                                className={`block my-6 w-full rounded-lg border border-gray-200 ${className ?? ''}`.trim()}
+                                loading="lazy"
+                              />
+                            ),
+                          }}
+                        >
                           {selectedItem.description}
                         </ReactMarkdown>
                       </div>
