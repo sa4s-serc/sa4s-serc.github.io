@@ -5,11 +5,20 @@ on:
     - cron: '0 9 * * 1'  # Runs every Monday at 9:00 AM UTC
   workflow_dispatch:       # Allows manual triggering from the GitHub Actions tab
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   fetch-posts:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Needed to commit the new markdown files back to the repo
+      contents: write  # Needed to commit generated markdown files
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy_primary.outputs.page_url || steps.deploy_retry.outputs.page_url }}
       
     steps:
       - name: Checkout repository
@@ -47,12 +56,35 @@ jobs:
           
       - name: Install Node dependencies
         run: npm install
-        
-      - name: Build and Deploy site
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build site
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deploy_primary
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Retry deploy to GitHub Pages (transient failure)
+        id: deploy_retry
+        if: steps.deploy_primary.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Verify deployment succeeded
+        if: always()
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npm run deploy
+          primary="${{ steps.deploy_primary.outcome }}"
+          retry="${{ steps.deploy_retry.outcome }}"
+          if [ "$primary" != "success" ] && [ "$retry" != "success" ]; then
+            echo "Both deployment attempts failed."
+            exit 1
+          fi
