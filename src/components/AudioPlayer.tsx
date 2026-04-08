@@ -36,6 +36,9 @@ const AudioPlayer = ({ src, title }: AudioPlayerProps) => {
       if (isPlaying) {
         audio.pause();
       } else {
+        if (audio.readyState === 0) {
+          audio.load();
+        }
         audio.play();
       }
       setIsPlaying(!isPlaying);
@@ -124,7 +127,7 @@ const AudioPlayer = ({ src, title }: AudioPlayerProps) => {
       <audio
         ref={audioRef}
         src={src}
-        preload="metadata"
+        preload="none"
         className="hidden"
       />
     </div>

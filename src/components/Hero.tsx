@@ -8,10 +8,10 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const carouselImages = [
-    '/images/home/ICSA-1.jpeg',
-    '/images/home/freshers2k24_sa4s.jpg',
-    '/images/home/icsa24_best_poster.jpeg',
-    '/images/home/sustaind.png'
+    { src: '/images/home/ICSA-1.jpeg', width: 1600, height: 1066 },
+    { src: '/images/home/freshers2k24_sa4s.jpg', width: 1600, height: 1200 },
+    { src: '/images/home/icsa24_best_poster.jpeg', width: 1600, height: 1200 },
+    { src: '/images/home/sustaind.jpg', width: 1600, height: 1200 },
   ];
 
   useEffect(() => {
@@ -69,21 +69,20 @@ const Hero = () => {
           {/* Right Carousel */}
           <div className="relative">
             <div className="relative h-80 lg:h-96 rounded-2xl overflow-hidden shadow-2xl">
-              {carouselImages.map((image, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`Lab photo ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-              ))}
+              <div className="absolute inset-0 transition-opacity duration-700 opacity-100">
+                <img
+                  key={carouselImages[currentSlide].src}
+                  src={carouselImages[currentSlide].src}
+                  alt={`Lab photo ${currentSlide + 1}`}
+                  width={carouselImages[currentSlide].width}
+                  height={carouselImages[currentSlide].height}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
             </div>
             
             {/* Carousel indicators */}

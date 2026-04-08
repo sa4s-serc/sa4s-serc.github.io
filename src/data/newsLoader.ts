@@ -12,25 +12,25 @@ interface NewsFrontMatter {
   headline: string;
 }
 
+const newsFiles = import.meta.glob('./news/*.md', { query: '?raw', import: 'default' }) as Record<string, () => Promise<string>>;
+
 // Load news from markdown files
 export async function loadNewsFromMarkdown(): Promise<NewsItem[]> {
-  const newsFiles = import.meta.glob('./news/*.md', { query: '?raw', import: 'default' }) as Record<string, () => Promise<string>>;
-  const newsItems: NewsItem[] = [];
+  const loadedItems = await Promise.all(
+    Object.values(newsFiles).map(async (loadContent) => parseMarkdownNews(await loadContent()))
+  );
 
-  for (const [path, loadContent] of Object.entries(newsFiles)) {
-    const content = await loadContent();
-    const item = parseMarkdownNews(content);
-    if (item) {
-      newsItems.push(item);
-    }
-  }
+  return sortNewsItems(loadedItems.filter((item): item is NewsItem => item !== null));
+}
 
-  // Sort by date (newest first) - handle various date formats
-  return newsItems.sort((a, b) => {
-    const dateA = parseNewsDate(a.date);
-    const dateB = parseNewsDate(b.date);
-    return dateB.getTime() - dateA.getTime();
-  });
+export async function loadLatestNewsFromMarkdown(limit: number): Promise<NewsItem[]> {
+  const latestPaths = Object.keys(newsFiles).sort().reverse().slice(0, limit);
+
+  const loadedItems = await Promise.all(
+    latestPaths.map(async (path) => parseMarkdownNews(await newsFiles[path]()))
+  );
+
+  return sortNewsItems(loadedItems.filter((item): item is NewsItem => item !== null));
 }
 
 function parseMarkdownNews(content: string): NewsItem | null {
@@ -85,8 +85,17 @@ function parseNewsDate(dateStr: string): Date {
   return new Date(0);
 }
 
+function sortNewsItems(newsItems: NewsItem[]): NewsItem[] {
+  return newsItems.sort((a, b) => {
+    const dateA = parseNewsDate(a.date);
+    const dateB = parseNewsDate(b.date);
+    return dateB.getTime() - dateA.getTime();
+  });
+}
+
 // Cache for loaded news items
 let cachedNewsItems: NewsItem[] | null = null;
+const latestNewsCache = new Map<number, NewsItem[]>();
 
 // Get all news items (with caching)
 export async function getAllNewsItems(): Promise<NewsItem[]> {
@@ -96,9 +105,18 @@ export async function getAllNewsItems(): Promise<NewsItem[]> {
   return cachedNewsItems;
 }
 
+export async function getLatestNewsItems(limit: number): Promise<NewsItem[]> {
+  if (!latestNewsCache.has(limit)) {
+    latestNewsCache.set(limit, await loadLatestNewsFromMarkdown(limit));
+  }
+
+  return latestNewsCache.get(limit) ?? [];
+}
+
 // Clear cache (useful for development)
 export function clearNewsCache(): void {
   cachedNewsItems = null;
+  latestNewsCache.clear();
 }
 
 // For backward compatibility, export the static data as well

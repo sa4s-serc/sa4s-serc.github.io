@@ -3,25 +3,9 @@ import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import { getAllNewsItems, NewsItem } from '../data/newsLoader';
+import { getLatestNewsItems, NewsItem } from '../data/newsLoader';
 
 const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*?\]\(([^)\s]+)[^)]*\)/g;
-const HTML_IMAGE_REGEX = /<img[^>]*src=['"]([^'"]+)['"][^>]*>/i;
-
-function extractPreviewImage(description: string): string | undefined {
-  const markdownMatch = description.match(MARKDOWN_IMAGE_REGEX);
-  if (markdownMatch && markdownMatch.length > 0) {
-    const src = markdownMatch[0].match(/!\[[^\]]*?\]\(([^)\s]+)[^)]*\)/);
-    if (src?.[1]) return src[1];
-  }
-
-  const htmlMatch = description.match(HTML_IMAGE_REGEX);
-  if (htmlMatch?.[1]) {
-    return htmlMatch[1];
-  }
-
-  return undefined;
-}
 
 function toPreviewText(description: string): string {
   return description
@@ -48,8 +32,8 @@ const FeaturedNews = () => {
   useEffect(() => {
     const loadFeaturedNews = async () => {
       try {
-        const allItems = await getAllNewsItems();
-        setFeaturedNews(allItems.slice(0, 3));
+        const latestItems = await getLatestNewsItems(3);
+        setFeaturedNews(latestItems);
       } catch (error) {
         console.error('Error loading featured news:', error);
       } finally {
@@ -76,7 +60,6 @@ const FeaturedNews = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {featuredNews.map((item, index) => {
               const description = item.description || '';
-              const imageSrc = extractPreviewImage(description);
               const previewText = toPreviewText(description);
 
               return (
@@ -87,14 +70,6 @@ const FeaturedNews = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
                   {item.headline}
                 </h3>
-                {imageSrc && (
-                  <img
-                    src={imageSrc}
-                    alt={item.headline}
-                    className="w-full h-40 object-cover rounded-md border border-gray-200 mb-4"
-                    loading="lazy"
-                  />
-                )}
                 {previewText && (
                   <p
                     className="text-gray-600 mb-4 line-clamp-3"
