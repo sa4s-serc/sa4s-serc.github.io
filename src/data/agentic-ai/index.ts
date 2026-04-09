@@ -499,6 +499,14 @@ export const talkHighlights: AgenticHighlightItem[] = [
     links: [{ label: "News", href: "/news" }],
   },
   {
+    title: "NASSCOM talk on engineering Agentic AI",
+    subtitle: "Milestone · 8 August 2025",
+    description:
+      "This marked a stronger outward-facing articulation of the group's concepts-to-practice narrative.",
+    tags: ["milestone", "industry", "outreach"],
+    links: [newsLinks.generic],
+  },
+  {
     title: "Architecting AI-Enabled Systems: From ML to Agentic AI",
     subtitle: "ECSA 2025 tutorial",
     description:
@@ -593,6 +601,14 @@ export const publicationHighlights: AgenticHighlightItem[] = [
       publicationLinks.polaris,
       { label: "Blog", href: "/blogs/2512.04702v2" },
     ],
+  },
+  {
+    title: "MOYA selected as a CAIN 2025 best paper candidate",
+    subtitle: "Milestone · 28 February 2025",
+    description:
+      "The autonomous CloudOps line became an early flagship result for SA4S's agentic systems work.",
+    tags: ["milestone", "best paper", "CAIN 2025"],
+    links: [publicationLinks.moya, newsLinks.generic],
   },
 ];
 

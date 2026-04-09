@@ -1,10 +1,9 @@
-import { ArrowRight, BookOpen, FolderKanban, Mic, Newspaper } from "lucide-react";
+import { ArrowRight, BookOpen, FolderKanban, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import CountUp from "../components/CountUp";
 import LifecycleMap from "../components/LifecycleMap";
 import {
-  agenticMilestones,
   lifecycleExplorations,
   lifecycleMapNodes,
   projectHighlights,
@@ -48,65 +47,21 @@ function LinkRow({ links }: { links: AgenticLink[] }) {
   );
 }
 
-function HighlightSection({
-  title,
-  icon,
-  items,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  items: typeof projectHighlights;
-}) {
-  return (
-    <section className="py-16">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="mb-8 flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-gray-200">
-            {icon}
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
-            <p className="text-gray-600">Curated highlights collected into one place.</p>
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm"
-            >
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sa4s-teal-700">
-                {item.subtitle}
-              </p>
-              <h3 className="mt-3 text-xl font-bold text-gray-900">{item.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-gray-600">{item.description}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {item.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-5">
-                <LinkRow links={item.links} />
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const AgenticAI = () => {
   return (
     <div className="min-h-screen bg-[#f7faf9] pt-16">
+      {/* Page title */}
+      <section className="bg-[linear-gradient(135deg,#f6fbfa_0%,#eef7ff_55%,#f8fafc_100%)] pb-10 pt-4 text-center">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+            Our Explorations in GenAI &amp; SE
+          </h1>
+        </div>
+      </section>
+
+      {/* Interactive lifecycle map */}
       <section className="border-b border-gray-200 bg-[linear-gradient(135deg,#f6fbfa_0%,#eef7ff_55%,#f8fafc_100%)]">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 pb-12">
           <LifecycleMap nodes={lifecycleMapNodes} />
 
           <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3">
@@ -131,8 +86,7 @@ const AgenticAI = () => {
                 <CountUp
                   to={
                     talkHighlights.length +
-                    publicationHighlights.length +
-                    agenticMilestones.length
+                    publicationHighlights.length
                   }
                 />
               </div>
@@ -144,89 +98,94 @@ const AgenticAI = () => {
         </div>
       </section>
 
-      <HighlightSection
-        title="Projects and Systems"
-        icon={<FolderKanban className="text-sa4s-teal-700" size={22} />}
-        items={projectHighlights}
-      />
-
+      {/* Three-column: Projects | Talks | Publications — with dividers & theme accents */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid gap-8 lg:grid-cols-2">
-            <div>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sa4s-teal-50">
-                  <Mic className="text-sa4s-teal-700" size={22} />
+          <div className="grid gap-0 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
+            {/* Projects & Systems — teal theme */}
+            <div className="px-4 lg:px-6">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm" style={{ background: "linear-gradient(135deg,#ccfbf1,#99f6e4)" }}>
+                  <FolderKanban className="text-sa4s-teal-700" size={20} />
                 </div>
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Talks and Tutorials</h2>
-                  <p className="text-gray-600">Public-facing material that was previously buried in news posts.</p>
-                </div>
+                <h2 className="text-xl font-bold text-gray-900">Projects &amp; Systems</h2>
               </div>
-              <div className="space-y-5">
+              <div className="space-y-4">
+                {projectHighlights.map((item) => (
+                  <article key={item.title} className="rounded-2xl border border-teal-100 bg-teal-50/40 p-5 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sa4s-teal-700">
+                      {item.subtitle}
+                    </p>
+                    <h3 className="mt-2 text-base font-bold text-gray-900">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">{item.description}</p>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="rounded-full bg-white px-2.5 py-0.5 text-[10px] font-medium text-gray-600 ring-1 ring-teal-200">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <LinkRow links={item.links} />
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            {/* Divider 1 */}
+            <div className="hidden lg:flex lg:items-stretch lg:justify-center lg:px-0">
+              <div className="w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
+            </div>
+            <hr className="my-8 border-gray-200 lg:hidden" />
+
+            {/* Talks & Tutorials — amber/warm theme */}
+            <div className="px-4 lg:px-6">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm" style={{ background: "linear-gradient(135deg,#fef3c7,#fde68a)" }}>
+                  <Mic className="text-amber-700" size={20} />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900">Talks &amp; Tutorials</h2>
+              </div>
+              <div className="space-y-4">
                 {talkHighlights.map((item) => (
-                  <article key={item.title} className="rounded-3xl border border-gray-200 p-6 shadow-sm">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sa4s-teal-700">
+                  <article key={item.title} className="rounded-2xl border border-amber-100 bg-amber-50/40 p-5 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
                       {item.subtitle}
                     </p>
-                    <h3 className="mt-3 text-xl font-bold text-gray-900">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-gray-600">{item.description}</p>
+                    <h3 className="mt-2 text-base font-bold text-gray-900">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">{item.description}</p>
                     <LinkRow links={item.links} />
                   </article>
                 ))}
               </div>
             </div>
 
-            <div>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50">
-                  <BookOpen className="text-blue-700" size={22} />
+            {/* Divider 2 */}
+            <div className="hidden lg:flex lg:items-stretch lg:justify-center lg:px-0">
+              <div className="w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
+            </div>
+            <hr className="my-8 border-gray-200 lg:hidden" />
+
+            {/* Publication Highlights — blue/indigo theme */}
+            <div className="px-4 lg:px-6">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm" style={{ background: "linear-gradient(135deg,#dbeafe,#bfdbfe)" }}>
+                  <BookOpen className="text-blue-700" size={20} />
                 </div>
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Publication Highlights</h2>
-                  <p className="text-gray-600">A curated subset of the Agentic AI publication trail.</p>
-                </div>
+                <h2 className="text-xl font-bold text-gray-900">Publication Highlights</h2>
               </div>
-              <div className="space-y-5">
+              <div className="space-y-4">
                 {publicationHighlights.map((item) => (
-                  <article key={item.title} className="rounded-3xl border border-gray-200 p-6 shadow-sm">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">
+                  <article key={item.title} className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
                       {item.subtitle}
                     </p>
-                    <h3 className="mt-3 text-xl font-bold text-gray-900">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-gray-600">{item.description}</p>
+                    <h3 className="mt-2 text-base font-bold text-gray-900">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">{item.description}</p>
                     <LinkRow links={item.links} />
                   </article>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="mb-8 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-              <Newspaper className="text-amber-700" size={22} />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">Milestones</h2>
-              <p className="text-gray-600">Key moments that show how the Agentic AI line has evolved.</p>
-            </div>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {agenticMilestones.map((item) => (
-              <article key={`${item.date}-${item.headline}`} className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700">
-                  {item.date}
-                </p>
-                <h3 className="mt-3 text-xl font-bold text-gray-900">{item.headline}</h3>
-                <p className="mt-3 text-sm leading-6 text-gray-600">{item.description}</p>
-                <LinkRow links={item.links} />
-              </article>
-            ))}
           </div>
         </div>
       </section>

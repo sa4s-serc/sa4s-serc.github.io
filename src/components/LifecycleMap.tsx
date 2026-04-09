@@ -311,20 +311,18 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
         );
       })}
 
-      {/* Central hub */}
+      {/* Central hub icon */}
       {(() => {
         const cx = (PHASES.Maintenance.cx + PHASES.Development.cx) / 2;
         const cy = (PHASES.Requirements.cy + PHASES.Testing.cy) / 2;
         const iconSize = 80;
         return (
           <g>
-            <foreignObject x={cx - iconSize / 2} y={cy - 90} width={iconSize} height={iconSize}>
+            <foreignObject x={cx - iconSize / 2} y={cy - iconSize / 2} width={iconSize} height={iconSize}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: iconSize, height: iconSize, background: "linear-gradient(135deg,#5eead4 0%,#93c5fd 100%)", borderRadius: 20, color: "#0f172a", boxShadow: "0 4px 14px rgba(148,163,184,0.35)" }}>
                 <Sparkles size={36} />
               </div>
             </foreignObject>
-            <text x={cx} y={cy + 18} textAnchor="middle" fontSize="38" fontWeight={700} fill="#0f172a" style={{ fontFamily: "Georgia, serif" }}>Our Explorations</text>
-            <text x={cx} y={cy + 64} textAnchor="middle" fontSize="34" fontWeight={700} fill="#334155" style={{ fontFamily: "Georgia, serif" }}>in GenAI &amp; SE</text>
           </g>
         );
       })()}
@@ -474,15 +472,12 @@ function MobileAccordion({ nodes }: { nodes: LifecycleMapNode[] }) {
 export default function LifecycleMap({ nodes }: { nodes: LifecycleMapNode[] }) {
   return (
     <div className="rounded-[2rem] border border-gray-200 bg-gradient-to-br from-[#f8fafc] via-white to-[#f1f5f9] p-4 shadow-xl sm:p-6">
-      {/* Header — visible on both */}
+      {/* Header — desktop */}
       <div className="mb-4 hidden items-center justify-between gap-3 px-2 lg:flex">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-sa4s-teal-700">
             Interactive lifecycle map
           </p>
-          <h3 className="mt-1 text-2xl font-bold text-gray-900 sm:text-3xl">
-            Our Explorations in GenAI &amp; SE
-          </h3>
           <p className="mt-1 text-sm text-gray-600">
             Click any sticky note to open its publication, blog, or news entry.
           </p>
