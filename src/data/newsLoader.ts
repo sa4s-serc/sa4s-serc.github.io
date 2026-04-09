@@ -5,11 +5,13 @@ export interface NewsItem {
   date: string;
   headline: string;
   description?: string;
+  sourceUrl?: string;
 }
 
 interface NewsFrontMatter {
   date: string;
   headline: string;
+  sourceUrl?: string;
 }
 
 const newsFiles = import.meta.glob('./news/*.md', { query: '?raw', import: 'default' }) as Record<string, () => Promise<string>>;
@@ -46,7 +48,8 @@ function parseMarkdownNews(content: string): NewsItem | null {
     return {
       date: parsed.attributes.date,
       headline: parsed.attributes.headline,
-      description
+      description,
+      sourceUrl: parsed.attributes.sourceUrl,
     };
   } catch (error) {
     console.error('Error parsing markdown news:', error);

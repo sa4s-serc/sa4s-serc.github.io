@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -112,6 +112,17 @@ const News = () => {
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">
                       {selectedItem.headline}
                     </h1>
+                    {selectedItem.sourceUrl && (
+                      <a
+                        href={selectedItem.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 mb-6 text-sm font-semibold text-sa4s-teal-600 hover:text-sa4s-teal-700"
+                      >
+                        View original LinkedIn post
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
                     {selectedItem.description && (
                       <div className="prose max-w-none">
                         <ReactMarkdown

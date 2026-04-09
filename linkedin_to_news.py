@@ -38,6 +38,8 @@ SCRIPT_DIR = Path(__file__).parent
 NEWS_DIR = SCRIPT_DIR / "src" / "data" / "news"
 PROCESSED_FILE = SCRIPT_DIR / "processed_posts.json"
 PROFILE_URL = "https://www.linkedin.com/in/karthikv1392/recent-activity/all/"
+MAX_FEED_SCROLLS = 20
+SCROLL_STABLE_LIMIT = 2
 
 # Credentials
 LI_AT_COOKIE = os.getenv("LI_AT_COOKIE", "")
@@ -102,10 +104,21 @@ def get_activity_ids_from_feed() -> list[str]:
         except Exception:
             logger.warning("  Selector timeout — trying scroll-based approach...")
 
-        # Scroll down minimally to fetch the latest weekly posts
-        for i in range(2):
+        # Scroll until the feed stops yielding new activity IDs.
+        previous_count = 0
+        stable_iterations = 0
+        for i in range(MAX_FEED_SCROLLS):
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(2)
+            html = page.content()
+            current_count = len(set(re.findall(r'urn:li:activity:(\d+)', html)))
+            if current_count == previous_count:
+                stable_iterations += 1
+            else:
+                stable_iterations = 0
+            previous_count = current_count
+            if stable_iterations >= SCROLL_STABLE_LIMIT:
+                break
 
         # Extract the full HTML
         html = page.content()
@@ -180,6 +193,7 @@ def fetch_post_content(activity_id: str) -> dict | None:
 
         return {
             "activity_id": activity_id,
+            "url": url,
             "title": title,
             "content": content,
             "image": image,
@@ -251,6 +265,7 @@ If the post is a generic opinion, sharing an unrelated article, or about somethi
 ---
 date: "DD Month YYYY"
 headline: "Short, professional headline"
+sourceUrl: "https://www.linkedin.com/feed/update/urn:li:activity:..."
 ---
 
 Body text here in markdown...
@@ -262,7 +277,8 @@ Body text here in markdown...
 3. Do NOT include conversational social media filler ("Excited to share", "I am happy to announce").
 4. Do NOT use meta-phrases like "The full paper is available at this link". Instead, cleanly hyperlink the paper title directly, e.g., "[**CALM**](url)", or use a simple "[Read the paper](url)".
 5. Write in a professional, third-person academic tone ("Karthik Vaidhyanathan presented..." instead of "I presented...").
-6. The `date` field must be EXACTLY "{post['date']}".{image_instruction}
+6. The `date` field must be EXACTLY "{post['date']}".
+7. The `sourceUrl` field must be EXACTLY "{post['url']}".{image_instruction}
 
 **Here are examples of existing news entries on the website for style reference:**
 
@@ -295,7 +311,21 @@ Content:
             # Validate the output has frontmatter
             if not result.startswith("---"):
                 logger.warning(f"  Generated content missing frontmatter, attempting fix...")
-                result = f'---\ndate: "{post["date"]}"\nheadline: "{post["title"][:80]}"\n---\n\n{result}'
+                result = (
+                    f'---\n'
+                    f'date: "{post["date"]}"\n'
+                    f'headline: "{post["title"][:80]}"\n'
+                    f'sourceUrl: "{post["url"]}"\n'
+                    f'---\n\n{result}'
+                )
+
+            # Ensure sourceUrl is preserved even if the model omits it.
+            if "sourceUrl:" not in result:
+                result = result.replace(
+                    "---\n",
+                    f'---\nsourceUrl: "{post["url"]}"\n',
+                    1,
+                )
 
             return result
 

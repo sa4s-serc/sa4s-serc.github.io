@@ -71,7 +71,47 @@ const publicationLinks = {
   },
 } as const;
 
-const newsLink = { label: "News", href: "/news" } as const;
+const newsLinks = {
+  generic: {
+    label: "News",
+    href: "/news",
+  },
+  energyCode: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7344776886121615360",
+    external: true,
+  },
+  assessmentFramework: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7413590723851268096",
+    external: true,
+  },
+  change: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7426256099428933632",
+    external: true,
+  },
+  calm: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7431368154003623936",
+    external: true,
+  },
+  genai4seKeynote: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7430437644821770240",
+    external: true,
+  },
+  vibeCoding: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7444772730756816896",
+    external: true,
+  },
+  archView: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7443330507452583937",
+    external: true,
+  },
+} as const;
 
 export const lifecycleMapNodes: LifecycleMapNode[] = [
   // Maintenance (left column)
@@ -82,8 +122,9 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     phase: "Maintenance",
     links: [
       publicationLinks.change,
+      newsLinks.change,
       { label: "Blog", href: "/blogs/2601.06456v1" },
-      newsLink,
+      newsLinks.generic,
     ],
   },
   {
@@ -92,7 +133,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
       "Self-adaptation approach for QoS routing in Small Language Model based Systems",
     venue: "SEAMS 2026",
     phase: "Maintenance",
-    links: [newsLink],
+    links: [newsLinks.calm, newsLinks.generic],
   },
   {
     id: "polaris",
@@ -112,7 +153,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     links: [
       publicationLinks.moya,
       { label: "Blog", href: "/blogs/2501.08243v1" },
-      newsLink,
+      newsLinks.generic,
     ],
   },
   {
@@ -132,7 +173,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSA 2026",
     phase: "Design",
     collab: true,
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "archview",
@@ -140,7 +181,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSA 2025",
     phase: "Requirements",
     extraPhases: ["Design"],
-    links: [newsLink],
+    links: [newsLinks.archView, newsLinks.generic],
   },
   // Design (top)
   {
@@ -178,28 +219,28 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSE 2026",
     phase: "Design",
     collab: true,
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "serverless",
     title: "Automated generation of serverless functions",
     venue: "ICSA 2025",
     phase: "Development",
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "study-agentic",
     title: "Study across Agentic AI Frameworks",
     venue: "IEEE Software 2026",
     phase: "Development",
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "agentic-akm",
     title: "Agentic Approach to Architecture Knowledge Management",
     venue: "AGENT 2026",
     phase: "Development",
-    links: [publicationLinks.leveragingGenAiAkm, newsLink],
+    links: [publicationLinks.leveragingGenAiAkm, newsLinks.generic],
   },
   {
     id: "agents-micro",
@@ -207,7 +248,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSA 2026",
     phase: "Development",
     collab: true,
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "energy-code",
@@ -215,7 +256,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSE 2026",
     phase: "Development",
     collab: true,
-    links: [publicationLinks.energyCode, newsLink],
+    links: [publicationLinks.energyCode, newsLinks.energyCode, newsLinks.generic],
   },
   {
     id: "fn-call",
@@ -237,7 +278,8 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     links: [
       publicationLinks.assessmentFramework,
       { label: "Blog", href: "/blogs/2512.12791v2" },
-      newsLink,
+      newsLinks.assessmentFramework,
+      newsLinks.generic,
     ],
   },
   {
@@ -258,14 +300,14 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ISEC 2026",
     phase: "Deployment",
     collab: true,
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
   {
     id: "auto-deploy",
     title: "Automated development and deployment of services",
     venue: "ICSA-C 2025",
     phase: "Deployment",
-    links: [newsLink],
+    links: [newsLinks.generic],
   },
 ];
 
@@ -275,7 +317,7 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     venue: "ICSA 2026",
     note: "Accepted work on automated architecture view generation from source code, sourced from the March 27, 2026 news entry.",
     phase: "Requirements",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.archView, newsLinks.generic],
   },
   {
     title: "Can LLMs Generate Architectural Design Decisions? - An Exploratory Empirical Study",
@@ -318,7 +360,7 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     venue: "ICSE 2026",
     note: "Accepted work on whether LLM-generated code meets energy-efficiency goals.",
     phase: "Development",
-    links: [publicationLinks.energyCode, { label: "News", href: "/news" }],
+    links: [publicationLinks.energyCode, newsLinks.energyCode, newsLinks.generic],
   },
   {
     title: "Small Models, Big Tasks: An Exploratory Empirical Study on Small Language Models for Function Calling",
@@ -348,7 +390,8 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     links: [
       publicationLinks.assessmentFramework,
       { label: "Blog", href: "/blogs/2512.12791v2" },
-      { label: "News", href: "/news" },
+      newsLinks.assessmentFramework,
+      newsLinks.generic,
     ],
   },
   {
@@ -358,7 +401,7 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     phase: "Maintenance",
     links: [
       publicationLinks.moya,
-      { label: "News", href: "/news" },
+      newsLinks.generic,
       { label: "Blog", href: "/blogs/2501.08243v1" },
     ],
   },
@@ -379,7 +422,8 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     phase: "Maintenance",
     links: [
       publicationLinks.change,
-      { label: "News", href: "/news" },
+      newsLinks.change,
+      newsLinks.generic,
       { label: "Blog", href: "/blogs/2601.06456v1" },
     ],
   },
@@ -388,7 +432,7 @@ export const lifecycleExplorations: AgenticLifecycleItem[] = [
     venue: "SEAMS 2026",
     note: "Accepted work on QoS-aware routing and orchestration across fleets of small language models.",
     phase: "Maintenance",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.calm, newsLinks.generic],
   },
   {
     title: "POLARIS: Is Multi-Agentic Reasoning the Next Wave in Engineering Self-Adaptive Systems?",
@@ -433,7 +477,7 @@ export const projectHighlights: AgenticHighlightItem[] = [
     description:
       "An agentic approach for generating clearer architecture views from source repositories and iterative validation.",
     tags: ["architecture", "views", "ICSA 2026"],
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.archView, newsLinks.generic],
   },
   {
     title: "Architecting Agentic AI Systems",
@@ -441,7 +485,7 @@ export const projectHighlights: AgenticHighlightItem[] = [
     description:
       "This theme appears across current student work and fellowships, especially around architecture, governance, and evaluation.",
     tags: ["project direction", "fellowship", "architecture"],
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.generic],
   },
 ];
 
@@ -468,7 +512,7 @@ export const talkHighlights: AgenticHighlightItem[] = [
     description:
       "A keynote on how architectural thinking changes when autonomy shifts from deterministic logic to agents.",
     tags: ["keynote", "GenAI4SE", "software architecture"],
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.genai4seKeynote, newsLinks.generic],
   },
   {
     title: "Vibe Coding: What is the 'vibe' really?",
@@ -476,7 +520,7 @@ export const talkHighlights: AgenticHighlightItem[] = [
     description:
       "A public-facing talk connecting generative AI, agentic AI, and the changing practice of software engineering.",
     tags: ["talk", "outreach", "software engineering"],
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.vibeCoding, newsLinks.generic],
   },
 ];
 
@@ -558,41 +602,41 @@ export const agenticMilestones: AgenticMilestone[] = [
     headline: "MOYA selected as a CAIN 2025 best paper candidate",
     description:
       "The autonomous CloudOps line became an early flagship result for SA4S's agentic systems work.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.generic],
   },
   {
     date: "8 August 2025",
     headline: "NASSCOM talk on engineering Agentic AI",
     description:
       "This marked a stronger outward-facing articulation of the group's concepts-to-practice narrative.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.generic],
   },
   {
     date: "4 January 2026",
     headline: "Agentic AI assessment framework accepted at AGENT 2026",
     description:
       "Evaluation became a major strand alongside architecture and deployment concerns.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.assessmentFramework, newsLinks.generic],
   },
   {
     date: "8 February 2026",
     headline: "CHANGE accepted at CAIN 2026",
     description:
       "AgentOps and lifecycle governance became explicit research themes for post-deployment systems.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.change, newsLinks.generic],
   },
   {
     date: "22 February 2026",
     headline: "CALM accepted at SEAMS 2026",
     description:
       "The SLM orchestration line became an explicit part of the group’s agentic and self-adaptive systems work.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.calm, newsLinks.generic],
   },
   {
     date: "27 March 2026",
     headline: "Architecture view generation accepted at ICSA 2026",
     description:
       "The architecture reasoning line expanded into repository-aware, agentic architectural documentation.",
-    links: [{ label: "News", href: "/news" }],
+    links: [newsLinks.archView, newsLinks.generic],
   },
 ];
