@@ -8,11 +8,11 @@ const Header = () => {
 
   const navItems = [
     { name: 'Home', path: '/' },
+    { name: 'Agentic AI', path: '/agenticai' },
     { name: 'News', path: '/news' },
     { name: 'Tools', path: '/tools' },
     { name: 'Showcases', path: '/showcases' },
     { name: 'Projects', path: '/work' },
-    { name: 'Agentic AI', path: '/agenticai' },
     { name: 'Publications', path: '/publications' },
     { name: 'Blogs', path: '/blogs' },
     { name: 'Research', path: '/research' },

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import {
   ClipboardList,
   PencilRuler,
@@ -50,63 +51,63 @@ const PHASE_LIST: PhaseInfo[] = [
 /*  SVG GRAPH — desktop (hidden below lg)                             */
 /* ================================================================== */
 
-const W = 2260;
-const H = 1340;
+const W = 2540;
+const H = 1460;
 const PHASE_W = 230;
 const PHASE_H = 74;
 
 type PhaseConfig = { icon: LucideIcon; cx: number; cy: number };
 
 const PHASES: Record<AgenticLifecyclePhase, PhaseConfig> = {
-  Maintenance:  { icon: Wrench,        cx: 400,  cy: 760 },
-  Requirements: { icon: ClipboardList, cx: 820,  cy: 600 },
-  Design:       { icon: PencilRuler,   cx: 1440, cy: 600 },
-  Development:  { icon: Code2,         cx: 1860, cy: 760 },
-  Testing:      { icon: TestTube2,     cx: 1440, cy: 920 },
-  Deployment:   { icon: Rocket,        cx: 820,  cy: 920 },
+  Maintenance:  { icon: Wrench,        cx: 420,  cy: 770 },
+  Requirements: { icon: ClipboardList, cx: 860,  cy: 610 },
+  Design:       { icon: PencilRuler,   cx: 1490, cy: 610 },
+  Development:  { icon: Code2,         cx: 1940, cy: 770 },
+  Testing:      { icon: TestTube2,     cx: 1490, cy: 940 },
+  Deployment:   { icon: Rocket,        cx: 860,  cy: 940 },
 };
 
 const CYCLE: AgenticLifecyclePhase[] = [
   "Requirements", "Design", "Development", "Testing", "Deployment", "Maintenance",
 ];
 
-const NOTE_W = 220;
-const NOTE_H = 160;
+const NOTE_W = 270;
+const NOTE_H = 195;
 
 type NotePos = { x: number; y: number; labelPos: "top" | "bottom" };
 
 const NOTE_POSITIONS: Record<string, NotePos> = {
   // Maintenance — left column
-  change:   { x: 20,  y: 50,   labelPos: "bottom" },
-  calm:     { x: 20,  y: 280,  labelPos: "bottom" },
+  change:   { x: 20,  y: 40,   labelPos: "bottom" },
+  calm:     { x: 20,  y: 275,  labelPos: "bottom" },
   polaris:  { x: 20,  y: 510,  labelPos: "bottom" },
-  moya:     { x: 20,  y: 850,  labelPos: "bottom" },
-  "sa-llm": { x: 20,  y: 1080, labelPos: "bottom" },
+  moya:     { x: 20,  y: 870,  labelPos: "bottom" },
+  "sa-llm": { x: 20,  y: 1105, labelPos: "bottom" },
 
-  // Design — four papers evenly spaced across the top (100px gap)
-  monoliths:     { x: 430,  y: 50, labelPos: "top" },
-  "enroute-akm": { x: 750,  y: 50, labelPos: "top" },
-  "self-coding": { x: 1070, y: 50, labelPos: "top" },
-  "adr-context": { x: 1390, y: 50, labelPos: "top" },
+  // Design — four papers evenly spaced across the top
+  monoliths:     { x: 450,  y: 50, labelPos: "top" },
+  "enroute-akm": { x: 780,  y: 50, labelPos: "top" },
+  "self-coding": { x: 1110, y: 50, labelPos: "top" },
+  "adr-context": { x: 1440, y: 50, labelPos: "top" },
 
   // Requirements (shared with Design) — second row
-  archview: { x: 560, y: 300, labelPos: "top" },
+  archview: { x: 580, y: 310, labelPos: "top" },
 
   // Development — second row + right column
-  serverless: { x: 1500, y: 300, labelPos: "top" },
-  "study-agentic": { x: 2010, y: 50,   labelPos: "bottom" },
-  "agentic-akm":   { x: 2010, y: 280,  labelPos: "bottom" },
-  "agents-micro":  { x: 2010, y: 510,  labelPos: "bottom" },
-  "energy-code":   { x: 2010, y: 850,  labelPos: "bottom" },
-  "fn-call":       { x: 2010, y: 1080, labelPos: "bottom" },
+  serverless: { x: 1560, y: 310, labelPos: "top" },
+  "study-agentic": { x: 2240, y: 40,   labelPos: "bottom" },
+  "agentic-akm":   { x: 2240, y: 275,  labelPos: "bottom" },
+  "agents-micro":  { x: 2240, y: 510,  labelPos: "bottom" },
+  "energy-code":   { x: 2240, y: 870,  labelPos: "bottom" },
+  "fn-call":       { x: 2240, y: 1105, labelPos: "bottom" },
 
   // Testing
-  "agent-assess": { x: 1230, y: 1140, labelPos: "bottom" },
-  swenergy:       { x: 1620, y: 1140, labelPos: "bottom" },
+  "agent-assess": { x: 1270, y: 1190, labelPos: "bottom" },
+  swenergy:       { x: 1660, y: 1190, labelPos: "bottom" },
 
   // Deployment
-  iaac:          { x: 540, y: 1140, labelPos: "bottom" },
-  "auto-deploy": { x: 800, y: 1140, labelPos: "bottom" },
+  iaac:          { x: 560, y: 1190, labelPos: "bottom" },
+  "auto-deploy": { x: 860, y: 1190, labelPos: "bottom" },
 };
 
 /* ------------------------------------------------------------------ */
@@ -131,7 +132,7 @@ function LinkBadge({ link }: { link: AgenticLink }) {
     : Newspaper;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
   const cls =
-    "inline-flex items-center gap-1 rounded-full border border-yellow-600/30 bg-yellow-50 px-1.5 py-[1px] text-[10px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700";
+    "inline-flex items-center gap-1 rounded-full border border-yellow-600/30 bg-yellow-50 px-2 py-[2px] text-[15px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700";
 
   if (link.external) {
     return (
@@ -148,7 +149,7 @@ function LinkBadge({ link }: { link: AgenticLink }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  StickyCard (used inside SVG foreignObject)                        */
+/*  StickyCard (rendered as HTML overlay, not inside SVG)              */
 /* ------------------------------------------------------------------ */
 
 function StickyCard({ node }: { node: LifecycleMapNode }) {
@@ -156,15 +157,15 @@ function StickyCard({ node }: { node: LifecycleMapNode }) {
   const inner = (
     <>
       <div
-        className="line-clamp-4 text-[13px] font-bold leading-[1.25] text-gray-900"
+        className="line-clamp-4 text-[16px] font-bold leading-[1.3] text-gray-900"
         style={{ fontFamily: '"Patrick Hand", "Kalam", system-ui, sans-serif' }}
       >
         {node.title}
       </div>
       {node.collab && (
-        <div className="mt-1 text-[11px] font-bold italic text-gray-700">[Collaboration]</div>
+        <div className="mt-1 text-[12px] font-bold italic text-gray-700">[Collaboration]</div>
       )}
-      <div className="mt-auto flex flex-wrap gap-1 pt-2">
+      <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
         {node.links.map((l) => (
           <LinkBadge key={`${l.label}-${l.href}`} link={l} />
         ))}
@@ -233,135 +234,194 @@ function phaseAnchor(phase: PhaseConfig, fromX: number, fromY: number) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  SVG Graph (desktop)                                               */
+/*  SVG Graph (desktop) — hybrid: SVG for lines, HTML overlay for     */
+/*  cards & icons (avoids Safari foreignObject bugs).                 */
+/*  The overlay is rendered at the full viewBox size (2260×1340 px)   */
+/*  and CSS-scaled down via transform so text renders at full size.   */
 /* ------------------------------------------------------------------ */
 
 function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => setScale(el.clientWidth / W);
+    update();
+    const ro = new ResizeObserver(() => update());
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const hubCx = (PHASES.Maintenance.cx + PHASES.Development.cx) / 2;
+  const hubCy = (PHASES.Requirements.cy + PHASES.Testing.cy) / 2;
+  const hubSize = 80;
+
   return (
-    <svg
-      viewBox={`0 0 ${W} ${H}`}
-      width="100%"
-      style={{ minWidth: 1200 }}
-      className="block"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
-        </marker>
-        <filter id="card-shadow" x="-50%" y="-50%" width="200%" height="200%">
-          <feDropShadow dx="1" dy="2" stdDeviation="2.5" floodOpacity="0.12" />
-        </filter>
-        <linearGradient id="phase-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#334155" />
-          <stop offset="100%" stopColor="#1e293b" />
-        </linearGradient>
-      </defs>
+    <div ref={containerRef} className="relative" style={{ minWidth: 1200 }}>
+      {/* -------- SVG layer: connectors, arrows, phase rects -------- */}
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width="100%"
+        preserveAspectRatio="xMinYMin meet"
+        className="block"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+          </marker>
+          <linearGradient id="phase-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#334155" />
+            <stop offset="100%" stopColor="#1e293b" />
+          </linearGradient>
+        </defs>
 
-      {/* Dashed connectors */}
-      {nodes.flatMap((n) => {
-        const np = NOTE_POSITIONS[n.id];
-        if (!np) return [];
-        const targets: AgenticLifecyclePhase[] = [n.phase, ...(n.extraPhases ?? [])];
-        return targets.map((phaseName) => {
-          const phase = PHASES[phaseName];
-          const a = stickyAnchor(np, phase.cx, phase.cy);
-          const b = phaseAnchor(phase, np.x + NOTE_W / 2, np.y + NOTE_H / 2);
-          const dx = b.x - a.x;
-          const dy = b.y - a.y;
-          const horizontalFirst = Math.abs(dx) > Math.abs(dy);
-          const r = 12;
-          let d: string;
-          if (horizontalFirst) {
-            const midX = a.x + dx / 2;
-            const sx = Math.sign(dx) || 1;
-            const sy = Math.sign(dy) || 1;
-            d = `M ${a.x} ${a.y} H ${midX - r * sx} Q ${midX} ${a.y}, ${midX} ${a.y + r * sy} V ${b.y - r * sy} Q ${midX} ${b.y}, ${midX + r * sx} ${b.y} H ${b.x}`;
-          } else {
-            const midY = a.y + dy / 2;
-            const sx = Math.sign(dx) || 1;
-            const sy = Math.sign(dy) || 1;
-            d = `M ${a.x} ${a.y} V ${midY - r * sy} Q ${a.x} ${midY}, ${a.x + r * sx} ${midY} H ${b.x - r * sx} Q ${b.x} ${midY}, ${b.x} ${midY + r * sy} V ${b.y}`;
-          }
+        {/* Dashed connectors */}
+        {nodes.flatMap((n) => {
+          const np = NOTE_POSITIONS[n.id];
+          if (!np) return [];
+          const targets: AgenticLifecyclePhase[] = [n.phase, ...(n.extraPhases ?? [])];
+          return targets.map((phaseName) => {
+            const phase = PHASES[phaseName];
+            const a = stickyAnchor(np, phase.cx, phase.cy);
+            const b = phaseAnchor(phase, np.x + NOTE_W / 2, np.y + NOTE_H / 2);
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const horizontalFirst = Math.abs(dx) > Math.abs(dy);
+            const r = 12;
+            let d: string;
+            if (horizontalFirst) {
+              const midX = a.x + dx / 2;
+              const sx = Math.sign(dx) || 1;
+              const sy = Math.sign(dy) || 1;
+              d = `M ${a.x} ${a.y} H ${midX - r * sx} Q ${midX} ${a.y}, ${midX} ${a.y + r * sy} V ${b.y - r * sy} Q ${midX} ${b.y}, ${midX + r * sx} ${b.y} H ${b.x}`;
+            } else {
+              const midY = a.y + dy / 2;
+              const sx = Math.sign(dx) || 1;
+              const sy = Math.sign(dy) || 1;
+              d = `M ${a.x} ${a.y} V ${midY - r * sy} Q ${a.x} ${midY}, ${a.x + r * sx} ${midY} H ${b.x - r * sx} Q ${b.x} ${midY}, ${b.x} ${midY + r * sy} V ${b.y}`;
+            }
+            return (
+              <path
+                key={`conn-${n.id}-${phaseName}`}
+                d={d}
+                stroke="#475569"
+                strokeWidth={1.5}
+                strokeDasharray="6 5"
+                fill="none"
+                opacity={0.85}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            );
+          });
+        })}
+
+        {/* Cycle arrows */}
+        {CYCLE.map((from, i) => {
+          const to = CYCLE[(i + 1) % CYCLE.length];
+          const f = PHASES[from];
+          const t = PHASES[to];
+          const a = phaseAnchor(f, t.cx, t.cy);
+          const b = phaseAnchor(t, f.cx, f.cy);
           return (
-            <path
-              key={`conn-${n.id}-${phaseName}`}
-              d={d}
-              stroke="#475569"
-              strokeWidth={1.5}
-              strokeDasharray="6 5"
-              fill="none"
-              opacity={0.85}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <line key={`cy-${from}-${to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#475569" strokeWidth={2} markerEnd="url(#arrow)" opacity={0.85} />
           );
-        });
-      })}
+        })}
 
-      {/* Cycle arrows */}
-      {CYCLE.map((from, i) => {
-        const to = CYCLE[(i + 1) % CYCLE.length];
-        const f = PHASES[from];
-        const t = PHASES[to];
-        const a = phaseAnchor(f, t.cx, t.cy);
-        const b = phaseAnchor(t, f.cx, f.cy);
-        return (
-          <line key={`cy-${from}-${to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#475569" strokeWidth={2} markerEnd="url(#arrow)" opacity={0.85} />
-        );
-      })}
-
-      {/* Central hub icon */}
-      {(() => {
-        const cx = (PHASES.Maintenance.cx + PHASES.Development.cx) / 2;
-        const cy = (PHASES.Requirements.cy + PHASES.Testing.cy) / 2;
-        const iconSize = 80;
-        return (
-          <g>
-            <foreignObject x={cx - iconSize / 2} y={cy - iconSize / 2} width={iconSize} height={iconSize}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: iconSize, height: iconSize, background: "linear-gradient(135deg,#5eead4 0%,#93c5fd 100%)", borderRadius: 20, color: "#0f172a", boxShadow: "0 4px 14px rgba(148,163,184,0.35)" }}>
-                <Sparkles size={36} />
-              </div>
-            </foreignObject>
-          </g>
-        );
-      })()}
-
-      {/* Phase boxes */}
-      {(Object.entries(PHASES) as [AgenticLifecyclePhase, PhaseConfig][]).map(([name, p]) => {
-        const Icon = p.icon;
-        return (
-          <g key={`phase-${name}`} filter="url(#card-shadow)">
+        {/* Phase box backgrounds (pure SVG rects + text) */}
+        {(Object.entries(PHASES) as [AgenticLifecyclePhase, PhaseConfig][]).map(([name, p]) => (
+          <g key={`phase-${name}`}>
             <rect x={p.cx - PHASE_W / 2} y={p.cy - PHASE_H / 2} width={PHASE_W} height={PHASE_H} rx={12} fill="url(#phase-grad)" stroke="#475569" strokeWidth={1} />
-            <foreignObject x={p.cx - PHASE_W / 2 + 14} y={p.cy - 18} width={36} height={36}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, background: "rgba(148,163,184,0.18)", borderRadius: 8, color: "#fcd34d" }}>
+          </g>
+        ))}
+
+        {/* Venue labels (pure SVG text) */}
+        {nodes.map((n) => {
+          const np = NOTE_POSITIONS[n.id];
+          if (!np) return null;
+          const labelY = np.labelPos === "top" ? np.y - 14 : np.y + NOTE_H + 24;
+          return (
+            <text key={`label-${n.id}`} x={np.x + NOTE_W / 2} y={labelY} textAnchor="middle" fontSize={18} fontWeight={700} fill="#0f172a">{n.venue}</text>
+          );
+        })}
+      </svg>
+
+      {/* -------- HTML overlay -------- */}
+      {/* Rendered at full viewBox dimensions then CSS-scaled to match */}
+      <div
+        className="pointer-events-none absolute left-0 top-0 origin-top-left"
+        style={{ width: W, height: H, transform: `scale(${scale})` }}
+      >
+        {/* Central hub: icon + title */}
+        <div
+          className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
+          style={{
+            left: hubCx - 200,
+            top: hubCy - 80,
+            width: 400,
+            height: 160,
+          }}
+        >
+          <div
+            className="flex items-center justify-center rounded-[40px] shadow-lg"
+            style={{
+              width: hubSize,
+              height: hubSize,
+              background: "linear-gradient(135deg,#5eead4 0%,#93c5fd 100%)",
+              color: "#0f172a",
+            }}
+          >
+            <Sparkles size={40} />
+          </div>
+          <p className="mt-3 text-[40px] font-bold leading-tight text-gray-800">
+            Our Explorations in<br />GenAI &amp; SE
+          </p>
+        </div>
+
+        {/* Phase text + icon overlays */}
+        {(Object.entries(PHASES) as [AgenticLifecyclePhase, PhaseConfig][]).map(([name, p]) => {
+          const Icon = p.icon;
+          return (
+            <div
+              key={`phase-overlay-${name}`}
+              className="pointer-events-none absolute flex items-center justify-center gap-3"
+              style={{
+                left: p.cx - PHASE_W / 2,
+                top: p.cy - PHASE_H / 2,
+                width: PHASE_W,
+                height: PHASE_H,
+              }}
+            >
+              <div
+                className="flex items-center justify-center rounded-lg"
+                style={{ width: 36, height: 36, background: "rgba(148,163,184,0.18)", color: "#fcd34d" }}
+              >
                 <Icon size={22} />
               </div>
-            </foreignObject>
-            <text x={p.cx + 20} y={p.cy + 8} textAnchor="middle" fill="#ffffff" fontSize={22} fontWeight={700}>{name}</text>
-          </g>
-        );
-      })}
+              <span style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>{name}</span>
+            </div>
+          );
+        })}
 
-      {/* Sticky notes */}
-      {nodes.map((n) => {
-        const np = NOTE_POSITIONS[n.id];
-        if (!np) return null;
-        const labelY = np.labelPos === "top" ? np.y - 14 : np.y + NOTE_H + 24;
-        return (
-          <g key={`note-${n.id}`}>
-            <text x={np.x + NOTE_W / 2} y={labelY} textAnchor="middle" fontSize={18} fontWeight={700} fill="#0f172a">{n.venue}</text>
-            <g filter="url(#card-shadow)">
-              <foreignObject x={np.x} y={np.y} width={NOTE_W} height={NOTE_H}>
-                <div style={{ width: NOTE_W, height: NOTE_H }}>
-                  <StickyCard node={n} />
-                </div>
-              </foreignObject>
-            </g>
-          </g>
-        );
-      })}
-    </svg>
+        {/* Sticky note cards */}
+        {nodes.map((n) => {
+          const np = NOTE_POSITIONS[n.id];
+          if (!np) return null;
+          return (
+            <div
+              key={`card-${n.id}`}
+              className="pointer-events-auto absolute"
+              style={{ left: np.x, top: np.y, width: NOTE_W, height: NOTE_H }}
+            >
+              <StickyCard node={n} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

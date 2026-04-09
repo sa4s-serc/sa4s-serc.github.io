@@ -49,9 +49,9 @@ function LinkRow({ links }: { links: AgenticLink[] }) {
 
 const AgenticAI = () => {
   return (
-    <div className="min-h-screen bg-[#f7faf9] pt-16">
+    <div className="min-h-screen bg-[#f7faf9]">
       {/* Page title */}
-      <section className="bg-[linear-gradient(135deg,#f6fbfa_0%,#eef7ff_55%,#f8fafc_100%)] pb-10 pt-4 text-center">
+      <section className="bg-[linear-gradient(135deg,#f6fbfa_0%,#eef7ff_55%,#f8fafc_100%)] pb-10 pt-20 text-center">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
             Our Explorations in GenAI &amp; SE

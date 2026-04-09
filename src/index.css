@@ -103,3 +103,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Safari compatibility: explicit -webkit- prefixes for backdrop-filter */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .backdrop-blur-lg {
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
