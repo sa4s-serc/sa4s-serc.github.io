@@ -83,17 +83,17 @@ const NOTE_POSITIONS: Record<string, NotePos> = {
   moya:     { x: 20,  y: 850,  labelPos: "bottom" },
   "sa-llm": { x: 20,  y: 1080, labelPos: "bottom" },
 
-  // Requirements (shared with Design)
-  archview: { x: 540, y: 320, labelPos: "top" },
+  // Design — four papers evenly spaced across the top (100px gap)
+  monoliths:     { x: 430,  y: 50, labelPos: "top" },
+  "enroute-akm": { x: 750,  y: 50, labelPos: "top" },
+  "self-coding": { x: 1070, y: 50, labelPos: "top" },
+  "adr-context": { x: 1390, y: 50, labelPos: "top" },
 
-  // Design — evenly spaced top row
-  monoliths:     { x: 500,  y: 50, labelPos: "top" },
-  "enroute-akm": { x: 920,  y: 50, labelPos: "top" },
-  "self-coding": { x: 1340, y: 50, labelPos: "top" },
-  "adr-context": { x: 1760, y: 50, labelPos: "top" },
+  // Requirements (shared with Design) — second row
+  archview: { x: 560, y: 300, labelPos: "top" },
 
-  // Development — upper + right column
-  serverless:      { x: 1620, y: 240, labelPos: "top" },
+  // Development — second row + right column
+  serverless: { x: 1500, y: 300, labelPos: "top" },
   "study-agentic": { x: 2010, y: 50,   labelPos: "bottom" },
   "agentic-akm":   { x: 2010, y: 280,  labelPos: "bottom" },
   "agents-micro":  { x: 2010, y: 510,  labelPos: "bottom" },
