@@ -51,63 +51,63 @@ const PHASE_LIST: PhaseInfo[] = [
 /*  SVG GRAPH — desktop (hidden below lg)                             */
 /* ================================================================== */
 
-const W = 2540;
-const H = 1460;
-const PHASE_W = 230;
-const PHASE_H = 74;
+const W = 2700;
+const H = 1560;
+const PHASE_W = 260;
+const PHASE_H = 84;
 
 type PhaseConfig = { icon: LucideIcon; cx: number; cy: number };
 
 const PHASES: Record<AgenticLifecyclePhase, PhaseConfig> = {
-  Maintenance:  { icon: Wrench,        cx: 420,  cy: 770 },
-  Requirements: { icon: ClipboardList, cx: 860,  cy: 610 },
-  Design:       { icon: PencilRuler,   cx: 1490, cy: 610 },
-  Development:  { icon: Code2,         cx: 1940, cy: 770 },
-  Testing:      { icon: TestTube2,     cx: 1490, cy: 940 },
-  Deployment:   { icon: Rocket,        cx: 860,  cy: 940 },
+  Maintenance:  { icon: Wrench,        cx: 440,  cy: 810 },
+  Requirements: { icon: ClipboardList, cx: 900,  cy: 640 },
+  Design:       { icon: PencilRuler,   cx: 1570, cy: 640 },
+  Development:  { icon: Code2,         cx: 2060, cy: 810 },
+  Testing:      { icon: TestTube2,     cx: 1570, cy: 990 },
+  Deployment:   { icon: Rocket,        cx: 900,  cy: 990 },
 };
 
 const CYCLE: AgenticLifecyclePhase[] = [
   "Requirements", "Design", "Development", "Testing", "Deployment", "Maintenance",
 ];
 
-const NOTE_W = 270;
-const NOTE_H = 195;
+const NOTE_W = 300;
+const NOTE_H = 220;
 
 type NotePos = { x: number; y: number; labelPos: "top" | "bottom" };
 
 const NOTE_POSITIONS: Record<string, NotePos> = {
   // Maintenance — left column
-  change:   { x: 20,  y: 40,   labelPos: "bottom" },
-  calm:     { x: 20,  y: 275,  labelPos: "bottom" },
-  polaris:  { x: 20,  y: 510,  labelPos: "bottom" },
-  moya:     { x: 20,  y: 870,  labelPos: "bottom" },
-  "sa-llm": { x: 20,  y: 1105, labelPos: "bottom" },
+  change:   { x: 15,  y: 40,   labelPos: "bottom" },
+  calm:     { x: 15,  y: 300,  labelPos: "bottom" },
+  polaris:  { x: 15,  y: 560,  labelPos: "bottom" },
+  moya:     { x: 15,  y: 930,  labelPos: "bottom" },
+  "sa-llm": { x: 15,  y: 1190, labelPos: "bottom" },
 
   // Design — four papers evenly spaced across the top
-  monoliths:     { x: 450,  y: 50, labelPos: "top" },
-  "enroute-akm": { x: 780,  y: 50, labelPos: "top" },
-  "self-coding": { x: 1110, y: 50, labelPos: "top" },
-  "adr-context": { x: 1440, y: 50, labelPos: "top" },
+  monoliths:     { x: 460,  y: 50, labelPos: "top" },
+  "enroute-akm": { x: 810,  y: 50, labelPos: "top" },
+  "self-coding": { x: 1160, y: 50, labelPos: "top" },
+  "adr-context": { x: 1510, y: 50, labelPos: "top" },
 
   // Requirements (shared with Design) — second row
-  archview: { x: 580, y: 310, labelPos: "top" },
+  archview: { x: 600, y: 330, labelPos: "top" },
 
   // Development — second row + right column
-  serverless: { x: 1560, y: 310, labelPos: "top" },
-  "study-agentic": { x: 2240, y: 40,   labelPos: "bottom" },
-  "agentic-akm":   { x: 2240, y: 275,  labelPos: "bottom" },
-  "agents-micro":  { x: 2240, y: 510,  labelPos: "bottom" },
-  "energy-code":   { x: 2240, y: 870,  labelPos: "bottom" },
-  "fn-call":       { x: 2240, y: 1105, labelPos: "bottom" },
+  serverless:     { x: 1640, y: 330, labelPos: "top" },
+  "study-agentic": { x: 2370, y: 40,   labelPos: "bottom" },
+  "agentic-akm":   { x: 2370, y: 300,  labelPos: "bottom" },
+  "agents-micro":  { x: 2370, y: 560,  labelPos: "bottom" },
+  "energy-code":   { x: 2370, y: 930,  labelPos: "bottom" },
+  "fn-call":       { x: 2370, y: 1190, labelPos: "bottom" },
 
   // Testing
-  "agent-assess": { x: 1270, y: 1190, labelPos: "bottom" },
-  swenergy:       { x: 1660, y: 1190, labelPos: "bottom" },
+  "agent-assess": { x: 1340, y: 1270, labelPos: "bottom" },
+  swenergy:       { x: 1750, y: 1270, labelPos: "bottom" },
 
   // Deployment
-  iaac:          { x: 560, y: 1190, labelPos: "bottom" },
-  "auto-deploy": { x: 860, y: 1190, labelPos: "bottom" },
+  iaac:          { x: 580, y: 1270, labelPos: "bottom" },
+  "auto-deploy": { x: 920, y: 1270, labelPos: "bottom" },
 };
 
 /* ------------------------------------------------------------------ */
@@ -132,18 +132,18 @@ function LinkBadge({ link }: { link: AgenticLink }) {
     : Newspaper;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
   const cls =
-    "inline-flex items-center gap-1 rounded-full border border-yellow-600/30 bg-yellow-50 px-2 py-[2px] text-[15px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700";
+    "inline-flex items-center gap-1.5 rounded-full border border-yellow-600/30 bg-yellow-50 px-2.5 py-[3px] text-[13px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700";
 
   if (link.external) {
     return (
       <a href={link.href} target="_blank" rel="noreferrer" className={cls} onClick={stop}>
-        <Icon size={10} /> {link.label}
+        <Icon size={12} /> {link.label}
       </a>
     );
   }
   return (
     <Link to={link.href} className={cls} onClick={stop}>
-      <Icon size={10} /> {link.label}
+      <Icon size={12} /> {link.label}
     </Link>
   );
 }
@@ -157,15 +157,15 @@ function StickyCard({ node }: { node: LifecycleMapNode }) {
   const inner = (
     <>
       <div
-        className="line-clamp-4 text-[16px] font-bold leading-[1.3] text-gray-900"
+        className="line-clamp-4 text-[18px] font-bold leading-[1.35] text-gray-900"
         style={{ fontFamily: '"Patrick Hand", "Kalam", system-ui, sans-serif' }}
       >
         {node.title}
       </div>
       {node.collab && (
-        <div className="mt-1 text-[12px] font-bold italic text-gray-700">[Collaboration]</div>
+        <div className="mt-1.5 text-[13px] font-bold italic text-gray-700">[Collaboration]</div>
       )}
-      <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
+      <div className="mt-auto flex flex-wrap gap-2 pt-3">
         {node.links.map((l) => (
           <LinkBadge key={`${l.label}-${l.href}`} link={l} />
         ))}
@@ -174,7 +174,7 @@ function StickyCard({ node }: { node: LifecycleMapNode }) {
   );
 
   const base =
-    "group relative flex h-full w-full flex-col rounded-[8px] border p-3 text-left shadow-[2px_3px_8px_rgba(0,0,0,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_5px_12px_rgba(0,0,0,0.14)]";
+    "group relative flex h-full w-full flex-col rounded-[10px] border p-4 text-left shadow-[2px_3px_8px_rgba(0,0,0,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_5px_12px_rgba(0,0,0,0.14)]";
   const style: React.CSSProperties = {
     background: "linear-gradient(180deg, #fffdf0 0%, #fef9c3 70%, #fef3c7 100%)",
     borderColor: "rgba(202, 138, 4, 0.25)",
@@ -256,7 +256,7 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
 
   const hubCx = (PHASES.Maintenance.cx + PHASES.Development.cx) / 2;
   const hubCy = (PHASES.Requirements.cy + PHASES.Testing.cy) / 2;
-  const hubSize = 80;
+  const hubSize = 90;
 
   return (
     <div ref={containerRef} className="relative" style={{ minWidth: 1200 }}>
@@ -327,7 +327,7 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
           const a = phaseAnchor(f, t.cx, t.cy);
           const b = phaseAnchor(t, f.cx, f.cy);
           return (
-            <line key={`cy-${from}-${to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#475569" strokeWidth={2} markerEnd="url(#arrow)" opacity={0.85} />
+            <line key={`cy-${from}-${to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#475569" strokeWidth={2.5} markerEnd="url(#arrow)" opacity={0.85} />
           );
         })}
 
@@ -342,9 +342,9 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
         {nodes.map((n) => {
           const np = NOTE_POSITIONS[n.id];
           if (!np) return null;
-          const labelY = np.labelPos === "top" ? np.y - 14 : np.y + NOTE_H + 24;
+          const labelY = np.labelPos === "top" ? np.y - 16 : np.y + NOTE_H + 28;
           return (
-            <text key={`label-${n.id}`} x={np.x + NOTE_W / 2} y={labelY} textAnchor="middle" fontSize={18} fontWeight={700} fill="#0f172a">{n.venue}</text>
+            <text key={`label-${n.id}`} x={np.x + NOTE_W / 2} y={labelY} textAnchor="middle" fontSize={20} fontWeight={700} fill="#0f172a">{n.venue}</text>
           );
         })}
       </svg>
@@ -359,10 +359,10 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
         <div
           className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
           style={{
-            left: hubCx - 200,
-            top: hubCy - 80,
-            width: 400,
-            height: 160,
+            left: hubCx - 240,
+            top: hubCy - 100,
+            width: 480,
+            height: 200,
           }}
         >
           <div
@@ -397,11 +397,11 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
             >
               <div
                 className="flex items-center justify-center rounded-lg"
-                style={{ width: 36, height: 36, background: "rgba(148,163,184,0.18)", color: "#fcd34d" }}
+                style={{ width: 40, height: 40, background: "rgba(148,163,184,0.18)", color: "#fcd34d" }}
               >
-                <Icon size={22} />
+                <Icon size={24} />
               </div>
-              <span style={{ color: "#fff", fontSize: 22, fontWeight: 700 }}>{name}</span>
+              <span style={{ color: "#fff", fontSize: 26, fontWeight: 700 }}>{name}</span>
             </div>
           );
         })}

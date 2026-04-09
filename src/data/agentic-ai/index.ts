@@ -205,7 +205,6 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     collab: true,
     links: [
       publicationLinks.canLlmsGenerateAdr,
-      publicationLinks.draft,
       {
         label: "Blog",
         href: "/blogs/can_llms_generate_architectural_design_decisions___an_exploratory_empirical_study",
