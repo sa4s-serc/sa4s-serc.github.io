@@ -1,24 +1,17 @@
 import { ArrowRight, BookOpen, FolderKanban, Mic, Newspaper } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import CountUp from "../components/CountUp";
+import LifecycleMap from "../components/LifecycleMap";
 import {
-  agenticHero,
   agenticMilestones,
   lifecycleExplorations,
+  lifecycleMapNodes,
   projectHighlights,
   publicationHighlights,
   talkHighlights,
 } from "../data/agentic-ai";
 import { AgenticLink } from "../data/agentic-ai/types";
-
-const phaseOrder = [
-  "Requirements",
-  "Design",
-  "Development",
-  "Testing",
-  "Deployment",
-  "Maintenance",
-] as const;
 
 function LinkButton({ link }: { link: AgenticLink }) {
   const className =
@@ -113,98 +106,40 @@ const AgenticAI = () => {
   return (
     <div className="min-h-screen bg-[#f7faf9] pt-16">
       <section className="border-b border-gray-200 bg-[linear-gradient(135deg,#f6fbfa_0%,#eef7ff_55%,#f8fafc_100%)]">
-        <div className="container mx-auto grid gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sa4s-teal-700">
-              Centralized research map
-            </p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
-              {agenticHero.title}
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-              {agenticHero.description}
-            </p>
+        <div className="container mx-auto px-4 py-12">
+          <LifecycleMap nodes={lifecycleMapNodes} />
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <div className="text-3xl font-bold text-gray-900">{lifecycleExplorations.length}</div>
-                <p className="mt-1 text-sm text-gray-600">Lifecycle-mapped explorations</p>
+          <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+              <div className="text-4xl font-bold text-gray-900">
+                <CountUp to={lifecycleExplorations.length} />
               </div>
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <div className="text-3xl font-bold text-gray-900">{projectHighlights.length}</div>
-                <p className="mt-1 text-sm text-gray-600">Projects and systems pulled together</p>
-              </div>
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                <div className="text-3xl font-bold text-gray-900">
-                  {talkHighlights.length + publicationHighlights.length + agenticMilestones.length}
-                </div>
-                <p className="mt-1 text-sm text-gray-600">Talk, publication, and news highlights</p>
-              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Lifecycle-mapped explorations
+              </p>
             </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-gray-200 bg-white p-4 shadow-xl">
-            <img
-              src={agenticHero.image}
-              alt={agenticHero.imageAlt}
-              className="w-full rounded-[1.5rem] object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="mb-8 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-sa4s-teal-700">
-              Lifecycle view
-            </p>
-            <h2 className="mt-3 text-3xl font-bold text-gray-900">
-              The image is now backed by centralized page content
-            </h2>
-            <p className="mt-4 text-gray-600">
-              Instead of leaving the map as a disconnected graphic, the work items below are grouped
-              by lifecycle phase so the page can be maintained from one place.
-            </p>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-            {phaseOrder.map((phase) => {
-              const items = lifecycleExplorations.filter((item) => item.phase === phase);
-
-              return (
-                <section
-                  key={phase}
-                  className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-2xl font-bold text-gray-900">{phase}</h3>
-                    <span className="rounded-full bg-sa4s-teal-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-sa4s-teal-700">
-                      {items.length} items
-                    </span>
-                  </div>
-                  <div className="mt-5 space-y-4">
-                    {items.map((item) => (
-                      <article
-                        key={`${phase}-${item.title}`}
-                        className="rounded-2xl border border-gray-100 bg-gray-50 p-4"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <h4 className="text-base font-semibold leading-6 text-gray-900">
-                            {item.title}
-                          </h4>
-                          <span className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-200">
-                            {item.venue}
-                          </span>
-                        </div>
-                        <p className="mt-2 text-sm leading-6 text-gray-600">{item.note}</p>
-                        <LinkRow links={item.links} />
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+              <div className="text-4xl font-bold text-gray-900">
+                <CountUp to={projectHighlights.length} />
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Projects and systems pulled together
+              </p>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+              <div className="text-4xl font-bold text-gray-900">
+                <CountUp
+                  to={
+                    talkHighlights.length +
+                    publicationHighlights.length +
+                    agenticMilestones.length
+                  }
+                />
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Talk, publication, and news highlights
+              </p>
+            </div>
           </div>
         </div>
       </section>

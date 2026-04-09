@@ -28,6 +28,16 @@ export interface AgenticHighlightItem {
   links: AgenticLink[];
 }
 
+export interface LifecycleMapNode {
+  id: string;
+  title: string;
+  venue: string;
+  phase: AgenticLifecyclePhase;
+  extraPhases?: AgenticLifecyclePhase[];
+  collab?: boolean;
+  links: AgenticLink[];
+}
+
 export interface AgenticMilestone {
   date: string;
   headline: string;
