@@ -66,14 +66,6 @@ const AgenticAI = () => {
           <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
               <div className="text-4xl font-bold text-gray-900">
-                <CountUp to={lifecycleMapNodes.length} />
-              </div>
-              <p className="mt-1 text-sm text-gray-600">
-                Research papers
-              </p>
-            </div>
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
-              <div className="text-4xl font-bold text-gray-900">
                 <CountUp to={projectHighlights.length} />
               </div>
               <p className="mt-1 text-sm text-gray-600">
@@ -82,10 +74,18 @@ const AgenticAI = () => {
             </div>
             <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
               <div className="text-4xl font-bold text-gray-900">
-                <CountUp to={talkHighlights.length + publicationHighlights.length} />
+                <CountUp to={talkHighlights.length} />
               </div>
               <p className="mt-1 text-sm text-gray-600">
-                Publications &amp; talks
+                Talks &amp; tutorials
+              </p>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+              <div className="text-4xl font-bold text-gray-900">
+                <CountUp to={lifecycleMapNodes.length} />
+              </div>
+              <p className="mt-1 text-sm text-gray-600">
+                Research papers
               </p>
             </div>
           </div>

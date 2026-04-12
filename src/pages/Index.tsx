@@ -36,7 +36,7 @@ const Index = () => {
               🎉 <strong>9 Papers Accepted at ICSE 2026!</strong>
             </span>
             <a
-              href="/agenticai"
+              href="/news"
               className="inline-flex items-center justify-center text-sm font-semibold bg-white text-green-700 hover:bg-white/90 px-4 py-1.5 rounded-full transition-all duration-200"
             >
               See the Papers →
