@@ -111,29 +111,74 @@ function decodeLatex(str: string): string {
   return str;
 }
 
+/**
+ * Venue overrides for papers whose DBLP entry only has "CoRR" or an empty venue,
+ * but have actually been accepted at a conference/journal.
+ * Keyed by citation key from dblp.bib.
+ */
+const VENUE_OVERRIDES: Record<string, { venue: string; year?: number }> = {
+  "DBLP:journals/corr/abs-2601-06456": { venue: "CAIN 2026", year: 2026 },
+  "DBLP:journals/corr/abs-2601-11926": { venue: "SEAMS 2026 Artifact Track", year: 2026 },
+  "DBLP:journals/corr/abs-2601-14132": { venue: 'ICSE 2026 Track "Software Architecture BoF"', year: 2026 },
+  "DBLP:journals/corr/abs-2602-03632": { venue: "SEAMS 2026", year: 2026 },
+  "DBLP:journals/corr/abs-2602-04445": { venue: "AGENT 2026", year: 2026 },
+  "DBLP:journals/corr/abs-2501-17028": { venue: "CAIN 2025", year: 2025 },
+  "DBLP:journals/corr/abs-2503-13310": { venue: "Journal of Systems and Software (Preprint)", year: 2025 },
+  "DBLP:journals/corr/abs-2504-08207": { venue: "Journal of Systems and Software (Preprint)", year: 2025 },
+  "DBLP:journals/corr/abs-2505-13693": { venue: "ECSA 2025", year: 2025 },
+  "DBLP:journals/corr/abs-2506-01774": { venue: 'The "Greening AI with Software Engineering" workshop (CECAM/Lorentz Center)', year: 2025 },
+  "DBLP:journals/corr/abs-2509-10099": { venue: "ICSE 2026 (Rio de Janeiro)", year: 2026 },
+  "DBLP:journals/corr/abs-2512-04702": { venue: "SEAMS 2026", year: 2026 },
+  "DBLP:journals/corr/abs-2512-09543": { venue: "AGENT 2026 (ICSE 2026 workshop)", year: 2026 },
+  "DBLP:journals/corr/abs-2512-12791": { venue: "AGENT 2026 (ICSE 2026 workshop)", year: 2026 },
+};
+
+/** Title fixups for known typos in DBLP BibTeX data. */
+const TITLE_FIXUPS: Record<string, string> = {
+  "DBLP:journals/corr/abs-2601-14132": "Toward Self-coding Information Systems",
+};
+
 function parseBibContent(bibContent: string): YearlyPublications[] {
   const parsed = bibtexParse.toJSON(bibContent);
   const map: Record<number, Publication[]> = {};
-  const seenTitles = new Set<string>();
+  // Map: normalizedTitle -> { pub, isPreprint, yearKey }
+  const seenTitles = new Map<
+    string,
+    { pub: Publication; isPreprint: boolean; yearKey: number }
+  >();
 
   for (const entry of parsed) {
     const fields = entry.entryTags;
-    const year = parseInt(fields.year, 10);
+    let year = parseInt(fields.year, 10);
     if (isNaN(year)) continue;
 
-    const rawTitle = decodeLatex(fields.title || "");
-    const normalizedTitle = rawTitle.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const citationKey: string = entry.citationKey;
+    let rawTitle = decodeLatex(fields.title || "");
+    if (TITLE_FIXUPS[citationKey]) rawTitle = TITLE_FIXUPS[citationKey];
 
-    // Deduplicate identical papers (e.g., conference version vs arXiv preprint)
-    if (!normalizedTitle || seenTitles.has(normalizedTitle)) continue;
-    seenTitles.add(normalizedTitle);
+    const normalizedTitle = rawTitle.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (!normalizedTitle) continue;
+
+    const rawVenue = fields.journal || fields.booktitle || "";
+    const isCoRR = rawVenue.trim() === "CoRR" || rawVenue.trim() === "";
+    const override = VENUE_OVERRIDES[citationKey];
+
+    let venue: string;
+    if (override) {
+      venue = override.venue;
+      if (override.year) year = override.year;
+    } else if (isCoRR) {
+      venue = "arXiv preprint";
+    } else {
+      venue = decodeLatex(rawVenue);
+    }
 
     const publication: Publication = {
-      id: entry.citationKey,
+      id: citationKey,
       authors: parseAuthors(decodeLatex(fields.author || "")),
       title: rawTitle,
-      venue: decodeLatex(fields.journal || fields.booktitle || ""),
-      volume: decodeLatex(fields.volume || ""),
+      venue,
+      volume: isCoRR && !override ? "" : decodeLatex(fields.volume || ""),
       year,
       pages: decodeLatex(fields.pages || ""),
       doi: decodeLatex(fields.doi || ""),
@@ -141,6 +186,25 @@ function parseBibContent(bibContent: string): YearlyPublications[] {
       isbn: decodeLatex(fields.isbn || ""),
     };
 
+    // Fuzzy key: strip version suffixes for better dedup
+    const fuzzyKey = normalizedTitle.replace(/version[0-9]+/g, "");
+    const isPreprint = isCoRR && !override;
+
+    const existing = seenTitles.get(fuzzyKey);
+    if (existing) {
+      // Prefer the non-preprint version
+      if (existing.isPreprint && !isPreprint) {
+        const bucket = map[existing.yearKey];
+        if (bucket) {
+          const idx = bucket.indexOf(existing.pub);
+          if (idx !== -1) bucket.splice(idx, 1);
+        }
+      } else {
+        continue;
+      }
+    }
+
+    seenTitles.set(fuzzyKey, { pub: publication, isPreprint, yearKey: year });
     if (!map[year]) map[year] = [];
     map[year].push(publication);
   }
