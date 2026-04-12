@@ -33,7 +33,7 @@ const Index = () => {
               🇧🇷 Rio 2026
             </span>
             <span className="font-medium text-sm md:text-base">
-              🎉 <strong>8 Papers Accepted at ICSE 2026!</strong>
+              🎉 <strong>9 Papers Accepted at ICSE 2026!</strong>
             </span>
             <a
               href="/blogs"
