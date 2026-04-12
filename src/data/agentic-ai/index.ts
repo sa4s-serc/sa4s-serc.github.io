@@ -16,7 +16,7 @@ export const agenticHero = {
 const publicationLinks = {
   canLlmsGenerateAdr: {
     label: "Publication",
-    href: "https://doi.org/10.1109/ICSA59870.2024.00016",
+    href: "https://arxiv.org/abs/2403.01709",
     external: true,
   },
   leveragingGenAiAkm: {
@@ -26,47 +26,87 @@ const publicationLinks = {
   },
   selfAdaptationLlms: {
     label: "Publication",
-    href: "https://doi.org/10.1109/ICSA-C63560.2024.00036",
+    href: "https://arxiv.org/abs/2404.09866",
     external: true,
   },
   moya: {
     label: "Publication",
-    href: "https://doi.org/10.48550/arXiv.2501.08243",
+    href: "https://arxiv.org/abs/2501.08243",
+    external: true,
+  },
+  serverless: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2502.02539",
     external: true,
   },
   draft: {
     label: "Publication",
-    href: "https://doi.org/10.48550/arXiv.2504.08207",
+    href: "https://arxiv.org/abs/2504.08207",
     external: true,
   },
   functionCalling: {
     label: "Publication",
-    href: "https://doi.org/10.48550/arXiv.2504.19277",
+    href: "https://arxiv.org/abs/2504.19277",
     external: true,
   },
   energyCode: {
     label: "Publication",
-    href: "https://arxiv.org/pdf/2509.10099",
+    href: "https://arxiv.org/abs/2509.10099",
     external: true,
   },
   polaris: {
     label: "Publication",
-    href: "https://arxiv.org/pdf/2512.04702",
+    href: "https://arxiv.org/abs/2512.04702",
     external: true,
   },
   swenergy: {
     label: "Publication",
-    href: "https://arxiv.org/pdf/2512.09543",
+    href: "https://arxiv.org/abs/2512.09543",
     external: true,
   },
   assessmentFramework: {
     label: "Publication",
-    href: "https://arxiv.org/pdf/2512.12791",
+    href: "https://arxiv.org/abs/2512.12791",
     external: true,
   },
   change: {
     label: "Publication",
-    href: "https://arxiv.org/pdf/2601.06456",
+    href: "https://arxiv.org/abs/2601.06456",
+    external: true,
+  },
+  selfCoding: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2601.14132",
+    external: true,
+  },
+  agenticAkm: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2602.04445",
+    external: true,
+  },
+  calm: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2602.03632",
+    external: true,
+  },
+  agentsMicro: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2603.09004",
+    external: true,
+  },
+  archView: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2603.21178",
+    external: true,
+  },
+  adrContextEase: {
+    label: "Publication",
+    href: "https://arxiv.org/abs/2604.03826",
+    external: true,
+  },
+  studyAgentic: {
+    label: "Publication",
+    href: "https://doi.org/10.1109/MS.2025.3622209",
     external: true,
   },
 } as const;
@@ -88,7 +128,7 @@ const newsLinks = {
   },
   change: {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/feed/update/urn:li:activity:7426256099428933632",
+    href: "https://www.linkedin.com/posts/karthikv1392_cain2026-sa4s-serc-ugcPost-7417749499089059840-ULP9",
     external: true,
   },
   calm: {
@@ -133,7 +173,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
       "Self-adaptation approach for QoS routing in Small Language Model based Systems",
     venue: "SEAMS 2026",
     phase: "Maintenance",
-    links: [newsLinks.calm, newsLinks.generic],
+    links: [publicationLinks.calm, newsLinks.calm, newsLinks.generic],
   },
   {
     id: "polaris",
@@ -181,7 +221,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSA 2025",
     phase: "Requirements",
     extraPhases: ["Design"],
-    links: [newsLinks.archView, newsLinks.generic],
+    links: [publicationLinks.archView, newsLinks.archView, newsLinks.generic],
   },
   // Design (top)
   {
@@ -190,7 +230,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "AGENT 2026",
     phase: "Design",
     links: [
-      publicationLinks.leveragingGenAiAkm,
+      publicationLinks.agenticAkm,
       {
         label: "Blog",
         href: "/blogs/leveraging_generative_ai_for_architecture_knowledge_management",
@@ -205,6 +245,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     collab: true,
     links: [
       publicationLinks.canLlmsGenerateAdr,
+      publicationLinks.adrContextEase,
       {
         label: "Blog",
         href: "/blogs/can_llms_generate_architectural_design_decisions___an_exploratory_empirical_study",
@@ -218,28 +259,28 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSE 2026",
     phase: "Design",
     collab: true,
-    links: [newsLinks.generic],
+    links: [publicationLinks.selfCoding, newsLinks.generic],
   },
   {
     id: "serverless",
     title: "Automated generation of serverless functions",
     venue: "ICSA 2025",
     phase: "Development",
-    links: [newsLinks.generic],
+    links: [publicationLinks.serverless, newsLinks.generic],
   },
   {
     id: "study-agentic",
     title: "Study across Agentic AI Frameworks",
     venue: "IEEE Software 2026",
     phase: "Development",
-    links: [newsLinks.generic],
+    links: [publicationLinks.studyAgentic, newsLinks.generic],
   },
   {
     id: "agentic-akm",
     title: "Agentic Approach to Architecture Knowledge Management",
     venue: "AGENT 2026",
     phase: "Development",
-    links: [publicationLinks.leveragingGenAiAkm, newsLinks.generic],
+    links: [publicationLinks.agenticAkm, newsLinks.generic],
   },
   {
     id: "agents-micro",
@@ -247,7 +288,7 @@ export const lifecycleMapNodes: LifecycleMapNode[] = [
     venue: "ICSA 2026",
     phase: "Development",
     collab: true,
-    links: [newsLinks.generic],
+    links: [publicationLinks.agentsMicro, newsLinks.generic],
   },
   {
     id: "energy-code",

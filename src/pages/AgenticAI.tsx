@@ -1,10 +1,9 @@
-import { ArrowRight, BookOpen, FolderKanban, Mic } from "lucide-react";
+import { ArrowRight, BookOpen, FolderKanban, Handshake, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import CountUp from "../components/CountUp";
 import LifecycleMap from "../components/LifecycleMap";
 import {
-  lifecycleExplorations,
   lifecycleMapNodes,
   projectHighlights,
   publicationHighlights,
@@ -67,10 +66,10 @@ const AgenticAI = () => {
           <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
               <div className="text-4xl font-bold text-gray-900">
-                <CountUp to={lifecycleExplorations.length} />
+                <CountUp to={lifecycleMapNodes.length} />
               </div>
               <p className="mt-1 text-sm text-gray-600">
-                Lifecycle-mapped explorations
+                Research papers
               </p>
             </div>
             <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
@@ -78,20 +77,15 @@ const AgenticAI = () => {
                 <CountUp to={projectHighlights.length} />
               </div>
               <p className="mt-1 text-sm text-gray-600">
-                Projects and systems pulled together
+                Projects &amp; systems
               </p>
             </div>
             <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
               <div className="text-4xl font-bold text-gray-900">
-                <CountUp
-                  to={
-                    talkHighlights.length +
-                    publicationHighlights.length
-                  }
-                />
+                <CountUp to={talkHighlights.length + publicationHighlights.length} />
               </div>
               <p className="mt-1 text-sm text-gray-600">
-                Talk, publication, and news highlights
+                Publications &amp; talks
               </p>
             </div>
           </div>
@@ -185,6 +179,91 @@ const AgenticAI = () => {
                   </article>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Collaborations */}
+      <section className="border-t border-gray-200 bg-[#f7faf9] py-16">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="mb-10 flex items-center justify-center gap-3">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm"
+              style={{ background: "linear-gradient(135deg,#e0f2fe,#bae6fd)" }}
+            >
+              <Handshake className="text-sa4s-teal-700" size={20} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Collaborations</h2>
+          </div>
+
+          {/* Industry */}
+          <div className="mb-10">
+            <p className="mb-5 text-center text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Industry
+            </p>
+            <div className="flex items-center justify-center">
+              <a
+                href="https://montycloud.com"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white px-10 py-6 shadow-sm transition hover:shadow-md"
+              >
+                <img
+                  src="/images/collabpic/montycloud.png"
+                  alt="MontyCloud"
+                  className="h-16 w-auto object-contain transition group-hover:scale-105"
+                />
+              </a>
+            </div>
+          </div>
+
+          {/* Research Groups */}
+          <div>
+            <p className="mb-5 text-center text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Research Groups
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <a
+                href="https://s2group.cs.vu.nl/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-2 rounded-2xl border border-gray-200 bg-white px-8 py-6 shadow-sm transition hover:shadow-md"
+              >
+                <img
+                  src="/images/collabpic/s2group.png"
+                  alt="S2 Research Group"
+                  className="h-14 w-auto object-contain transition group-hover:scale-105"
+                />
+                <span className="text-xs font-medium text-gray-500">VU Amsterdam</span>
+              </a>
+
+              <a
+                href="https://www.sdu.dk/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-2 rounded-2xl border border-gray-200 bg-white px-8 py-6 shadow-sm transition hover:shadow-md"
+              >
+                <img
+                  src="/images/collabpic/sdu.png"
+                  alt="SDU"
+                  className="h-14 w-auto object-contain transition group-hover:scale-105"
+                />
+                <span className="text-xs font-medium text-gray-500">Vejle, Denmark</span>
+              </a>
+
+              <a
+                href="https://framelab.disim.univaq.it/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-2 rounded-2xl border border-gray-200 bg-white px-8 py-6 shadow-sm transition hover:shadow-md"
+              >
+                <img
+                  src="/images/collabpic/framelab.png"
+                  alt="FrameLab"
+                  className="h-14 w-auto object-contain transition group-hover:scale-105"
+                />
+                <span className="text-xs font-medium text-gray-500">Univaq, Italy</span>
+              </a>
             </div>
           </div>
         </div>

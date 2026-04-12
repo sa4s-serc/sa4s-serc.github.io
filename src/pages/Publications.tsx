@@ -154,8 +154,10 @@ function parseBibContent(bibContent: string): YearlyPublications[] {
 }
 
 const conferences = [
-  { name: 'ICSA', logo: '/images/publications/icsa24.jpeg' },
-  { name: 'ICSE', logo: '/images/publications/icse24.png' },
+  { name: 'ICSA 2024', logo: '/images/publications/icsa24.jpeg' },
+  { name: 'ICSA 2025', logo: '/images/publications/icsa25.jpg' },
+  { name: 'ICSE 2024', logo: '/images/publications/icse24.png' },
+  { name: 'ICSE 2026', logo: '/images/publications/icse2026_banner.png' },
   { name: 'SEAMS', logo: '/images/publications/seams24.png' },
   { name: 'Software', logo: '/images/publications/software-logo-black-700x223.png' },
   { name: 'WF-IoT', logo: '/images/publications/wfiot.png' },
