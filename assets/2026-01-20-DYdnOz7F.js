@@ -1,13 +1,13 @@
 const e=`---
 date: "20 January 2026"
-headline: "8 Papers Accepted at ICSE 2026"
+headline: "9 Papers Accepted at ICSE 2026"
 ---
 
 <div style="text-align: center; margin-bottom: 2rem;">
   <img src="/images/publications/icse2026_banner.png" alt="ICSE 2026 Banner" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);" />
 </div>
 
-We are thrilled to announce that **8 papers** from the SA4S research group have been accepted at **ICSE 2026**, the premier conference in software engineering!
+We are thrilled to announce that **9 papers** from the SA4S research group have been accepted at **ICSE 2026**, the premier conference in software engineering!
 
 This achievement highlights our team's innovative research in **Agentic AI**, **Sustainable Computing**, and **Self-Adaptive Systems**.
 
@@ -30,7 +30,7 @@ Here are some of the highlighted papers accepted this year:
 *   **[Generating Energy-Efficient Code via Large-Language Models – Where are we now?](/blogs/2509.10099v1)**  
     *Accepted at ICSE 2026 Main Track*
 
-...and **3 more** papers! We will share details on the remaining papers soon.
+...and **4 more** papers! We will share details on the remaining papers soon.
 
 > "This is a testament to our team's hard work and dedication to pushing the boundaries of software engineering research."
 
