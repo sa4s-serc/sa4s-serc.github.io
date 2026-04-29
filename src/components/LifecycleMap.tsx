@@ -123,7 +123,7 @@ function pickPrimary(links: AgenticLink[]): AgenticLink | undefined {
   );
 }
 
-function LinkBadge({ link }: { link: AgenticLink }) {
+function LinkBadge({ link, className }: { link: AgenticLink; className?: string }) {
   const label = link.label.toLowerCase();
   const Icon = label.includes("publication")
     ? FileText
@@ -132,6 +132,7 @@ function LinkBadge({ link }: { link: AgenticLink }) {
     : Newspaper;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
   const cls =
+    className ??
     "inline-flex items-center gap-1.5 rounded-full border border-yellow-600/30 bg-yellow-50 px-2.5 py-[3px] text-[13px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700";
 
   if (link.external) {
@@ -152,7 +153,60 @@ function LinkBadge({ link }: { link: AgenticLink }) {
 /*  StickyCard (rendered as HTML overlay, not inside SVG)              */
 /* ------------------------------------------------------------------ */
 
-function StickyCard({ node }: { node: LifecycleMapNode }) {
+/* ---------- Theming ---------- */
+
+export type LifecycleMapVariant = "agentic" | "autose";
+
+type LifecycleTheme = {
+  title: string; // central title (use \n for line break)
+  hubGradient: string;
+  hubTextColor: string;
+  cardBg: string;
+  cardBorder: string;
+  badgeClass: string;
+  mobileCardBg: string;
+  mobileCardBorder: string;
+  containerBg: string;
+  phaseIconColor: string;
+  accentLabelClass: string;
+};
+
+const THEMES: Record<LifecycleMapVariant, LifecycleTheme> = {
+  agentic: {
+    title: "Our Explorations in\nGenAI & SE",
+    hubGradient: "linear-gradient(135deg,#5eead4 0%,#93c5fd 100%)",
+    hubTextColor: "#0f172a",
+    cardBg: "linear-gradient(180deg, #fffdf0 0%, #fef9c3 70%, #fef3c7 100%)",
+    cardBorder: "rgba(202, 138, 4, 0.25)",
+    badgeClass:
+      "inline-flex items-center gap-1.5 rounded-full border border-yellow-600/30 bg-yellow-50 px-2.5 py-[3px] text-[13px] font-semibold text-yellow-900 shadow-sm transition hover:bg-white hover:text-sa4s-teal-700",
+    mobileCardBg: "bg-gradient-to-b from-[#fffdf0] to-[#fef9c3]",
+    mobileCardBorder: "border-amber-200/60",
+    containerBg: "from-[#f8fafc] via-white to-[#f1f5f9]",
+    phaseIconColor: "#fcd34d",
+    accentLabelClass: "text-sa4s-teal-700",
+  },
+  autose: {
+    title: "Our Exploration Towards\nAutonomous SE",
+    hubGradient: "linear-gradient(135deg,#c4b5fd 0%,#fda4af 100%)",
+    hubTextColor: "#1e1b4b",
+    cardBg: "linear-gradient(180deg, #faf5ff 0%, #ede9fe 70%, #e0e7ff 100%)",
+    cardBorder: "rgba(124, 58, 237, 0.28)",
+    badgeClass:
+      "inline-flex items-center gap-1.5 rounded-full border border-violet-600/30 bg-violet-50 px-2.5 py-[3px] text-[13px] font-semibold text-violet-900 shadow-sm transition hover:bg-white hover:text-rose-700",
+    mobileCardBg: "bg-gradient-to-b from-[#faf5ff] to-[#ede9fe]",
+    mobileCardBorder: "border-violet-200/60",
+    containerBg: "from-[#faf5ff] via-white to-[#fdf2f8]",
+    phaseIconColor: "#fbcfe8",
+    accentLabelClass: "text-violet-700",
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/*  StickyCard (rendered as HTML overlay, not inside SVG)              */
+/* ------------------------------------------------------------------ */
+
+function StickyCard({ node, theme }: { node: LifecycleMapNode; theme: LifecycleTheme }) {
   const primary = pickPrimary(node.links);
   const inner = (
     <>
@@ -167,7 +221,7 @@ function StickyCard({ node }: { node: LifecycleMapNode }) {
       )}
       <div className="mt-auto flex flex-wrap gap-2 pt-3">
         {node.links.map((l) => (
-          <LinkBadge key={`${l.label}-${l.href}`} link={l} />
+          <LinkBadge key={`${l.label}-${l.href}`} link={l} className={theme.badgeClass} />
         ))}
       </div>
     </>
@@ -176,8 +230,8 @@ function StickyCard({ node }: { node: LifecycleMapNode }) {
   const base =
     "group relative flex h-full w-full flex-col rounded-[10px] border p-4 text-left shadow-[2px_3px_8px_rgba(0,0,0,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[3px_5px_12px_rgba(0,0,0,0.14)]";
   const style: React.CSSProperties = {
-    background: "linear-gradient(180deg, #fffdf0 0%, #fef9c3 70%, #fef3c7 100%)",
-    borderColor: "rgba(202, 138, 4, 0.25)",
+    background: theme.cardBg,
+    borderColor: theme.cardBorder,
   };
 
   if (primary?.external) {
@@ -240,7 +294,7 @@ function phaseAnchor(phase: PhaseConfig, fromX: number, fromY: number) {
 /*  and CSS-scaled down via transform so text renders at full size.   */
 /* ------------------------------------------------------------------ */
 
-function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
+function DesktopGraph({ nodes, theme }: { nodes: LifecycleMapNode[]; theme: LifecycleTheme }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 
@@ -370,14 +424,19 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
             style={{
               width: hubSize,
               height: hubSize,
-              background: "linear-gradient(135deg,#5eead4 0%,#93c5fd 100%)",
-              color: "#0f172a",
+              background: theme.hubGradient,
+              color: theme.hubTextColor,
             }}
           >
             <Sparkles size={40} />
           </div>
           <p className="mt-3 text-[40px] font-bold leading-tight text-gray-800">
-            Our Explorations in<br />GenAI &amp; SE
+            {theme.title.split("\n").map((line, i, arr) => (
+              <span key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
           </p>
         </div>
 
@@ -397,7 +456,7 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
             >
               <div
                 className="flex items-center justify-center rounded-lg"
-                style={{ width: 40, height: 40, background: "rgba(148,163,184,0.18)", color: "#fcd34d" }}
+                style={{ width: 40, height: 40, background: "rgba(148,163,184,0.18)", color: theme.phaseIconColor }}
               >
                 <Icon size={24} />
               </div>
@@ -416,7 +475,7 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
               className="pointer-events-auto absolute"
               style={{ left: np.x, top: np.y, width: NOTE_W, height: NOTE_H }}
             >
-              <StickyCard node={n} />
+              <StickyCard node={n} theme={theme} />
             </div>
           );
         })}
@@ -429,11 +488,11 @@ function DesktopGraph({ nodes }: { nodes: LifecycleMapNode[] }) {
 /*  Mobile accordion view                                             */
 /* ================================================================== */
 
-function MobileCard({ node }: { node: LifecycleMapNode }) {
+function MobileCard({ node, theme }: { node: LifecycleMapNode; theme: LifecycleTheme }) {
   const primary = pickPrimary(node.links);
 
   const inner = (
-    <div className="rounded-xl border border-amber-200/60 bg-gradient-to-b from-[#fffdf0] to-[#fef9c3] p-4 shadow-sm">
+    <div className={`rounded-xl border ${theme.mobileCardBorder} ${theme.mobileCardBg} p-4 shadow-sm`}>
       <div className="flex items-start justify-between gap-3">
         <h4 className="text-sm font-bold leading-snug text-gray-900">{node.title}</h4>
         <span className="shrink-0 rounded-full bg-gray-900 px-2 py-0.5 text-[10px] font-bold text-white">
@@ -445,7 +504,7 @@ function MobileCard({ node }: { node: LifecycleMapNode }) {
       )}
       <div className="mt-3 flex flex-wrap gap-1.5">
         {node.links.map((l) => (
-          <LinkBadge key={`${l.label}-${l.href}`} link={l} />
+          <LinkBadge key={`${l.label}-${l.href}`} link={l} className={theme.badgeClass} />
         ))}
       </div>
     </div>
@@ -464,18 +523,19 @@ function MobileCard({ node }: { node: LifecycleMapNode }) {
   return inner;
 }
 
-function MobileAccordion({ nodes }: { nodes: LifecycleMapNode[] }) {
+function MobileAccordion({ nodes, theme }: { nodes: LifecycleMapNode[]; theme: LifecycleTheme }) {
+  const titleFlat = theme.title.replace(/\n/g, " ");
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3 px-1">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow"
-          style={{ background: "linear-gradient(135deg,#5eead4,#93c5fd)" }}
+          style={{ background: theme.hubGradient }}
         >
           <Sparkles size={20} />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-900">Our Explorations in GenAI &amp; SE</h3>
+          <h3 className="text-xl font-bold text-gray-900">{titleFlat}</h3>
           <p className="text-xs text-gray-500">Tap a phase to see its publications</p>
         </div>
       </div>
@@ -513,7 +573,7 @@ function MobileAccordion({ nodes }: { nodes: LifecycleMapNode[] }) {
               <AccordionContent className="px-4 pb-3">
                 <div className="space-y-3">
                   {items.map((node) => (
-                    <MobileCard key={node.id} node={node} />
+                    <MobileCard key={node.id} node={node} theme={theme} />
                   ))}
                 </div>
               </AccordionContent>
@@ -529,13 +589,20 @@ function MobileAccordion({ nodes }: { nodes: LifecycleMapNode[] }) {
 /*  Main export — switches between desktop graph & mobile accordion   */
 /* ================================================================== */
 
-export default function LifecycleMap({ nodes }: { nodes: LifecycleMapNode[] }) {
+export default function LifecycleMap({
+  nodes,
+  variant = "agentic",
+}: {
+  nodes: LifecycleMapNode[];
+  variant?: LifecycleMapVariant;
+}) {
+  const theme = THEMES[variant];
   return (
-    <div className="rounded-[2rem] border border-gray-200 bg-gradient-to-br from-[#f8fafc] via-white to-[#f1f5f9] p-4 shadow-xl sm:p-6">
+    <div className={`rounded-[2rem] border border-gray-200 bg-gradient-to-br ${theme.containerBg} p-4 shadow-xl sm:p-6`}>
       {/* Header — desktop */}
       <div className="mb-4 hidden items-center justify-between gap-3 px-2 lg:flex">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-sa4s-teal-700">
+          <p className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${theme.accentLabelClass}`}>
             Interactive lifecycle map
           </p>
           <p className="mt-1 text-sm text-gray-600">
@@ -553,12 +620,12 @@ export default function LifecycleMap({ nodes }: { nodes: LifecycleMapNode[] }) {
 
       {/* Desktop: SVG graph */}
       <div className="hidden overflow-x-auto lg:block">
-        <DesktopGraph nodes={nodes} />
+        <DesktopGraph nodes={nodes} theme={theme} />
       </div>
 
       {/* Mobile: Accordion */}
       <div className="lg:hidden">
-        <MobileAccordion nodes={nodes} />
+        <MobileAccordion nodes={nodes} theme={theme} />
       </div>
     </div>
   );
