@@ -1,1 +1,0 @@
-import{r,F as n,v as s}from"./index-BF-njAt3.js";var u=s[" useId ".trim().toString()]||(()=>{}),i=0;function v(t){const[e,o]=r.useState(u());return n(()=>{o(a=>a??String(i++))},[t]),t||(e?`radix-${e}`:"")}var c=r.createContext(void 0);function x(t){const e=r.useContext(c);return t||e||"ltr"}export{x as a,v as u};
