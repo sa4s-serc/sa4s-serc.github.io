@@ -1,0 +1,1 @@
+import{v as r,z as n,R as s}from"./index-LzJnBxX8.js";var u=s[" useId ".trim().toString()]||(()=>{}),i=0;function v(t){const[e,o]=r.useState(u());return n(()=>{o(a=>a??String(i++))},[t]),t||(e?`radix-${e}`:"")}var c=r.createContext(void 0);function x(t){const e=r.useContext(c);return t||e||"ltr"}export{v as a,x as u};
