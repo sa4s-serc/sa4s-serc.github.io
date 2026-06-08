@@ -1,9 +1,9 @@
-import{c as v,r as o,j as m,t as w,k as b,a as T,v as k,w as _}from"./index-B64b4Ad5.js";/**
+import{c as l,r as d,j as h,S as m,a as g,v as u,w as p}from"./index-C7UNFpSD.js";/**
  * @license lucide-react v0.462.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const xe=v("User",[["path",{d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2",key:"975kel"}],["circle",{cx:"12",cy:"7",r:"4",key:"17ys0d"}]]);var A=Symbol.for("react.lazy"),h=w[" use ".trim().toString()];function M(e){return typeof e=="object"&&e!==null&&"then"in e}function p(e){return e!=null&&typeof e=="object"&&"$$typeof"in e&&e.$$typeof===A&&"_payload"in e&&M(e._payload)}function L(e){const t=S(e),a=o.forwardRef((i,n)=>{let{children:s,...r}=i;p(s)&&typeof h=="function"&&(s=h(s._payload));const c=o.Children.toArray(s),l=c.find(E);if(l){const d=l.props.children,y=c.map(g=>g===l?o.Children.count(d)>1?o.Children.only(null):o.isValidElement(d)?d.props.children:null:g);return m.jsx(t,{...r,ref:n,children:o.isValidElement(d)?o.cloneElement(d,void 0,y):null})}return m.jsx(t,{...r,ref:n,children:s})});return a.displayName=`${e}.Slot`,a}var I=L("Slot");function S(e){const t=o.forwardRef((a,i)=>{let{children:n,...s}=a;if(p(n)&&typeof h=="function"&&(n=h(n._payload)),o.isValidElement(n)){const r=P(n),c=D(s,n.props);return n.type!==o.Fragment&&(c.ref=i?b(i,r):r),o.cloneElement(n,c)}return o.Children.count(n)>1?o.Children.only(null):null});return t.displayName=`${e}.SlotClone`,t}var x=Symbol("radix.slottable");function E(e){return o.isValidElement(e)&&typeof e.type=="function"&&"__radixId"in e.type&&e.type.__radixId===x}function D(e,t){const a={...t};for(const i in t){const n=e[i],s=t[i];/^on[A-Z]/.test(i)?n&&s?a[i]=(...c)=>{const l=s(...c);return n(...c),l}:n&&(a[i]=n):i==="style"?a[i]={...n,...s}:i==="className"&&(a[i]=[n,s].filter(Boolean).join(" "))}return{...e,...a}}function P(e){var i,n;let t=(i=Object.getOwnPropertyDescriptor(e.props,"ref"))==null?void 0:i.get,a=t&&"isReactWarning"in t&&t.isReactWarning;return a?e.ref:(t=(n=Object.getOwnPropertyDescriptor(e,"ref"))==null?void 0:n.get,a=t&&"isReactWarning"in t&&t.isReactWarning,a?e.props.ref:e.props.ref||e.ref)}const R=k("inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",{variants:{variant:{default:"bg-primary text-primary-foreground hover:bg-primary/90",destructive:"bg-destructive text-destructive-foreground hover:bg-destructive/90",outline:"border border-input bg-background hover:bg-accent hover:text-accent-foreground",secondary:"bg-secondary text-secondary-foreground hover:bg-secondary/80",ghost:"hover:bg-accent hover:text-accent-foreground",link:"text-primary underline-offset-4 hover:underline"},size:{default:"h-10 px-4 py-2",sm:"h-9 rounded-md px-3",lg:"h-11 rounded-md px-8",icon:"h-10 w-10"}},defaultVariants:{variant:"default",size:"default"}}),C=o.forwardRef(({className:e,variant:t,size:a,asChild:i=!1,...n},s)=>{const r=i?I:"button";return m.jsx(r,{className:T(R({variant:t,size:a,className:e})),ref:s,...n})});C.displayName="Button";const F=`---
+ */const me=l("User",[["path",{d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2",key:"975kel"}],["circle",{cx:"12",cy:"7",r:"4",key:"17ys0d"}]]),f=u("inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",{variants:{variant:{default:"bg-primary text-primary-foreground hover:bg-primary/90",destructive:"bg-destructive text-destructive-foreground hover:bg-destructive/90",outline:"border border-input bg-background hover:bg-accent hover:text-accent-foreground",secondary:"bg-secondary text-secondary-foreground hover:bg-secondary/80",ghost:"hover:bg-accent hover:text-accent-foreground",link:"text-primary underline-offset-4 hover:underline"},size:{default:"h-10 px-4 py-2",sm:"h-9 rounded-md px-3",lg:"h-11 rounded-md px-8",icon:"h-10 w-10"}},defaultVariants:{variant:"default",size:"default"}}),y=d.forwardRef(({className:t,variant:n,size:e,asChild:a=!1,...i},s)=>{const c=a?m:"button";return h.jsx(c,{className:g(f({variant:n,size:e,className:t})),ref:s,...i})});y.displayName="Button";const v=`---
 title: "Architecting the Future: Software Architecture for Machine Learning-Based Systems"
 excerpt: "The intersection of software architecture and machine learning presents unique challenges. This blog post delves into existing practices for architecting ML-based systems, identifies key areas needing attention, and explores what lies ahead for the community to better define these practices."
 date: "2021-03-16"
@@ -55,7 +55,7 @@ The authors see the future software architect as an "ML-aware software architect
 #### Conclusion
 
 The integration of machine learning into software systems presents a new set of architectural challenges. This paper sheds light on these challenges and offers a roadmap for developing better architecting practices, emphasizing the need for new frameworks, processes, self-adaptation techniques, and evolution strategies. By addressing these areas, we can build more robust, ethical, and adaptable ML-powered applications that benefit society.
-`,q=`---
+`,w=`---
 title: "Enhancing Cultural Experiences with Digital Twins and Indoor Navigation"
 excerpt: "Visiting cultural heritage sites can be overwhelming without proper guidance. This research introduces a Digital Object Space Management service (DOSM) that creates digital twins of these sites, enabling navigation, localization, and customized experiences for visitors through IoT and 3D visualization."
 date: "2021-08-30"
@@ -125,7 +125,7 @@ Limitations include the cost and complexity of implementing the system, particul
 
 The Digital Object Space Management (DOSM) service presented in this paper offers a promising approach to enhancing cultural experiences. By leveraging digital twin technology, IoT, and 3D visualization, this service has the potential to transform how visitors interact with cultural heritage sites, making them more accessible, engaging, and informative.
 \`\`\`
-`,z=`---
+`,b=`---
 title: "Architecture Design for Human-Driven Systems: Balancing Quality of Experience and Quality of Service"
 excerpt: "This research addresses the challenge of designing sustainable socio-technical systems by incorporating human behavior into architectural design. They propose a novel approach that combines agent-based social simulation (ABSS) with architectural models, enabling the selection of optimal system configurations that enhance both human Quality of Experience (QoE) and system Quality of Service (QoS)."
 date: "2021-09-21"
@@ -167,7 +167,7 @@ This paper presents a valuable approach for designing human-centric systems by i
 
 Original Paper Link: http://arxiv.org/ps/2109.10073v1
 \`\`\`
-`,O=`---
+`,T=`---
 title: "AdaMLS: Towards Self-Adaptive Machine Learning-Enabled Systems with QoS-Aware Model Switching"
 excerpt: "Machine Learning-Enabled Systems (MLS) face challenges due to run-time uncertainties affecting Quality of Service (QoS).  AdaMLS introduces a novel self-adaptive approach, utilizing lightweight unsupervised learning for dynamic model switching, ensuring consistent QoS in the face of these uncertainties."
 date: "2023-08-19"
@@ -236,7 +236,7 @@ Future directions include exploring a diverse range of learning techniques and m
 AdaMLS offers a valuable contribution to the field of self-adaptive MLS. By leveraging lightweight unsupervised learning for dynamic model switching, it provides a practical approach for managing run-time uncertainties and ensuring consistent QoS.  This work paves the way for more robust, reliable, and cost-effective MLS deployments in the future.
 
 **Link to the GitHub Repository:** [https://github.com/sa4s-serc/AdaMLS](https://github.com/sa4s-serc/AdaMLS)
-`,B=`---
+`,k=`---
 title: "RLabs: Engineering Affordable End-to-End Remote Labs with IoT-Based Retrofitting"
 excerpt: "This paper introduces a new low-cost and scalable remote labs (RLabs) solution, built by retrofitting Internet of Things (IoT) components to traditional laboratory equipment. The solution includes two use case experiments - Vanishing Rod and Focal Length - and is qualitatively evaluated against seven non-functional attributes including affordability, portability, and usability."
 date: "2024-02-08"
@@ -290,7 +290,7 @@ However, some limitations and future directions include:
 
 ## Conclusion
 The RLabs project presents a viable and impactful solution for enhancing access to laboratory education. By retrofitting existing equipment with IoT components and developing a scalable software platform, this research contributes to the democratization of science education and offers a blueprint for future remote laboratory initiatives.
-`,W=`---
+`,_=`---
 title: "SWITCH: A Web Service Exemplar for Evaluating Self-Adaptive ML-Enabled Systems"
 excerpt: "Machine Learning-Enabled Systems (MLS) face challenges due to runtime uncertainties, affecting their Quality of Service (QoS). This research introduces SWITCH, an exemplar designed to enhance self-adaptive capabilities in MLS through dynamic model switching at runtime, providing a platform for researchers to explore and refine self-adaptive strategies."
 date: "2024-02-13"
@@ -358,7 +358,7 @@ SWITCH is a pioneering tool designed to address the challenges of self-adaptatio
 
 Link to the GitHub repository: [https://github.com/sa4s-serc/switch](https://github.com/sa4s-serc/switch)
 Link to the official website: [https://tool-switch.github.io](https://tool-switch.github.io)
-`,H=`---
+`,A=`---
 title: "Can Large Language Models Generate Architectural Design Decisions? An Exploratory Empirical Study"
 excerpt: "Architectural Design Records (ADRs) are crucial for software architecture but often face adoption challenges. This study explores using Large Language Models (LLMs) to generate ADRs, finding that models like GPT-4 excel in zero-shot prompting, and fine-tuned smaller models can achieve comparable results, potentially aiding architects in documenting design decisions."
 date: "2024-03-04"
@@ -414,7 +414,7 @@ Limitations of the study include a limited dataset of ADRs and a focus solely on
 This exploratory study provides promising evidence that LLMs can generate architectural design decisions. By leveraging zero-shot prompting, few-shot learning, and fine-tuning, LLMs can assist architects in documenting their decisions, fostering better collaboration, and preserving valuable architectural knowledge. Further research is needed to achieve human-level performance and address the identified limitations, paving the way for widespread adoption of AI-powered ADR generation.
 
 GitHub Repo: https://github.com/sa4s-serc/ArchAI_ADR
-\`\`\``,K=`---
+\`\`\``,M=`---
 title: "Towards Sustainable MLOps: A Self-Adaptation Approach for Smarter Machine Learning Pipelines"
 excerpt: "Machine learning models often struggle to transition from prototype to production due to evolving data and requirements. This research introduces a self-adaptive MLOps architecture that leverages a MAPE-K loop to address sustainability concerns, enhancing performance and efficiency."
 date: "2024-04-06"
@@ -486,7 +486,7 @@ By integrating self-adaptive principles into MLOps through a **MAPE-K loop**, th
 
 [Link to the original paper: arXiv:2404.04572](https://arxiv.org/abs/2404.04572)
 [Link to the code: https://github.com/sa4s-serc/sustainableMLOps](https://github.com/sa4s-serc/sustainableMLOps)
-`,G=`---
+`,L=`---
 title: "Reimagining Self-Adaptation in Software Systems with Large Language Models"
 excerpt: "This paper explores using Large Language Models (LLMs) for enhancing the self-adaptation capabilities of software systems. By drawing parallels with human operators, the proposed method uses LLMs to autonomously generate context-aware adaptation strategies, improving system resilience and adaptability."
 date: "2024-04-15"
@@ -561,7 +561,7 @@ However, there are also limitations and areas for future research:
 This work presents a compelling vision for the future of self-adaptive software systems. By harnessing the power of LLMs, we can create more intelligent, resilient, and efficient systems that can adapt to the ever-changing demands of the modern world. The marriage of LLMs and self-adaptation promises to reshape how we engineer software for dynamic and uncertain environments.
 
 [Link to the github repository](https://github.com/Raghav010/llm_selfAdapt)
-`,U=`---
+`,I=`---
 title: "EcoMLS: A Self-Adaptive Approach to Green Machine Learning Systems"
 excerpt: "Machine Learning-Enabled Systems (MLS) are crucial for technologies like autonomous vehicles, but their energy consumption poses a sustainability challenge. This paper introduces EcoMLS, a self-adaptive approach that optimizes energy efficiency by dynamically switching between ML models at runtime, balancing energy consumption with model confidence for more sustainable machine learning."
 date: "2024-04-17"
@@ -609,7 +609,7 @@ The current study focuses on the inference phase, but future work could explore 
 
 #### Conclusion
 EcoMLS offers a promising self-adaptation approach to ensure MLS sustainability by dynamically balancing energy consumption and model confidence.  The results highlight the potential of runtime model switching to achieve significant energy savings without compromising performance, bringing us closer to a future where AI is both powerful and environmentally responsible.
-`,j=`---
+`,S=`---
 title: "MOYA: Engineering an LLM-Powered Multi-Agent Framework for Autonomous CloudOps"
 excerpt: "Managing cloud operations (CloudOps) is complex, requiring real-time processing of diverse data. This paper introduces MOYA, a multi-agent framework leveraging GenAI and RAG, balancing automation with human control, and addressing the limitations of existing frameworks to improve accuracy, efficiency, and security in CloudOps."
 date: "2024-01-23"
@@ -672,7 +672,7 @@ MOYA represents a significant advancement in autonomous CloudOps. The multi-agen
 #### Conclusion
 
 MOYA demonstrates the power of combining GenAI and multi-agent systems to automate and optimize CloudOps. By leveraging specialized agents and RAG, MOYA provides a more accurate, efficient, and flexible approach to managing cloud environments. Future research will focus on extending the framework's capabilities, enhancing inter-agent communication, and broadening its applicability across diverse cloud platforms.
-\`\`\``,V=`---
+\`\`\``,x=`---
 title: "LoCoML: A Low-Code Framework to Streamline ML Inference Pipelines"
 excerpt: "Integrating diverse machine learning models into real-world applications is challenging due to varying architectures and technical specifications. LoCoML is a low-code framework that simplifies this integration, enabling seamless communication across diverse language technologies within the Bhashini Project."
 date: "2025-01-24"
@@ -712,7 +712,7 @@ However, LoCoML currently focuses primarily on inference pipelines. Future work 
 LoCoML presents a promising approach to streamline the development of ML inference pipelines. By offering a low-code, user-friendly platform, LoCoML empowers users to connect and control various ML models seamlessly. The preliminary evaluations demonstrate that LoCoML introduces minimal performance impact, making it an efficient and effective solution for managing complex ML pipelines. As the Bhashini Project and similar initiatives continue to evolve, LoCoML can play a crucial role in enabling seamless communication and collaboration across diverse language technologies.
 
 [Link to the research artifact](https://anonymous.4open.science/r/XYZ-Project)
-`,Q=`---
+`,E=`---
 title: "Towards Safer Skies: A Semi-Automated Approach to Certifying Low-Criticality ML in Airborne Applications"
 excerpt: "As Machine Learning (ML) becomes increasingly integrated into aviation, ensuring the safety and reliability of these systems is paramount. This paper introduces a semi-automated certification process for low-criticality ML-enabled airborne applications, addressing the unique challenges posed by ML while adhering to established aviation standards."
 date: "2025-01-28"
@@ -750,7 +750,7 @@ This research provides a practical framework for certifying ML systems in aviati
 The semi-automated certification approach offers a promising path towards safely integrating ML into aviation. By combining the strengths of both human expertise and automated processes, this research contributes to building confidence in ML-enabled airborne systems, ultimately leading to safer and more efficient air travel.
 
 [Link to GitHub repo (if available): https://github.com/sa4s-serc/MLCert]
-\`\`\``,N=`---
+\`\`\``,D=`---
 title: "Generative AI for Software Architecture: Navigating Applications, Challenges, and Future Directions"
 excerpt: "Generative Artificial Intelligence (GenAI) holds immense potential in transforming software architecture. This blog post synthesizes current research, revealing the adoption of GenAI for architectural decision support and reconstruction while highlighting challenges like model precision, ethical concerns, and the need for architecture-specific datasets."
 date: "2025-06-27"
@@ -797,7 +797,7 @@ This research has significant implications for both researchers and practitioner
 #### Conclusion
 GenAI shows significant promise in transforming software architecture, but several challenges must be addressed to facilitate its broader adoption. By focusing on evaluation methodologies, ethical considerations, transparency, and domain-specific datasets, the research community can pave the way for the successful integration of GenAI into software architecture practices.
 \`\`\`
-`,Y=`---
+`,P=`---
 title: "DRAFT: Guiding Software Architects with LLMs for Architectural Design Decisions"
 excerpt: "Architectural Knowledge Management (AKM) is crucial, yet often hampered by manual effort. This paper introduces DRAFT, a novel approach that combines retrieval-augmented generation and fine-tuning to help architects generate Architectural Design Decisions (ADDs) efficiently while addressing privacy and resource concerns."
 date: "2025-04-11"
@@ -872,7 +872,7 @@ However, the results also suggest areas for future work. The study used open-sou
 DRAFT offers a promising approach to automating ADD generation and improving AKM. By combining retrieval-augmented generation with fine-tuning, DRAFT provides a practical and effective solution that addresses key challenges in the field. This research opens up new possibilities for leveraging LLMs to support software architects and improve the quality of software design decisions.
 
 Original paper and code can be found on [GitHub](https://github.com/sa4s-serc/LLM4ADR).
-`,J=`---
+`,R=`---
 title: "Small Models, Big Tasks: Exploring Function Calling with Small Language Models"
 excerpt: "Large Language Models (LLMs) excel at function calling, a critical task for automation, but their size poses challenges for resource-constrained environments. This research investigates the potential of Small Language Models (SLMs) for function calling through various techniques, offering insights into their performance and practical applicability."
 date: "2025-04-27"
@@ -944,7 +944,7 @@ This study provides valuable insights into the capabilities of SLMs for function
 [Link to the original paper (if available): [Insert ArXiv Link Here]]
 [Link to the code repository (if available): https://github.com/Raghav010/Small-Models-Big-Tasks]
 \`\`\`
-`,Z=`---
+`,C=`---
 title: "Generating Energy-Efficient Code via Large-Language Models – Where are we now?"
 excerpt: "We know LLMs can write code quickly, but can they write code that saves energy? A large-scale empirical study compares top AI models against human developers and a green software expert to find out if AI is truly sustainable."
 date: "2025-09-12"
@@ -998,7 +998,7 @@ The **Green expert's code** consistently outperformed all LLMs across all platfo
 For LLM vendors, the message is clear: **energy efficiency** needs to become a first-class metric, alongside functional correctness. As we move toward a world where millions of lines of AI-generated code are deployed daily, even small inefficiencies can scale into massive environmental costs.
 
 While AI is a powerful tool, the "Green Expert" isn't going anywhere just yet. For now, the most sustainable way to develop software is a partnership: using AI for speed, but relying on human wisdom to keep our carbon footprint in check.
-`,X=`---
+`,F=`---
 title: "POLARIS: Is Multi-Agentic Reasoning the Next Wave in Engineering Self-Adaptive Systems?"
 excerpt: "Traditional software adaptation relies on fixed rules that struggle with unpredictable environments. POLARIS introduces an AI-native framework that uses LLM-based agents to reason, verify, and learn from its own adaptation strategies in real-time."
 date: "2025-12-07"
@@ -1060,7 +1060,7 @@ As shown in the figure above, the Meta-learner acts like an expert systems engin
 POLARIS represents a significant step toward **Software 3.0**. By moving from passive execution to reasoning-driven adaptation, we can build autonomous systems that are not only more resilient but also capable of learning from their own mistakes. 
 
 As we move toward a future where AI components are integrated into every layer of our software stack, frameworks that can manage the resulting "AI-induced uncertainty" will be essential. POLARIS provides a blueprint for how we can build those intelligent, self-evolving systems of tomorrow.
-`,$=`---
+`,q=`---
 title: "SWEnergy: An Empirical Study on Energy Efficiency in Agentic Issue Resolution Frameworks with SLMs"
 excerpt: "As we push for local and sustainable AI, Small Language Models (SLMs) seem like a perfect fit for autonomous coding. However, new research reveals a massive efficiency gap: current frameworks often waste energy on 'unproductive reasoning loops,' burning resources without solving problems."
 date: "2025-12-11"
@@ -1119,7 +1119,7 @@ To make local, sustainable AI agents a reality, we need a shift toward **active 
 #### Conclusion
 
 The journey toward sustainable software engineering requires more than just smaller models; it requires **smarter frameworks**. By treating a model's limitations as a core design constraint, developers can build the next generation of autonomous agents—ones that are not only effective but also environmentally responsible and accessible for local deployment.
-`,ee=`---
+`,z=`---
 title: "Beyond Task Completion: An Assessment Framework for Evaluating Agentic AI Systems"
 excerpt: "Traditional AI evaluation focuses on whether a task was completed, but agentic systems are far more complex. This new framework introduces four critical pillars—LLM, Memory, Tools, and Environment—to capture the subtle behavioral failures that simple success metrics miss."
 date: "2025-12-16"
@@ -1183,7 +1183,7 @@ This framework provides a roadmap for both researchers and practitioners to buil
 ![Evaluation overhead comparison showing (a) cost and (b) time for LLM-as-judge and Agent-as-judge protocols](/images/blogpic/2512.12791v2_p2_f1.png)
 
 For those looking to implement these evaluations, the researchers have made their experiments and results available on **GitHub**, setting a new standard for transparency in agentic AI assessment.
-`,te=`---
+`,O=`---
 title: "Architecting AgentOps Needs CHANGE"
 excerpt: "Traditional MLOps falls short when AI agents start learning on the job. Discover the CHANGE framework—a new blueprint for architecting reliable, autonomous, and co-evolving Agentic AI systems."
 date: "2026-01-10"
@@ -1245,7 +1245,7 @@ The final piece of the puzzle is managing the transition from one "generation" o
 The rise of **Agentic AI** means we can no longer specify every behavior at design time. As the paper concludes, the goal isn't to stop agents from changing, but to make that change **observable and well-governed**.
 
 The **CHANGE** framework provides the first steps toward a disciplined **AgentOps** practice. For software architects, the challenge is now clear: we must build systems that don't just execute code, but responsibly manage the evolution of "thinking" machines.
-`,ne=`---
+`,B=`---
 title: "Meet ArchLearner: The AI That Predicts and Prevents IoT System Failures"
 excerpt: "In the sprawling world of IoT, unexpected issues can cripple performance. Researchers have developed ArchLearner, a new tool that uses machine learning to forecast future problems and automatically adapt a system's architecture, ensuring it stays efficient and reliable."
 date: "2019-09-09"
@@ -1305,7 +1305,7 @@ The results speak for themselves. By proactively adapting, ArchLearner was able 
 *   Perform the entire forecast-and-decide process in a blistering **0.023 seconds** on average, thanks to the efficiency of the pre-trained LSTM models.
 
 By leveraging a powerful combination of forecasting and reinforcement learning, ArchLearner demonstrates a promising future for self-adapting systems. It's a significant step towards creating truly autonomous and resilient IoT architectures that can handle the uncertainties of the real world, not just in theory, but in practice.
-`,ae=`---
+`,W=`---
 title: "FEAST: A Framework for Architecting Robust Self-Adaptive IoT Systems"
 excerpt: "IoT systems face run-time uncertainties, impacting their quality of service. This paper presents FEAST, a framework that guides architects in systematically designing, analyzing, and evaluating different architectural strategies for self-adaptive IoT systems, ultimately improving their resilience and performance."
 date: "2022-04-25"
@@ -1375,7 +1375,7 @@ FEAST offers a valuable framework for architects to navigate the complexities of
 ![Scenario 1 - accumulated Return On Investiment](/images/blogpic/3477314.3507146_figure6.png)
 
 ![Scenario 2 - accumulated Return On Investiment](/images/blogpic/3477314.3507146_figure7.png)
-`,ie=`---
+`,H=`---
 title: "MiLA4U: Building Self-Adapting IoT Apps That Prioritize User Goals"
 excerpt: "Tired of rigid apps that force you into a set workflow? Researchers introduce MiLA4U, a novel approach for IoT systems that dynamically adapts to your changing goals. This multi-level system intelligently selects services and manages devices to give you what you want, when you want it, all while saving energy."
 date: "2021-11-08"
@@ -1449,7 +1449,7 @@ The results were clear and compelling.
 
 #### The Future is Adaptive
 
-MiLA4U presents a powerful vision for the future of software. By placing the user's goals at the center and building a multi-level system that can dynamically adapt services and physical devices, it creates applications that are more flexible, efficient, and enjoyable to use. It’s a crucial step towards a world where technology truly works for us, bending to our needs rather than forcing us to bend to its limitations.`,se=`---
+MiLA4U presents a powerful vision for the future of software. By placing the user's goals at the center and building a multi-level system that can dynamically adapt services and physical devices, it creates applications that are more flexible, efficient, and enjoyable to use. It’s a crucial step towards a world where technology truly works for us, bending to our needs rather than forcing us to bend to its limitations.`,K=`---
 title: "Smarter Apps: How Reinforcement Learning Adapts UIs to Your Emotions"
 excerpt: "What if your apps could react to your feelings in real-time? Researchers are exploring how systems can adapt their user interface based on your emotions, using a powerful AI technique called reinforcement learning to create a more effective and satisfying user experience."
 date: "2023-06-26"
@@ -1523,7 +1523,7 @@ This research offers valuable lessons for anyone interested in creating more hum
 *   **Don't Be Annoying:** Too many UI changes can be frustrating. The MFRL agent naturally learns to find a balance, making adaptations that are helpful rather than disruptive.
 *   **Bootstrap with User Feedback:** The researchers kickstarted the Q-learning process by using an initial survey to create a "first draft" of the Q-Table. This helped the agent make smarter decisions from the very beginning.
 
-By proving that a learning-based approach is more effective than static or rule-based systems, this work paves the way for a new generation of applications that don't just serve us, but truly understand and react to us.`,oe=`---
+By proving that a learning-based approach is more effective than static or rule-based systems, this work paves the way for a new generation of applications that don't just serve us, but truly understand and react to us.`,G=`---
 title: "Emoticontrol: Teaching Apps to Read Your Mood and Adapt in Real-Time"
 excerpt: "Ever feel like your apps are fighting you, especially when you're stressed? Researchers have developed Emoticontrol, a new system that uses reinforcement learning to read a user's facial emotions and intelligently adapt the user interface on the fly. This breakthrough aims to enhance user experience and performance, particularly in high-stakes scenarios."
 date: "2023-06-01"
@@ -1623,7 +1623,7 @@ To ensure the system could support many users, they designed a scalable cloud ba
 The Emoticontrol project demonstrates a powerful new direction for human-computer interaction. It proves that it's possible to build systems that are not only intelligent but also emotionally aware. By moving beyond rigid, one-size-fits-all designs, we can create software that works *with* us, adapting to our needs and helping us perform better, especially when it matters most.
 
 While this study focused on an emergency app, the potential applications are vast—from educational software that adapts to a student's frustration, to healthcare apps that respond to a patient's anxiety, to entertainment systems that heighten a user's joy. Emoticontrol offers a glimpse into a future where our technology doesn't just serve us, but truly understands us.
-\`\`\``,re=`---
+\`\`\``,U=`---
 title: "ML-Enabled Service Discovery for Microservice Architecture: A QoS Approach"
 excerpt: "Microservice architectures introduce uncertainty that can affect Quality of Service (QoS). This paper presents an ML-enabled service discovery mechanism that combines machine learning and self-adaptation techniques to perform effective service discovery and selection by trading off different QoS attributes."
 date: "2024-04-08"
@@ -1685,7 +1685,7 @@ The authors acknowledge some limitations, including potential scalability issues
 This paper presents a promising approach to service discovery in microservice architectures. By combining machine learning and self-adaptation, it provides a way to dynamically optimize QoS and adapt to the ever-changing landscape of modern software systems. The proposed ML-enabled Service Discovery mechanism represents a significant step toward building more intelligent and resilient microservice applications.
 
 (Implementation details are available at: [https://github.com/karthikv1392/ML_SD_Tradeoff](https://github.com/karthikv1392/ML_SD_Tradeoff))
-\`\`\``,ce=`---
+\`\`\``,j=`---
 title: "From Blueprint to VR: A New Tool for Teaching Software Requirements"
 excerpt: "Defining requirements for Virtual Reality can be tricky. Researchers at IIIT Hyderabad developed a novel tool-based experiment to teach students how to effectively elicit and specify requirements for complex VR applications."
 date: "2023-12-05"
@@ -1732,7 +1732,7 @@ The experiment yielded impressive results, demonstrating the effectiveness of th
 - **Student Confidence:** The impact on students was significant. **87%** reported having high confidence in their ability to elicit and specify VR requirements after the experiment.
 - **Enhanced Understanding:** An overwhelming **96%** of students found that the **VReqST** tool helped them understand the VR applications in less time, and **93%** agreed that the cross-evaluation process helped them improve their own requirement-gathering skills.
 
-This experiment proves to be an effective, easy-to-replicate method for teaching the critical, and often difficult, skill of requirement gathering for modern software systems. By combining traditional documentation with a specialized tool and collaborative cross-evaluation, students don't just learn the theory—they experience it firsthand.`,le=`---
+This experiment proves to be an effective, easy-to-replicate method for teaching the critical, and often difficult, skill of requirement gathering for modern software systems. By combining traditional documentation with a specialized tool and collaborative cross-evaluation, students don't just learn the theory—they experience it firsthand.`,V=`---
 title: "SWITCHing Gears: A New Platform for Building Smarter, Self-Adapting AI"
 excerpt: "AI systems often struggle to adapt to real-world changes. Researchers have developed SWITCH, an open-source tool that allows AI to dynamically switch models on the fly, balancing speed and accuracy to maintain performance under any condition."
 date: "2024-04-15"
@@ -1801,7 +1801,7 @@ Existing research tools for self-adaptive systems have primarily focused on trad
 3.  **Advancing Robust AI:** By enabling hands-on experimentation, SWITCH helps accelerate the development of more resilient, efficient, and intelligent AI systems that can thrive in the dynamic real world.
 
 Ultimately, SWITCH is more than just a piece of software; it's a valuable contribution to the research community, paving the way for the next generation of truly adaptive AI.
-\`\`\``,de=`---
+\`\`\``,Q=`---
 title: "Proactive AI: How IoTArchML Teaches Systems to Fix Problems Before They Happen"
 excerpt: "Tired of systems that only fix problems after they've already occurred? Discover IoTArchML, a novel framework that uses machine learning to forecast issues in IoT architectures and proactively adapt, creating truly self-learning systems."
 date: "2019-03-25"
@@ -1870,7 +1870,7 @@ This moves beyond simple adaptation into the realm of true self-learning, where 
 #### Conclusion
 
 IoTArchML presents a compelling vision for the future of adaptive systems. By leveraging the predictive power of LSTMs and the decision-making prowess of reinforcement learning, it enables IoT architectures to anticipate and prevent problems rather than just reacting to them. This proactive stance is crucial for building the resilient, efficient, and truly intelligent systems required by our increasingly connected world.
-\`\`\``,he=`---
+\`\`\``,N=`---
 title: "From Silos to Synergy: A Practical Guide to Agile for Machine Learning"
 excerpt: "Traditional agile methods often clash with the experimental nature of machine learning. This article breaks down Agile4MLS, an industrial-tested framework that bridges the gap between software and ML teams for faster, more effective development."
 date: "2022-10-24"
@@ -1937,7 +1937,7 @@ After developing Proktor in just five months using this method, the team conduct
 *   **Uncertainty Can Be Managed:** The **2-sprint ahead** concept and the **demo API** were game-changers. An SW team member said, "Earlier, I always waited for the results from the ML team... In the case of Proktor... The ML development created uncertainty or block for the software team development at no point."
 *   **Faster, Better Releases:** The project manager remarked that the development pace was significantly higher than in previous projects, proving that the slowness typically associated with ML development could be overcome.
 
-By respecting the different natures of software and machine learning development while building strong communication bridges, **Agile4MLS** provides a clear and effective roadmap for any organization looking to successfully build and deploy ML-enabled systems.`,me=`---
+By respecting the different natures of software and machine learning development while building strong communication bridges, **Agile4MLS** provides a clear and effective roadmap for any organization looking to successfully build and deploy ML-enabled systems.`,Y=`---
 title: "Building a Digital Twin for Smart Cities: A Deep Dive into the WaterTwin Architecture"
 excerpt: "As cities get smarter, managing complex infrastructure like water networks becomes a major challenge. Researchers have developed 'WaterTwin', a Digital Twin architecture that creates a virtual replica of a city's water system for real-time monitoring, simulation, and control."
 date: "2024-01-01"
@@ -2029,7 +2029,7 @@ The WaterTwin project successfully demonstrates a scalable and interoperable arc
 
 The researchers plan to extend this work by applying the architecture to other smart city domains, deploying it in a larger-scale real-world water network, and further refining the machine learning models to improve predictive accuracy. This research provides a solid foundation for the future of smart, resilient, and adaptable cities.
 \`\`\`
-`,ue=`---
+`,J=`---
 title: "DigIT: A Digital Twin Blueprint for Smarter, Traffic-Free Cities"
 excerpt: "Imagine a city where traffic flows smoothly, even during rush hour. Researchers have developed DigIT, a powerful Digital Twin architecture that uses AI to predict and prevent congestion, creating a virtual replica of the city's transport network to test solutions before they hit the real world."
 date: "2025-01-01"
@@ -2102,7 +2102,7 @@ The team developed intuitive dashboards to visualize both the predictive analyti
 The \`DigIT\` platform demonstrates that a well-architected **Digital Twin** is a feasible and powerful solution for modern traffic management. By combining a holistic design model (the DCM), real-time data, predictive AI, and automated workflows (MLOps), this architecture provides a scalable and adaptive blueprint for cities around the world.
 
 While the current implementation focuses on traffic forecasting, the modular design opens the door to future enhancements, such as managing multi-modal transport (including public transit and pedestrians), optimizing communication networks for autonomous vehicles, and creating even more resilient and efficient urban environments. This research paves the way for a future where our cities are not just smart, but truly intelligent.
-\`\`\``,ge=`---
+\`\`\``,X=`---
 title: "Automating Architectural Decisions: Do LLMs Make the Cut?"
 excerpt: "Software architects spend countless hours documenting design choices. A new study explores if LLMs like GPT-4 can automate this process, comparing zero-shot, few-shot, and fine-tuning methods to see if AI is ready to draft Architecture Decision Records."
 date: "2024-05-15"
@@ -2196,7 +2196,7 @@ The choice of model and method depends on your needs:
 *   **For an in-house, privacy-preserving solution:** A fine-tuned model like Flan-T5 is a surprisingly effective and competitive option.
 
 This exploratory study paves the way for future work, including fine-tuning larger models and incorporating more complex context like design diagrams and codebase analysis. While AI may not be taking over the architect's job tomorrow, it's already proving to be a valuable co-pilot.
-`,pe=`---
+`,Z=`---
 title: "Architecting the Future: Software Architecture and Machine Learning Convergence"
 excerpt: "A Dagstuhl Seminar convened experts in software architecture and machine learning to address the increasing integration of ML in software systems. The seminar resulted in a shared vocabulary, key challenges, and a research roadmap for future work in areas such as data-centricity, evolvability, observability, and trustworthiness."
 date: "2023-07-23"
@@ -2266,7 +2266,7 @@ However, limitations exist. Participants acknowledged that the lack of understan
 The Dagstuhl Seminar on Software Architecture and Machine Learning provided a valuable forum for researchers and practitioners to collaborate and define the future of this evolving field. The shared vocabulary, key challenges, and research roadmap that emerged from the seminar provide a solid foundation for future work in **SA&ML**, paving the way for more effective and responsible integration of **ML** into software systems.
 
 If you are interested in reading more, the original report can be found at https://www.dagstuhl.de/23302
-`,fe=`---
+`,$=`---
 title: "Smarter IoT: A Data-Driven Architecture for Self-Adapting Microservice Systems"
 excerpt: "Modern IoT systems built on microservices are incredibly complex to manage. This paper introduces a novel three-layer architecture that uses machine learning to proactively adapt at the device, microservice, and application levels, ensuring systems remain robust and efficient."
 date: "2020-03-16"
@@ -2325,7 +2325,7 @@ The Cloud Layer performs the heavyweight computation and manages the system-wide
 
 This research presents a comprehensive architecture for building truly **self-adaptive, microservice-based IoT systems**. By blending proactive, ML-driven adaptation at the device and service levels with reactive, goal-driven adaptation at the application level, it offers a robust solution to the complexities of modern distributed systems.
 
-The authors plan to implement this architecture for the science fair use case, using technologies like **Apache Kafka**, **Istio**, **Kubernetes**, and **Keras**. This will allow them to measure its real-world effectiveness in terms of prediction accuracy, energy savings for devices, and the successful achievement of user goals. This work provides a strong blueprint for the next generation of intelligent, resilient IoT systems.`,ye=`---
+The authors plan to implement this architecture for the science fair use case, using technologies like **Apache Kafka**, **Istio**, **Kubernetes**, and **Keras**. This will allow them to measure its real-world effectiveness in terms of prediction accuracy, energy savings for devices, and the successful achievement of user goals. This work provides a strong blueprint for the next generation of intelligent, resilient IoT systems.`,ee=`---
 title: "EcoMLS: A Smart System That Puts AI on an Energy Diet"
 excerpt: "Artificial Intelligence is powerful but energy-hungry. Researchers have developed EcoMLS, a self-adapting system that dynamically switches ML models at runtime to slash energy use without tanking performance."
 date: "2024-06-15"
@@ -2403,7 +2403,7 @@ The graph below shows the energy consumption over time. EcoMLS consistently main
 
 **EcoMLS** provides a compelling proof-of-concept that **self-adaptation** is a powerful technique for building sustainable, energy-efficient AI systems. By moving beyond a one-size-fits-all approach, it demonstrates that we can intelligently manage resources at runtime to create "Green AI" that is both practical and effective.
 
-The researchers plan to extend this work to other domains like Natural Language Processing (NLP) and explore its use in edge computing. This research is a valuable contribution to the ongoing effort to make AI not just more powerful, but also more responsible.`,ve=`---
+The researchers plan to extend this work to other domains like Natural Language Processing (NLP) and explore its use in edge computing. This research is a valuable contribution to the ongoing effort to make AI not just more powerful, but also more responsible.`,te=`---
 title: "EdgeMLBalancer: A Smart AI Co-pilot for Your Phone"
 excerpt: "Ever wonder how your phone runs complex AI tasks without grinding to a halt? Researchers have developed EdgeMLBalancer, a self-adaptive system that dynamically switches AI models to perfectly balance performance and efficiency on resource-constrained devices."
 date: "2025-01-01"
@@ -2491,7 +2491,7 @@ The system was also efficient in its decision-making. The average time taken to 
 
 EdgeMLBalancer provides a powerful blueprint for the next generation of edge AI systems. By moving beyond static configurations and embracing dynamic self-adaptation, it paves the way for applications that are not only powerful but also intelligent about how they use our devices' limited resources.
 
-This research demonstrates that we can achieve a smarter, more sustainable balance between computational efficiency and accuracy. As AI becomes even more integrated into our daily lives, approaches like EdgeMLBalancer will be essential for building robust, high-performance applications that run seamlessly on the devices we use every day.`,we=`---
+This research demonstrates that we can achieve a smarter, more sustainable balance between computational efficiency and accuracy. As AI becomes even more integrated into our daily lives, approaches like EdgeMLBalancer will be essential for building robust, high-performance applications that run seamlessly on the devices we use every day.`,ne=`---
 title: "Retrofitting the Future of Education: How IoT is Making Remote Labs Accessible for All"
 excerpt: "The COVID-19 pandemic highlighted a major gap in education: access to hands-on science labs. Researchers have developed an innovative, low-cost solution called RLabs that retrofits traditional lab equipment with IoT devices, making remote experimentation accessible, scalable, and reliable."
 date: "2024-12-26"
@@ -2579,7 +2579,7 @@ If the system detects a hardware failure or a software bug, it automatically sen
 The RLabs platform was tested by a group of 45 ninth-grade students. The feedback was overwhelmingly positive, with an average score of **4.34 out of 5**. Students found the platform easy to navigate and the experiments highly responsive, confirming its usability and educational effectiveness. The server architecture proved to be lightweight and scalable, handling concurrent users with only a minimal increase in latency and CPU usage.
 
 By combining low-cost IoT retrofitting, a scalable P2P architecture, and a novel automated testing system, RLabs presents a powerful and practical blueprint for the future of science education—one that is more accessible, affordable, and resilient than ever before.
-`,be=`---
+`,ae=`---
 title: "The Battle for Smart City IoT: A Performance Showdown of oneM2M Architectures"
 excerpt: "Smart cities thrive on connected devices, but seamless communication is a huge challenge. We break down a study that stress-tests three leading oneM2M platforms—Mobius, OM2M, and ACME—revealing a clear performance winner and a crucial lesson for IoT architects."
 date: "2024-06-15"
@@ -2669,7 +2669,7 @@ This research offers clear, actionable guidance for anyone building a large-scal
 2.  **Match the Tool to the Job:** A highly modular framework like OM2M might be perfect for a system where extensibility is more critical than raw throughput. A simple framework like ACME is an excellent choice for educational projects or small-scale proofs-of-concept.
 3.  **Look Beyond Code Elegance:** Clean, modular code is vital for maintainability. But for performance, you must analyze the underlying architectural patterns. How a system manages state, processes, and network connections under load is what truly determines its scalability.
 
-The study concludes by suggesting that future work should explore microservice-based architectures, which could offer an even finer-grained approach to scaling and optimizing individual components of an IoT platform.`,Te=`---
+The study concludes by suggesting that future work should explore microservice-based architectures, which could offer an even finer-grained approach to scaling and optimizing individual components of an IoT platform.`,ie=`---
 title: "LEAF: A Layered Emission Assessment Framework for Cloud Deployments"
 excerpt: "Introducing LEAF, a formal framework for quantifying the carbon footprint of cloud deployments. Accepted in IEEE Software Special Issue: Green, Clean, Software Sustainability."
 date: "2025-12-20"
@@ -2697,7 +2697,7 @@ Key features include:
 We demonstrated LEAF's capabilities by modeling a serverless application on **Google Cloud Platform (GCP)**, incorporating components like Cloud API Gateway, Cloud Functions, and Cloud SQL. The simulation provided detailed estimations for latency, energy consumption, and carbon emissions, helping to identify "hotspots" in the architecture.
 
 Read the full paper on [TechRxiv](https://www.techrxiv.org/users/936505/articles/1306787-leaf-a-layered-emission-assessment-framework-for-cloud-deployments).
-`,ke=`---
+`,se=`---
 title: "Unlocking Architectural Wisdom: How Generative AI Can Revolutionize Knowledge Management"
 excerpt: "Software architecture decisions are crucial but often poorly documented, leading to 'knowledge vaporization.' This research proposes a new system that uses Generative AI to automatically extract, manage, and query this vital information, making it accessible to the entire team."
 date: "2024-06-15"
@@ -2770,7 +2770,7 @@ The findings revealed that:
 
 This research presents a compelling vision for the future of software development, where crucial architectural knowledge is no longer lost or buried in obscure documents. By leveraging the power of Generative AI, the proposed system aims to create a living, accessible, and intelligent repository of architectural wisdom.
 
-While the initial study shows that LLMs have great potential for automating AKM tasks, it also highlights the need for further research to reach human-level proficiency. The ultimate goal is a user-friendly system that simplifies documentation, prevents knowledge vaporization, and empowers teams to make better, more informed decisions.`,_e=`---
+While the initial study shows that LLMs have great potential for automating AKM tasks, it also highlights the need for further research to reach human-level proficiency. The ultimate goal is a user-friendly system that simplifies documentation, prevents knowledge vaporization, and empowers teams to make better, more informed decisions.`,oe=`---
 title: "From Vague Ideas to Smart Actions: AI-Powered IoT Systems That Adapt to You"
 excerpt: "Imagine your smart city assistant not just answering questions, but building custom apps for you in real-time. This research introduces a new framework where users and AI collaborate to create personalized IoT solutions, turning a simple request into a dynamic, purpose-built system."
 date: "2025-01-01"
@@ -2834,7 +2834,7 @@ This finding points to a critical area for future work: optimizing context manag
 #### The Future is Collaborative
 
 This research marks a significant step toward more intelligent and user-centric IoT systems. By shifting from a rigid, command-based model to a collaborative, mixed-initiative dialogue, we can create environments that don't just respond to us but truly work *with* us. The ability to dynamically generate new functionalities on the fly opens up a future where technology can finally keep pace with the complexity and spontaneity of human needs.
-`,Ae=`---
+`,re=`---
 title: "POSEIDON: A New Direction in Managing MEC Networks"
 excerpt: "Exploring how POSEIDON combines Deep RL with traditional optimization for efficient MEC network management."
 date: "2024-10-23"
@@ -2893,7 +2893,7 @@ As IoT and 5G technologies continue to expand, MEC networks will play an increas
 Researchers and developers interested in exploring this area further can access POSEIDON’s source code on [GitHub](https://github.com/sa4s-serc/poseidon), [Link to Paper](https://arxiv.org/abs/2410.11879). Although it’s still early days, POSEIDON offers a glimpse into how AI-driven methods could enhance the future of network management.
 
 POSEIDON represents a step toward more flexible and scalable solutions for managing MEC networks, providing a foundation for future developments in this rapidly evolving field.
-`,Me=`---
+`,ce=`---
 title: "Smarter Cities, Faster Data: A Scalable Distributed Architecture for IoT"
 excerpt: "As cities deploy more IoT devices, traditional data systems struggle to keep up. This post explores a new multi-layered, distributed architecture that boosts data throughput by over 800%, offering a robust and scalable backbone for the smart cities of tomorrow."
 date: "2023-10-12"
@@ -2978,7 +2978,7 @@ This research provides a powerful and practical blueprint for building the data 
 -   **Interoperable:** Break down data silos using standards like \`oneM2M\`, allowing different systems to communicate seamlessly.
 -   **Robust:** Eliminate single points of failure, leading to a more reliable network.
 
-As cities continue to evolve, architectures like this will be essential for turning the vast potential of IoT data into tangible improvements in urban life. The next step, as the authors suggest, could be to evolve this into a microservices-based architecture for even greater flexibility and performance.`,Le=`---
+As cities continue to evolve, architectures like this will be essential for turning the vast potential of IoT data into tangible improvements in urban life. The next step, as the authors suggest, could be to evolve this into a microservices-based architecture for even greater flexibility and performance.`,le=`---
 title: "Bridging Two Worlds: The Architectural Blueprint for Modern ML Systems"
 excerpt: "Machine learning is more than just an algorithm; it's a fundamental shift in software design. This post dives into the challenges of building robust, scalable ML-powered systems and outlines the new architectural thinking required to bridge the gap between traditional software and data-driven intelligence."
 date: "2021-07-07"
@@ -3052,7 +3052,7 @@ A **self-adaptive architecture** allows a system to modify itself autonomously t
 
 The separation between the "software subsystem" and the "ML subsystem" is a temporary model to help us understand the current challenges. The ultimate goal is to erase that line.
 
-The future of **software architecture for ML-based systems** lies in creating unified frameworks, processes, and tools that treat intelligent components not as external black boxes but as first-class citizens of the architecture. The role of the software architect will evolve to that of a coordinator who understands both worlds—fluent in both programmatic and probabilistic thinking—and can design systems that are not just built, but are built to learn and evolve.`,Ie=`---
+The future of **software architecture for ML-based systems** lies in creating unified frameworks, processes, and tools that treat intelligent components not as external black boxes but as first-class citizens of the architecture. The role of the software architect will evolve to that of a coordinator who understands both worlds—fluent in both programmatic and probabilistic thinking—and can design systems that are not just built, but are built to learn and evolve.`,de=`---
 title: "Never Settle: How AdaMLS Teaches AI Systems to Adapt by Switching Models on the Fly"
 excerpt: "Modern AI systems often struggle to maintain performance under real-world pressures. Discover AdaMLS, a groundbreaking approach that allows systems to dynamically switch between different AI models, ensuring optimal speed and accuracy no matter the workload."
 date: "2023-09-11"
@@ -3130,4 +3130,4 @@ By intelligently balancing speed and accuracy, AdaMLS achieved an overall utilit
 AdaMLS offers a powerful blueprint for engineering the next generation of **Machine Learning-Enabled Systems**. It shows that we don't have to settle for a single, compromised ML model. By building systems with self-adaptation capabilities, we can create AI that is more resilient, efficient, and reliable in production.
 
 This work paves the way for systems that can carry a versatile toolkit of models and automatically select the right one for the job at any given moment, revolutionizing how we deploy AI in mission-critical domains.
-`,u=Object.assign({"../blog/2103.07950v2.md":F,"../blog/2109.07900v1.md":q,"../blog/2109.10073v1.md":z,"../blog/2308.09960v1.md":O,"../blog/2402.05466v1.md":B,"../blog/2402.06351v1.md":W,"../blog/2403.01709v1.md":H,"../blog/2404.04572v1.md":K,"../blog/2404.09866v1.md":G,"../blog/2404.11411v1.md":U,"../blog/2501.08243v1.md":j,"../blog/2501.14165v1.md":V,"../blog/2501.17028v1.md":Q,"../blog/2503.13310v2.md":N,"../blog/2504.08207v1.md":Y,"../blog/2504.19277v1.md":J,"../blog/2509.10099v1.md":Z,"../blog/2512.04702v2.md":X,"../blog/2512.09543v2.md":$,"../blog/2512.12791v2.md":ee,"../blog/2601.06456v1.md":te,"../blog/3344948.3344962.md":ne,"../blog/3477314.3507146.md":ae,"../blog/3494322.3494329.md":ie,"../blog/3565472.3595614.md":se,"../blog/3593227.md":oe,"../blog/3605098.3635942.md":re,"../blog/3617650.3624936.md":ce,"../blog/3643915.3644105.md":le,"../blog/a_machine_learning_driven_approach_for_proactive_decision_ma.md":de,"../blog/agile4mlsleveraging_agile_practices_for_developing_machine_learning_enabled_systems_an_industrial_experience.md":he,"../blog/architecting_digital_twin_for_smart_city_systems_a_case_study.md":me,"../blog/architecting_digital_twins_for_intelligent_transportation_systems.md":ue,"../blog/can_llms_generate_architectural_design_decisions___an_exploratory_empirical_study.md":ge,"../blog/dagrep.13.7.166.md":pe,"../blog/data_driven_adaptation_in_microservice_based_iot_architectures.md":fe,"../blog/ecomls_a_self_adaptation_approach_for_architecting_green_ml_enabled_systems.md":ye,"../blog/edgemlbalancer_a_self_adaptive_approach_for_dynamic_model_switching_on_resource_constrained_edge_devices.md":ve,"../blog/engineering_end_to_end_remote_labs_using_iot_based_retrofitting.md":we,"../blog/exploratory_study_of_onem2m_based_interoperability_architectures_for_iot_a_smart_city_perspective.md":be,"../blog/leaf.md":Te,"../blog/leveraging_generative_ai_for_architecture_knowledge_management.md":ke,"../blog/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction.md":_e,"../blog/poseidon.md":Ae,"../blog/scalable_and_interoperable_distributed_architecture_for_iot_in_smart_cities.md":Me,"../blog/software_architecture_for_ml_based_systems_what_exists_and_what_lies_ahead.md":Le,"../blog/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching.md":Ie});console.log("Loaded markdown files:",Object.keys(u));const f={};for(const e in u){const t=e.match(/([\\/])([^\\/]+?)(?:\.md)?$/);if(!t)continue;const a=t[2],i=u[e],{attributes:n,body:s}=_(i);f[a]={metadata:n,content:s}}const Ee=Object.entries(f).map(([e,t])=>{const a=t.metadata||{};return{slug:e,title:a.title||"Untitled Post",excerpt:a.excerpt||"",date:a.date||new Date().toISOString(),author:a.author||"Unknown Author",category:a.category||"Uncategorized",thumbnail:a.thumbnail}}).sort((e,t)=>new Date(t.date).getTime()-new Date(e.date).getTime());export{C as B,xe as U,Ee as a,R as b,f as c};
+`,o=Object.assign({"../blog/2103.07950v2.md":v,"../blog/2109.07900v1.md":w,"../blog/2109.10073v1.md":b,"../blog/2308.09960v1.md":T,"../blog/2402.05466v1.md":k,"../blog/2402.06351v1.md":_,"../blog/2403.01709v1.md":A,"../blog/2404.04572v1.md":M,"../blog/2404.09866v1.md":L,"../blog/2404.11411v1.md":I,"../blog/2501.08243v1.md":S,"../blog/2501.14165v1.md":x,"../blog/2501.17028v1.md":E,"../blog/2503.13310v2.md":D,"../blog/2504.08207v1.md":P,"../blog/2504.19277v1.md":R,"../blog/2509.10099v1.md":C,"../blog/2512.04702v2.md":F,"../blog/2512.09543v2.md":q,"../blog/2512.12791v2.md":z,"../blog/2601.06456v1.md":O,"../blog/3344948.3344962.md":B,"../blog/3477314.3507146.md":W,"../blog/3494322.3494329.md":H,"../blog/3565472.3595614.md":K,"../blog/3593227.md":G,"../blog/3605098.3635942.md":U,"../blog/3617650.3624936.md":j,"../blog/3643915.3644105.md":V,"../blog/a_machine_learning_driven_approach_for_proactive_decision_ma.md":Q,"../blog/agile4mlsleveraging_agile_practices_for_developing_machine_learning_enabled_systems_an_industrial_experience.md":N,"../blog/architecting_digital_twin_for_smart_city_systems_a_case_study.md":Y,"../blog/architecting_digital_twins_for_intelligent_transportation_systems.md":J,"../blog/can_llms_generate_architectural_design_decisions___an_exploratory_empirical_study.md":X,"../blog/dagrep.13.7.166.md":Z,"../blog/data_driven_adaptation_in_microservice_based_iot_architectures.md":$,"../blog/ecomls_a_self_adaptation_approach_for_architecting_green_ml_enabled_systems.md":ee,"../blog/edgemlbalancer_a_self_adaptive_approach_for_dynamic_model_switching_on_resource_constrained_edge_devices.md":te,"../blog/engineering_end_to_end_remote_labs_using_iot_based_retrofitting.md":ne,"../blog/exploratory_study_of_onem2m_based_interoperability_architectures_for_iot_a_smart_city_perspective.md":ae,"../blog/leaf.md":ie,"../blog/leveraging_generative_ai_for_architecture_knowledge_management.md":se,"../blog/leveraging_llms_for_dynamic_iot_systems_generation_through_mixed_initiative_interaction.md":oe,"../blog/poseidon.md":re,"../blog/scalable_and_interoperable_distributed_architecture_for_iot_in_smart_cities.md":ce,"../blog/software_architecture_for_ml_based_systems_what_exists_and_what_lies_ahead.md":le,"../blog/towards_self_adaptive_machine_learning_enabled_systems_through_qos_aware_model_switching.md":de});console.log("Loaded markdown files:",Object.keys(o));const r={};for(const t in o){const n=t.match(/([\\/])([^\\/]+?)(?:\.md)?$/);if(!n)continue;const e=n[2],a=o[t],{attributes:i,body:s}=p(a);r[e]={metadata:i,content:s}}const ge=Object.entries(r).map(([t,n])=>{const e=n.metadata||{};return{slug:t,title:e.title||"Untitled Post",excerpt:e.excerpt||"",date:e.date||new Date().toISOString(),author:e.author||"Unknown Author",category:e.category||"Uncategorized",thumbnail:e.thumbnail}}).sort((t,n)=>new Date(n.date).getTime()-new Date(t.date).getTime());export{y as B,me as U,ge as a,f as b,r as c};
