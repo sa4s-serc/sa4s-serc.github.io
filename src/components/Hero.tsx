@@ -153,13 +153,6 @@ const Hero = () => {
 
       {/* ── Bonsai — anchored bottom on mobile, absolute bottom-right on desktop ── */}
       <div className="relative flex-shrink-0 flex justify-center pointer-events-none z-0 lg:absolute lg:bottom-0 lg:right-0 lg:w-[min(55vw,1000px)]">
-        <button
-          onClick={regen}
-          className="absolute top-2 left-3 lg:top-4 lg:left-auto lg:right-4 z-20 pointer-events-auto text-2xl leading-none text-[#c4beb5] hover:text-[#7A7060] transition-colors duration-400 bg-transparent border-none cursor-pointer select-none"
-          aria-label="Regenerate bonsai tree"
-        >
-          ⟳
-        </button>
         <div className="w-[95vw] max-w-[min(600px,56svh)] lg:w-full lg:max-w-none">
           <BonsaiTree
             seed={seed}
