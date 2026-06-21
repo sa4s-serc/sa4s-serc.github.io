@@ -5,6 +5,6 @@
 
 [ICSA 2026 Website](https://conf.researchr.org/home/icsa-2026)
 [SAML Panel](https://sa-ml.github.io/saml2026/program/)
-[Browse Our Publications](https://sa4s-serc.github.io/publications)
+[Browse Our Publications](/publications)
 [IMAGE] /images/spotlight/ICSA2026_WebsiteBanner.webp
 [DATE] 2026-06-19
