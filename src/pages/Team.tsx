@@ -52,6 +52,8 @@ const Team = () => {
               <img
                 src={publicUrl(member.photo === "" ? defaultPhoto : member.photo)}
                 alt={member.name}
+                loading="lazy"
+                decoding="async"
                 className="w-28 h-28 rounded-full mx-auto mb-4 object-cover ring-2 ring-[#D8D2C4]"
               />
               <h3 className="text-base font-bold text-[#1A1710] mb-0.5">{member.name}</h3>
