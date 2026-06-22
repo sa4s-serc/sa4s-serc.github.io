@@ -1,0 +1,28 @@
+const e=`---
+date: "18 June 2026"
+headline: "SA4S Lead to Present Tutorial on Software Architecture and Agentic AI at ICSA 2026"
+sourceUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7473426939068772353"
+---
+
+![Post Image](https://media.licdn.com/dms/image/v2/D5622AQFDHdLAuaanCQ/feedshare-shrink_800/B56Z7byMwtKwAc-/0/1781803830714?e=2147483647&v=beta&t=KqcFjyomI_AKHgXW5ita2clbV0M1-NlLJo842gnvrpM)
+
+**Karthik Vaidhyanathan**, lead of the **SA4S research group** at IIIT Hyderabad, will deliver a tutorial titled "[**Software Architecture meets Agentic AI**](https://vaidhyanathan.com/tutorials/icsa2026-agentic-ai/)" at the **International Conference on Software Architecture (ICSA) 2026**. This session represents the third installment in a series of tutorials exploring the intersection of Generative AI and software architecture.
+
+### 🤖 Bridging Architecture and Agentic AI
+
+The tutorial examines the bidirectional relationship between software architecture and autonomous agents, focusing on two core themes:
+
+*   **Architecting Agentic Systems:** Methodologies for designing, evaluating, and reasoning about agentic systems through the lens of software architecture.
+*   **Agents for Software Architecture:** Exploring how Agentic AI can be leveraged to assist in complex architectural tasks and decision-making.
+
+### 🛠️ Practical Insights and Case Studies
+
+The session is designed to bridge the gap between theoretical research and practical application. Participants will engage with hands-on demonstrations and real-world case studies that highlight emerging lessons from both research and industry practice. 
+
+The tutorial will also cover critical technical considerations, including:
+*   The selection and trade-offs between **Small Language Models (SLMs)** and **Large Language Models (LLMs)**.
+*   The use of modern agentic frameworks.
+*   **Sustainability considerations** in the deployment and orchestration of AI agents.
+
+This work continues the SA4S research group's efforts to establish robust engineering principles for AI-driven systems, ensuring they are scalable, governable, and sustainable.
+`;export{e as default};
