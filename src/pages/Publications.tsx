@@ -294,6 +294,7 @@ function parseBibContent(bibContent: string): YearlyPublications[] {
 const conferences = [
   { name: 'ICSA 2024', logo: '/images/publications/icsa24.jpeg' },
   { name: 'ICSA 2025', logo: '/images/publications/icsa25.jpg' },
+  { name: 'ICSA 2026', logo: '/images/publications/icsa26.jpeg' },
   { name: 'ICSE 2024', logo: '/images/publications/icse24.png' },
   { name: 'ICSE 2026', logo: '/images/publications/icse2026_banner.png' },
   { name: 'SEAMS', logo: '/images/publications/seams24.png' },

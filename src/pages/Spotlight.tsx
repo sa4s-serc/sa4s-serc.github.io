@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import allSpotlightItems from 'virtual:spotlight';
 import { publicUrl } from '../lib/utils';
@@ -40,17 +40,19 @@ function SpotlightContent({ content }: { content: string }) {
             {children}
           </p>
         ),
-        a: ({ href, children }) => (
-          <a
-            href={href}
-            target={href?.startsWith('http') ? '_blank' : undefined}
-            rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#2D6A4F] text-[#EDE8DF] rounded-full text-sm font-medium hover:bg-[#1D5038] transition-colors duration-200 no-underline mr-2 mb-2"
-          >
-            {children}
-            {href?.startsWith('http') && <ExternalLink size={12} />}
-          </a>
-        ),
+        a: ({ href, children }) => {
+          const cls = "inline-flex items-center gap-1.5 px-4 py-2 bg-[#2D6A4F] text-[#EDE8DF] rounded-full text-sm font-medium hover:bg-[#1D5038] transition-colors duration-200 no-underline mr-2 mb-2";
+          const isFile = /\.\w{2,5}$/.test(href ?? '');
+          if (href?.startsWith('/') && !isFile) {
+            return <Link to={href} className={cls}>{children}</Link>;
+          }
+          return (
+            <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+              {children}
+              {(href?.startsWith('http') || isFile) && <ExternalLink size={12} />}
+            </a>
+          );
+        },
       }}
     >
       {content}
