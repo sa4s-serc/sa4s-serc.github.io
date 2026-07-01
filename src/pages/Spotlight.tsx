@@ -40,6 +40,13 @@ function SpotlightContent({ content }: { content: string }) {
             {children}
           </p>
         ),
+        img: ({ src, alt }) => (
+          <img
+            src={src?.startsWith('/') ? publicUrl(src) : src}
+            alt={alt ?? ''}
+            className="w-full rounded-xl border border-[#D8D2C4] my-4 object-cover"
+          />
+        ),
         a: ({ href, children }) => {
           const cls = "inline-flex items-center gap-1.5 px-4 py-2 bg-[#2D6A4F] text-[#EDE8DF] rounded-full text-sm font-medium hover:bg-[#1D5038] transition-colors duration-200 no-underline mr-2 mb-2";
           const isFile = /\.\w{2,5}$/.test(href ?? '');
