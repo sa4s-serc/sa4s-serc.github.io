@@ -2,8 +2,8 @@
 [TITLE] Best Artifact Award at ICSA 2026
 [TAG] Conference
 [CONTENT] SA4S's paper with Sathvika Miryala and Rudra Dhar titled 𝗟𝗟𝗠-𝗯𝗮𝘀𝗲𝗱 𝗔𝘂𝘁𝗼𝗺𝗮𝘁𝗲𝗱 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝘂𝗿𝗲 𝗩𝗶𝗲𝘄 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗶𝗼𝗻: 𝗪𝗵𝗲𝗿𝗲 𝗔𝗿𝗲 𝗪𝗲 𝗡𝗼𝘄?, received the 𝗕𝗲𝘀𝘁 𝗔𝗿𝘁𝗶𝗳𝗮𝗰𝘁 𝗔𝘄𝗮𝗿𝗱 𝗮t International Conference on Software Architecture ICSA (ICSA) 2026. This recognition is especially meaningful because it acknowledges the importance of making research reproducible, reusable, and accessible to the community.
-![Best Paper Award](/images/spotlight/ICSABestArtifact2.png)
+![Best Paper Award](/images/spotlight/ICSABestArtifactAward2.png)
 [Link to Paper](https://arxiv.org/pdf/2603.21178)
 [Artifact](https://zenodo.org/records/18772573)
-[IMAGE] /images/spotlight/ICSABestArtifact.png
+[IMAGE] /images/spotlight/ICSABestArtifactAward.png
 [DATE] 2026-06-25
