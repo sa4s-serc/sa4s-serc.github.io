@@ -5,5 +5,7 @@ export interface TeamMember {
   photo: string;
   category: string;
   linkedin?: string;
+  scholar?: string;
+  dblp?: string;
   education?: string[];
 }

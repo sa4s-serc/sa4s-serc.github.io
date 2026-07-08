@@ -12,6 +12,7 @@ const primaryNav: NavItem[] = [
   { name: 'Research',     path: '/research' },
   { name: 'Publications', path: '/publications' },
   { name: 'News',         path: '/news' },
+  { name: 'Team',         path: '/team' },
 ];
 
 const drawerNav: NavItem[] = [
@@ -21,7 +22,6 @@ const drawerNav: NavItem[] = [
   { name: 'SustAInd ↗',     path: 'https://sa4s-serc.github.io/sustaind/', external: true },
   { name: 'Blogs',           path: '/blogs' },
   { name: 'Projects',        path: '/work' },
-  { name: 'Team',            path: '/team' },
   { name: 'Gallery',         path: '/gallery' },
 ];
 
