@@ -8,7 +8,7 @@ export const facultyMembers: TeamMember[] = [
     photo: "/team/karthik_vaidyanathan.jpg",
     category: "Faculty",
     scholar: "https://scholar.google.com/citations?user=qtITyHkAAAAJ&hl=en&oi=sra",
-    dblp: "https://dblp.org",
+    dblp: "https://dblp.org/pid/241/0360.html",
     education: [
       "Postdoc and Cultore Della Materia (Subject Matter Expert), University of L'Aquila, Italy",
       "PhD in Computer Science from GSSI - Gran Sasso Science Institute, advised by Henry Muccini",
