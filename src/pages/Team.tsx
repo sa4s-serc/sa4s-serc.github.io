@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Mail, Linkedin } from "lucide-react";
+import { Mail, Linkedin, Globe } from "lucide-react";
 import { categories, defaultPhoto, teamMembers } from "../data/teamData";
 import { publicUrl } from "../lib/utils";
 import type { TeamMember } from "../data/team/teamTypes";
@@ -17,11 +17,6 @@ function MemberButtons({ member, align = "center" }: { member: TeamMember; align
           <Mail size={16} />
         </a>
       )}
-      {member.linkedin && (
-        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={iconBtnCls} aria-label="LinkedIn">
-          <Linkedin size={16} />
-        </a>
-      )}
       {member.scholar && (
         <a href={member.scholar} target="_blank" rel="noopener noreferrer" className={textBtnCls}>
           Google Scholar
@@ -30,6 +25,16 @@ function MemberButtons({ member, align = "center" }: { member: TeamMember; align
       {member.dblp && (
         <a href={member.dblp} target="_blank" rel="noopener noreferrer" className={textBtnCls}>
           DBLP
+        </a>
+      )}
+      {member.linkedin && (
+        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={iconBtnCls} aria-label="LinkedIn">
+          <Linkedin size={16} />
+        </a>
+      )}
+      {member.website && (
+        <a href={member.website} target="_blank" rel="noopener noreferrer" className={iconBtnCls} aria-label="Website">
+          <Globe size={16} />
         </a>
       )}
     </div>
@@ -114,7 +119,7 @@ const Team = () => {
       </div>
 
       <div className="container mx-auto px-4 py-10">
-        <div className="flex flex-wrap gap-1.5 mb-10 border-b border-[#D8D2C4] pb-4">
+        <div className="flex flex-wrap justify-center gap-1.5 mb-10 border-b border-[#D8D2C4] pb-4">
           {categories.map((category) => (
             <button
               key={category}

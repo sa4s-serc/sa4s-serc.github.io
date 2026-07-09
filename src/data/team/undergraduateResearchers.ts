@@ -1,33 +1,23 @@
 import type { TeamMember } from "./teamTypes";
 
 export const dualDegreeStudents: TeamMember[] = [
-  {
-    name: "Adyansh Kakran",
-    role: "Undergraduate Researcher, started in May 2023",
-    email: "adyansh.kakran@research.iiit.ac.in",
-    photo: "/team/adyansh_kakran.jpeg",
-    category: "Undergraduate Researchers",
-    education: ["Best Poster Award - ICSA 2024"],
-  },
-  {
-    name: "Prakhar Jain",
-    role: "Undergraduate Researcher, started in May 2023",
-    email: "prakhar.jain@research.iiit.ac.in",
-    photo: "",
-    category: "Undergraduate Researchers",
-  },
+
   {
     name: "Amey Karan",
     role: "Undergraduate Researcher, started in May 2024",
     email: "amey.karan@research.iiit.ac.in",
     photo: "/team/amey_karan.jpeg",
     category: "Undergraduate Researchers",
+    linkedin: "https://www.linkedin.com/in/ameykaran/",
+    scholar: "https://scholar.google.com/citations?hl=en&user=KOlkdBEAAAAJ"
   },
   {
     name: "Aneesh Sambu",
     role: "Undergraduate Researcher, started in May 2024",
     email: "sambu.aneesh@research.iiit.ac.in",
     photo: "/team/aneesh_sambu.jpeg",
+    scholar: "https://scholar.google.com/citations?hl=en&user=fozJETwAAAAJ",
+    linkedin: "https://www.linkedin.com/in/aneesh-sambu/",
     category: "Undergraduate Researchers",
   },
   {
@@ -36,11 +26,15 @@ export const dualDegreeStudents: TeamMember[] = [
     email: "bassam.adnan@research.iiit.ac.in",
     photo: "/team/bassam_adnan.jpeg",
     category: "Undergraduate Researchers",
+    linkedin: "https://www.linkedin.com/in/bassam-adnan/",
+    scholar: "https://scholar.google.com/citations?hl=en&user=uZVNoC0AAAAJ"
   },
   {
     name: "Prakhar Singhal",
     role: "Undergraduate Researcher, started in May 2024",
     email: "prakhar.singhal@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/prakhar-singhal-a9437b26b/",
+    scholar: "https://scholar.google.com/citations?user=rZp5V8UAAAAJ&hl=en&oi=ao",
     photo: "/team/prakhar_singhal.jpeg",
     category: "Undergraduate Researchers",
   },
@@ -49,12 +43,14 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in May 2024",
     email: "miryala.sathvika@research.iiit.ac.in",
     photo: "/team/sathvika_miryala.jpeg",
+    linkedin: "https://www.linkedin.com/in/sathvika-miryala-366b02243/",
     category: "Undergraduate Researchers",
   },
   {
     name: "Shailender Goyal",
     role: "Undergraduate Researcher, started in May 2024",
     email: "shailender.goyal@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/shailender-goyal-890356284/",
     photo: "/team/shailender_goyal.jpeg",
     category: "Undergraduate Researchers",
   },
@@ -62,6 +58,8 @@ export const dualDegreeStudents: TeamMember[] = [
     name: "Shaunak Biswas",
     role: "Undergraduate Researcher, started in May 2024",
     email: "shaunak.biswas@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/shaunak-biswas-aa189a264/",
+    scholar: "https://scholar.google.co.in/citations?hl=en&user=GDXSUIgAAAAJ",
     photo: "/team/shaunak_biswas.jpeg",
     category: "Undergraduate Researchers",
   },
@@ -70,6 +68,9 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in May 2025",
     email: "arihant.tripathy@research.iiit.ac.in",
     photo: "/team/arihant_tripathy.jpeg",
+    website: "arihant25.github.io",
+    linkedin: "https://www.linkedin.com/in/arihanttr/",
+    scholar: "https://scholar.google.co.in/citations?user=K2JbGPsAAAAJ",
     category: "Undergraduate Researchers",
   },
   {
@@ -77,6 +78,9 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in May 2025",
     email: "aviral.gupta@research.iiit.ac.in",
     photo: "/team/aviral_gupta.jpeg",
+    website: "avilol.vercel.app",
+    linkedin: "https://www.linkedin.com/in/avilol/",
+    scholar: "https://scholar.google.co.in/citations?hl=en&user=izW-X2cAAAAJ",
     category: "Undergraduate Researchers",
   },
   {
@@ -84,13 +88,18 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in April 2026",
     email: "pranavswarup.kumar@research.iiit.ac.in",
     photo: "/team/pranav_swarup.jpeg",
+    website: "https://pranav-swarup.github.io/portfolio/",
+    linkedin: "https://www.linkedin.com/in/pranav-swarup-kumar/",
+    scholar: "https://scholar.google.com/citations?user=L7XN5AsAAAAJ&hl=en",
     category: "Undergraduate Researchers",
   },
   {
     name: "Shreyash Chandak",
     role: "Undergraduate Researcher, started in April 2026",
     email: "shreyash.chandak@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/shreyash-chandak/",
     photo: "/team/shreyash_chandak.jpeg",
+    website: "https://researchweb.iiit.ac.in/~shreyash.chandak/",
     category: "Undergraduate Researchers",
   },
   {
@@ -98,44 +107,20 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in April 2026",
     email: "av.aditya@research.iiit.ac.in",
     photo: "/team/av_aditya.jpeg",
+    linkedin: "https://www.linkedin.com/in/a-v-aditya/",
     category: "Undergraduate Researchers",
   },
 ];
 
 export const honorsStudents: TeamMember[] = [
-  {
-    name: "Divyansh Pandey",
-    role: "Undergraduate Researcher, started in May 2024",
-    email: "divyansh.pandey@students.iiit.ac.in",
-    photo: "/team/divyansh_pandey.jpeg",
-    category: "Undergraduate Researchers",
-  },
-  {
-    name: "Kritin Maddireddy",
-    role: "Undergraduate Researcher, started in May 2024",
-    email: "kritin.maddireddy@students.iiit.ac.in",
-    photo: "/team/kritin_maddireddy.jpeg",
-    category: "Undergraduate Researchers",
-  },
-  {
-    name: "Kotekal Methukula Santhosh",
-    role: "Undergraduate Researcher, started in May 2024",
-    email: "santhosh.km@students.iiit.ac.in",
-    photo: "/team/kotekal_methukula_santhosh.jpeg",
-    category: "Undergraduate Researchers",
-  },
-  {
-    name: "Vyakhya Gupta",
-    role: "Undergraduate Researcher, started in May 2024",
-    email: "vyakhya.gupta@students.iiit.ac.in",
-    photo: "",
-    category: "Undergraduate Researchers",
-  },
+
   {
     name: "Ananya Halgatti",
     role: "Undergraduate Researcher, started in May 2025",
     email: "ananya.halgatti@students.iiit.ac.in",
     photo: "/team/ananya_halgatti.jpeg",
+    linkedin: "https://www.linkedin.com/in/ananya-halgatti/",
+    scholar: "https://scholar.google.com/citations?hl=en&user=t5qie1UAAAAJ",
     category: "Undergraduate Researchers",
   },
   {
@@ -143,12 +128,14 @@ export const honorsStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in April 2026",
     email: "neha.prabhu@students.iiit.ac.in",
     photo: "/team/neha_prabhu.jpeg",
+    linkedin: "https://www.linkedin.com/in/neha-prabhu-7a774538a/",
     category: "Undergraduate Researchers",
   },
   {
     name: "Anagha Prajapati",
     role: "Undergraduate Researcher, started in April 2026",
     email: "anagha.prajapati@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/anaghapraj2510/",
     photo: "/team/anagha_prajapati.jpeg",
     category: "Undergraduate Researchers",
   },

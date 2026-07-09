@@ -7,6 +7,8 @@ import { publicUrl } from "@/lib/utils";
 /** Maps citation key → public-relative PDF path */
 const PDF_MAP: Record<string, string> = {
   // 2026
+  "DBLP:journals/corr/abs-2606-10702":          "papers/2026/Watts_and_Debts_of_Agentic_Frameworks.pdf",
+  "DBLP:journals/corr/abs-2605-00504":          "papers/2026/EnCoDe_Energy_Estimation_of_Source_Code_At_Design-Time.pdf",
   "DBLP:journals/jss/EspositoLMACVLT26":       "papers/date_unavailable/1-s2.0-S0164121225002766-main.pdf",
   "DBLP:journals/software/VaidhyanathanT26":    "papers/2026/Agentic_AI.pdf",
   "DBLP:journals/software/Vaidhyanathan26":     "papers/2026/From_AI.pdf",
@@ -196,7 +198,6 @@ const VENUE_OVERRIDES: Record<string, { venue: string; year?: number }> = {
   "DBLP:journals/corr/abs-2602-03632": { venue: "SEAMS 2026", year: 2026 },
   "DBLP:journals/corr/abs-2602-04445": { venue: "AGENT 2026", year: 2026 },
   "DBLP:journals/corr/abs-2501-17028": { venue: "CAIN 2025", year: 2025 },
-  "DBLP:journals/corr/abs-2503-13310": { venue: "Journal of Systems and Software (Preprint)", year: 2025 },
   "DBLP:journals/corr/abs-2504-08207": { venue: "Journal of Systems and Software (Preprint)", year: 2025 },
   "DBLP:journals/corr/abs-2505-13693": { venue: "ECSA 2025", year: 2025 },
   "DBLP:journals/corr/abs-2506-01774": { venue: 'The "Greening AI with Software Engineering" workshop (CECAM/Lorentz Center)', year: 2025 },
@@ -210,6 +211,10 @@ const VENUE_OVERRIDES: Record<string, { venue: string; year?: number }> = {
 const TITLE_FIXUPS: Record<string, string> = {
   "DBLP:journals/corr/abs-2601-14132": "Toward Self-coding Information Systems",
   "DBLP:conf/ecsa/BhattBRV25": "HarmonE: A Self-Adaptive Approach to Architecting Sustainable MLOps",
+  // Preprint title differs from published ("for" vs "of"); normalize so dedup drops the preprint
+  "DBLP:journals/corr/abs-2501-17028": "Approach Towards Semi-Automated Certification of Low Criticality ML-Enabled Airborne Applications",
+  // Preprint title adds "Trends," — normalize to match JSS published version so dedup drops it
+  "DBLP:journals/corr/abs-2503-13310": "Generative AI for software architecture. Applications, challenges, and future directions",
 };
 
 function parseBibContent(bibContent: string): YearlyPublications[] {

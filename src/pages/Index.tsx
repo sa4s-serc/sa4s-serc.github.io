@@ -1,7 +1,7 @@
 
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Layers, Activity, Network, Code2, ArrowRight, Mail } from 'lucide-react';
+import { Layers, Network, Code2, ArrowRight, Mail } from 'lucide-react';
 import Hero from '../components/Hero';
 import PulseStrip from '../components/PulseStrip';
 import FeaturedNews from '../components/FeaturedNews';
@@ -22,27 +22,21 @@ const inView = {
 const researchAreas = [
   {
     icon: <Layers size={18} />,
-    title: 'AI for Software Architecture (Design-Time)',
-    abbr: 'AI4SA Design',
-    desc: 'Using LLMs and AI agents to support architectural decision-making, ADR generation, view generation, and architecture knowledge management before systems are deployed.',
-  },
-  {
-    icon: <Activity size={18} />,
-    title: 'AI for Software Architecture (Run-Time)',
-    abbr: 'AI4SA Runtime',
-    desc: 'Building self-adaptive systems that monitor, reason about, and reconfigure themselves at runtime to meet quality goals around performance, energy, and reliability.',
+    title: 'Software Architecture for AI',
+    abbr: 'SA for AI',
+    desc: 'This research area investigates how to architect AI systems that hold up in production, covering architectural patterns for LLM-based pipelines, sustainable MLOps, multi-agent system design, energy-aware deployment, and empirical studies on how agentic frameworks behave under real workloads. The goal is to give practitioners principled architectural guidance for building AI systems that are observable, maintainable, and resource-efficient at scale.',
   },
   {
     icon: <Network size={18} />,
-    title: 'Architecting AI Systems',
-    abbr: 'Arch4AI',
-    desc: 'Studying how to design and structure AI-enabled and agentic systems well, from ML pipelines and multi-agent architectures to sustainable MLOps and production deployment patterns.',
+    title: 'AI for Software Architecture',
+    abbr: 'AI for SA',
+    desc: "This research area explores how large language models and autonomous agents can assist or automate generating and maintaining architectural decision records, recovering architecture views from source code, detecting and localising technical debt, supporting refactoring from monolith to microservices, and managing architecture knowledge over a system's lifetime. Work spans design-time tooling and benchmarking through to runtime self-adaptation, where systems reason about their own state and reconfigure to meet shifting quality goals without human intervention.",
   },
   {
     icon: <Code2 size={18} />,
     title: 'Code Generation',
     abbr: 'CodeGen',
-    desc: 'Evaluating and advancing the ability of AI agents to generate functional software components, including microservices, serverless functions, and architecture-conformant code at scale.',
+    desc: 'As code generation shifts toward autonomous, multi-agent development workflows, software architecture becomes essential for designing systems that are modular, maintainable, and efficient. This research area studies how architectural techniques—including memory management, agent coordination, and hybrid SLM–LLM pipelines—can improve the accuracy, scalability, and robustness of AI-assisted software engineering. We also investigate energy-aware architectures that minimize computational overhead while maintaining high-quality code generation, with the goal of building sustainable and trustworthy agentic development systems.',
   },
 ];
 
@@ -54,6 +48,45 @@ const Index = () => {
 
       {/* ── Hero ──────────────────────────────────── */}
       <Hero />
+
+      {/* ── Research areas ────────────────────────── */}
+      <section className="py-8 bg-[#FAF7F2]">
+        <div className="container mx-auto px-4">
+          <motion.div className="mb-6 text-center" {...inView}>
+            <h2 className="text-xl lg:text-2xl text-[#2D6A4F] tracking-[0.25em] uppercase font-semibold">What We Work On</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {researchAreas.map((area, i) => (
+              <motion.button
+                key={area.abbr}
+                onClick={() => navigate('/research')}
+                className="group flex gap-4 text-left border border-[#D8D2C4] hover:border-[#2D6A4F]/45 rounded-xl p-5 bg-[#F0EBE1] hover:bg-[#EAE4D6] transition-all duration-200 w-full"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
+              >
+                <div className="flex-shrink-0 mt-0.5 text-[#2D6A4F] group-hover:text-[#1D5038] transition-colors duration-200">
+                  {area.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-[#2D6A4F] tracking-widest uppercase font-semibold mb-1.5">
+                    {area.abbr}
+                  </div>
+                  <h3 className="font-semibold text-sm text-[#1A1710] mb-1.5 leading-snug">
+                    {area.title}
+                  </h3>
+                  <p className="text-xs text-[#6B6455] leading-relaxed line-clamp-2">{area.desc}</p>
+                  <span className="mt-2 inline-flex items-center gap-1 text-[11px] text-[#2D6A4F]/60 group-hover:text-[#2D6A4F] transition-colors duration-150">
+                    Read more <ArrowRight size={10} />
+                  </span>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── Subscribe — mobile only, above spotlight ──────── */}
       <div className="lg:hidden bg-[#F0EBE1] border-b border-[#D8D2C4] px-6 py-6 text-center">
@@ -180,58 +213,6 @@ const Index = () => {
           </a>
         </div>
       </div>
-
-      {/* ── Research areas ────────────────────────── */}
-      <section className="py-16 bg-[#FAF7F2]">
-        <div className="container mx-auto px-4">
-          <motion.div className="mb-10 text-center" {...inView}>
-            <h2 className="text-xl lg:text-2xl text-[#2D6A4F] tracking-[0.25em] uppercase font-semibold">What We Work On</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {researchAreas.map((area, i) => (
-              <motion.button
-                key={area.abbr}
-                onClick={() => navigate('/research')}
-                className="group flex gap-4 text-left border border-[#D8D2C4] hover:border-[#2D6A4F]/45 rounded-xl p-6 bg-[#F0EBE1] hover:bg-[#EAE4D6] transition-all duration-200 w-full"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
-              >
-                <div className="flex-shrink-0 mt-0.5 text-[#2D6A4F] group-hover:text-[#1D5038] transition-colors duration-200">
-                  {area.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-[#2D6A4F] tracking-widest uppercase font-semibold mb-2">
-                    {area.abbr}
-                  </div>
-                  <h3 className="font-semibold text-base text-[#1A1710] mb-2 leading-snug">
-                    {area.title}
-                  </h3>
-                  <p className="text-sm text-[#6B6455] leading-relaxed">{area.desc}</p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
-
-          <motion.div
-            className="mt-7 flex justify-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <button
-              onClick={() => navigate('/research')}
-              className="inline-flex items-center border border-[#D8D2C4] hover:border-[#2D6A4F] text-[#6B6455] hover:text-[#1A1710] px-5 py-2.5 rounded text-sm font-medium transition-all duration-200 group"
-            >
-              All research areas
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-150" size={14} />
-            </button>
-          </motion.div>
-        </div>
-      </section>
 
       {/* ── Latest news ───────────────────────────── */}
       <motion.div {...inView}>

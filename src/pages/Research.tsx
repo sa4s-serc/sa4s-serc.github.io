@@ -3,21 +3,16 @@ import { publicUrl } from '@/lib/utils';
 
 const researchAreas = [
   {
-    title: 'AI for Software Architecture (Design-Time)',
-    description: 'This direction looks at how AI can support architects before a system is ever deployed. Work here covers using LLMs and agents to generate architectural decision records, recover traceability links, produce architecture views from source code, and manage architecture knowledge over the lifetime of a project. Recent work includes ArchBench, a benchmarking platform for evaluating LLMs on these tasks, and ArchView, which studies automated architecture view generation across hundreds of open-source repositories.',
+    title: 'Software Architecture for AI',
+    description: 'This research area investigates how to architect AI systems that hold up in production, covering architectural patterns for LLM-based pipelines, sustainable MLOps, multi-agent system design, energy-aware deployment, and empirical studies on how agentic frameworks behave under real workloads. The goal is to give practitioners principled architectural guidance for building AI systems that are observable, maintainable, and resource-efficient at scale.',
   },
   {
-    title: 'AI for Software Architecture (Run-Time)',
-    description: 'This direction focuses on systems that can observe themselves, reason about what is happening, and reconfigure without human intervention. The group has worked extensively on MAPE-K based self-adaptive systems for ML pipelines and IoT deployments, studying how architectural patterns can help systems meet quality goals around performance, energy consumption, and reliability even as their environment changes.',
-  },
-  {
-    title: 'Architecting AI Systems',
-    description: 'As AI moves into production, the question of how to structure and sustain AI-enabled systems becomes critical. This includes architectural patterns for multi-agent systems, sustainable MLOps practices that reduce unnecessary retraining, design guidelines for LLM-based pipelines, and empirical studies on how agentic systems behave in real software engineering workflows. Tools like HarmonE and the MOYA framework for agentic architectural patterns came out of this line of work.',
+    title: 'AI for Software Architecture',
+    description: 'This research area explores how large language models and autonomous agents can assist or automate generating and maintaining architectural decision records, recovering architecture views from source code, detecting and localising technical debt, supporting refactoring from monolith to microservices, and managing architecture knowledge over a system\'s lifetime. Work spans design-time tooling and benchmarking through to runtime self-adaptation, where systems reason about their own state and reconfigure to meet shifting quality goals without human intervention.',
   },
   {
     title: 'Code Generation',
-    description: 'This direction examines whether AI agents can generate functional software components reliably enough to be useful in practice. Recent work evaluated agents on microservice generation across real integration scenarios and found meaningful gaps between unit and integration test pass rates. The group is interested in understanding where agent-generated code falls short architecturally, and what guardrails or evaluation frameworks can make generation more trustworthy.',
-  },
+    description: 'As code generation shifts toward autonomous, multi-agent development workflows, software architecture becomes essential for designing systems that are modular, maintainable, and efficient. This research area studies how architectural techniques—including memory management, agent coordination, and hybrid SLM–LLM pipelines—can improve the accuracy, scalability, and robustness of AI-assisted software engineering. We also investigate energy-aware architectures that minimize computational overhead while maintaining high-quality code generation, with the goal of building sustainable and trustworthy agentic development systems.',  },
 ];
 
 const collaborators = [
@@ -27,8 +22,8 @@ const collaborators = [
   { name: 'Middlesex University', logo: '/images/collabpic/middlesex.png' },
   { name: 'Linnaeus University', logo: '/images/collabpic/lnu.png' },
   { name: 'Smart City Living Lab, IIIT Hyderabad', logo: '/images/collabpic/scrc.png' },
-  { name: 'MontyCloud', logo: '/images/collabpic/montycloud.png' },
-  { name: 'Qualcomm', logo: '/images/collabpic/qualcomm.png' },
+  { name: 'MontyCloud', logo: '/images/collabpic/montycloud.png', small: true },
+  { name: 'Qualcomm', logo: '/images/collabpic/qualcomm.png', small: true },
   { name: 'Lloyds Banking Group', logo: '/images/collabpic/lloyds-bank.jpg' },
 ];
 
@@ -63,11 +58,11 @@ const Research: React.FC = () => {
           <h2 className="text-center text-xl lg:text-2xl text-[#2D6A4F] tracking-[0.25em] uppercase font-semibold mb-10">
             Our Collaborators
           </h2>
-          <div className="mx-auto grid max-w-lg grid-cols-2 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-8">
             {collaborators.map((collaborator) => (
               <div key={collaborator.name} className="flex justify-center">
                 <img
-                  className="max-h-20 w-full object-contain transition-transform duration-200 hover:scale-110"
+                  className={`w-auto object-contain transition-transform duration-200 hover:scale-110 ${'small' in collaborator && collaborator.small ? 'max-h-8' : 'max-h-16'}`}
                   src={publicUrl(collaborator.logo)}
                   alt={collaborator.name}
                 />

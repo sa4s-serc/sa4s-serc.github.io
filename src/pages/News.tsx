@@ -151,7 +151,7 @@ const News = () => {
                             img: ({ className, src, ...props }) => (
                               <img
                                 {...props}
-                                src={src ? publicUrl(src) : undefined}
+                                src={src ? (src.startsWith('http') ? src : publicUrl(src)) : undefined}
                                 className={`block my-6 w-full rounded-lg border border-[#D8D2C4] ${className ?? ''}`.trim()}
                                 loading="lazy"
                               />

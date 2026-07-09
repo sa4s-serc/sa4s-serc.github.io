@@ -6,6 +6,8 @@ export const researchStaff: TeamMember[] = [
     role: "Research Engineer",
     email: "mahisha26r@gmail.com",
     photo: "/team/mahisha_ramesh.jpeg",
+    scholar: "https://scholar.google.com/citations?user=-_rnAjMAAAAJ&hl=en",
+    linkedin: "https://www.linkedin.com/in/mahisha-ramesh-903a2b232/",
     category: "Research Staff",
     education: [
       "Mtech in CSE with AI specialisation in IIIT Delhi",
@@ -14,30 +16,12 @@ export const researchStaff: TeamMember[] = [
     ],
   },
   {
-    name: "Aneetta Sara Shany",
-    role: "Junior Research Fellow",
-    email: "aneetta.sara@research.iiit.ac.in",
-    photo: "/team/aneetta_sara_shany.jpeg",
-    category: "Research Staff",
-    education: [
-      "Working on the SustAInd project, focussing on building a software-centric framework for sustainable AI systems",
-    ],
-  },
-  {
-    name: "Chandrasekar S",
-    role: "Junior Research Fellow, started in Oct 2025",
-    email: "chandrasekar.s@research.iiiit.ac.in",
-    photo: "/team/chandrasekar_s.jpeg",
-    category: "Research Staff",
-    education: [
-      "Working on the SustAInd project, focussing on building a software-centric framework for sustainable AI systems",
-    ],
-  },
-  {
     name: "Pranav Reddy M",
     role: "Research Engineer, started in Feb 2026",
     email: "pranav.reddy@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/pranav-red912/",
     photo: "/team/pranav_reddy.jpeg",
+    scholar: "https://scholar.google.com/citations?user=DuRFwEwAAAAJ&hl=en",
     category: "Research Staff",
     education: ["Working on software architecture for agentic systems"],
   },

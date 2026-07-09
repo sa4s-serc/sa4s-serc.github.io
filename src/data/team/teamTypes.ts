@@ -4,8 +4,9 @@ export interface TeamMember {
   email: string;
   photo: string;
   category: string;
-  linkedin?: string;
   scholar?: string;
   dblp?: string;
+  linkedin?: string;
+  website?: string;
   education?: string[];
 }
