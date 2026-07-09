@@ -3,7 +3,7 @@ import type { TeamMember } from "./teamTypes";
 export const phdStudents: TeamMember[] = [
   {
     name: "Rudra Dhar",
-    role: "PhD CSE, Batch of Monsoon 2022",
+    role: "PhD in CSE, Batch of Monsoon 2022",
     email: "rudra.dhar@research.iiit.ac.in",
     photo: "/team/rudra_dhar.jpeg",
     category: "PhD Students",
@@ -20,17 +20,23 @@ export const phdStudents: TeamMember[] = [
   },
   {
     name: "Akhila Matathammal",
-    role: "PhD, started in July 2023",
+    role: "PhD in CSE, TCS Research Scholar, started in July 2023",
     email: "akhila.matathammal@research.iiit.ac.in",
     photo: "/team/akhila_matathammal.jpeg",
     linkedin: "https://www.linkedin.com/in/akhila-matathammal-9205b710b/",
     category: "PhD Students",
     scholar: "https://scholar.google.com/citations?user=JrkehfgAAAAJ&hl=en",
     dblp: "https://dblp.org/pid/340/9050",
+    education: [
+      "Researcher in Software Engineering for Artificial Intelligence (SA4AI), specializing in architecting Sustainable Agentic AI Systems",
+      "Interests: Sustainability, Self-Adaptation, AI-Enabled Systems, Software Architecture",
+      "Worked as a Full-Stack developer at multiple start-ups and as a Project Associate at IITH",
+      "B-Tech in Electronics and Communications from Sridevi Women's Engineering College, Hyderabad"
+    ],
   },
   {
     name: "Aneetta Sara Shany",
-    role: "PhD, started in Oct 2025",
+    role: "PhD in CSE, started in Oct 2025",
     email: "aneetta.sara@research.iiit.ac.in",
     photo: "/team/aneetta_sara_shany.jpeg",
     linkedin: "https://www.linkedin.com/in/aneetta-sara/",
@@ -47,10 +53,10 @@ export const phdStudents: TeamMember[] = [
   },
   {
     name: "Chandrasekar S",
-    role: "Junior Research Fellow, started in Oct 2025",
+    role: "PhD in CSE, started in Oct 2025",
     email: "chandrasekar.s@research.iiiit.ac.in",
     photo: "/team/chandrasekar_s.jpeg",
-    category: "Research Staff",
+    category: "PhD Students",
     linkedin: "https://www.linkedin.com/in/chandrasekar-sridhar-17b238168/",
     scholar: "https://scholar.google.com/citations?hl=en&user=359mSMMAAAAJ",
     dblp: "https://dblp.org/pid/398/1705",
