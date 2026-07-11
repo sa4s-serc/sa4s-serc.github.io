@@ -1,5 +1,5 @@
 
-import { Users } from 'lucide-react';
+import { Users, ExternalLink } from 'lucide-react';
 
 interface ProjectMember {
   name: string;
@@ -10,10 +10,30 @@ interface Project {
   id: string;
   title: string;
   summary: string;
+  url?: string;
   members: ProjectMember[];
 }
 
 const projects: Project[] = [
+  {
+    id: 'locoml-platform',
+    title: 'LoCoML Platform',
+    summary: 'LoCoML is a low-code machine learning platform allowing users with limited ML knowledge to build, update, and deploy models. It incorporates automation throughout the pipeline — from data pre-processing to deployment — with ~2% runtime overhead.',
+    url: 'https://sa4s-serc.github.io/locoml-website/',
+    members: [
+      { name: 'Chandrasekar S',         role: 'Masters Student' },
+      { name: 'Maddireddy Kritin',      role: 'Honours Student' },
+      { name: 'Kotekal Methukula Santhosh', role: 'Honours Student' },
+      { name: 'Nijesh Raghava',         role: 'BTP Student' },
+      { name: 'Varanasi Vamseedhar',    role: 'BTP Student' },
+      { name: 'Ayush Agarwal',          role: 'BTP Student' },
+      { name: 'Siddharth Mavani',       role: 'BTP Student' },
+      { name: 'Rohan C',                role: 'BTP Student' },
+      { name: 'Harshit Karwal',         role: 'BTP Student' },
+      { name: 'Mukta Chanda',           role: 'BTP Student' },
+      { name: 'Shashwat Dash',          role: 'BTP Student' },
+    ],
+  },
   {
     id: 'sustaind',
     title: 'SustAInd',
@@ -44,24 +64,6 @@ const projects: Project[] = [
     members: [
       { name: 'Arya Marda',        role: 'Honours Student' },
       { name: 'Shubham Kulkarni',  role: 'Masters Student' },
-    ],
-  },
-  {
-    id: 'locoml-platform',
-    title: 'LoCoML Platform',
-    summary: 'LoCoML is a low-code machine learning platform allowing users with limited ML knowledge to build, update, and deploy models. It incorporates automation throughout the pipeline — from data pre-processing to deployment — with ~2% runtime overhead.',
-    members: [
-      { name: 'Chandrasekar S',         role: 'Masters Student' },
-      { name: 'Maddireddy Kritin',      role: 'Honours Student' },
-      { name: 'Kotekal Methukula Santhosh', role: 'Honours Student' },
-      { name: 'Nijesh Raghava',         role: 'BTP Student' },
-      { name: 'Varanasi Vamseedhar',    role: 'BTP Student' },
-      { name: 'Ayush Agarwal',          role: 'BTP Student' },
-      { name: 'Siddharth Mavani',       role: 'BTP Student' },
-      { name: 'Rohan C',                role: 'BTP Student' },
-      { name: 'Harshit Karwal',         role: 'BTP Student' },
-      { name: 'Mukta Chanda',           role: 'BTP Student' },
-      { name: 'Shashwat Dash',          role: 'BTP Student' },
     ],
   },
   {
@@ -149,9 +151,20 @@ const Work = () => {
                 <h2 className="text-lg font-bold text-[#1A1710] mb-3 group-hover:text-[#2D6A4F] transition-colors duration-150">
                   {project.title}
                 </h2>
-                <p className="text-sm text-[#6B6455] mb-5 leading-relaxed">
+                <p className="text-sm text-[#6B6455] mb-4 leading-relaxed">
                   {project.summary}
                 </p>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mb-4 px-3 py-1.5 rounded-md text-xs font-medium bg-[#1F4A30] text-[#C4DDD1] hover:bg-[#2D6A4F] transition-colors duration-150"
+                  >
+                    <ExternalLink size={11} />
+                    Visit Project
+                  </a>
+                )}
                 <div>
                   <div className="flex items-center gap-2 mb-3">
                     <Users className="text-[#2D6A4F]" size={15} />

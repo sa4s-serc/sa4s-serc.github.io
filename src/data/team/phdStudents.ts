@@ -36,7 +36,7 @@ export const phdStudents: TeamMember[] = [
   },
   {
     name: "Aneetta Sara Shany",
-    role: "PhD in CSE, started in Oct 2025",
+    role: "PhD in CSE, JRF, started in May 2026",
     email: "aneetta.sara@research.iiit.ac.in",
     photo: "/team/aneetta_sara_shany.jpeg",
     linkedin: "https://www.linkedin.com/in/aneetta-sara/",
@@ -53,7 +53,7 @@ export const phdStudents: TeamMember[] = [
   },
   {
     name: "Chandrasekar S",
-    role: "PhD in CSE, started in Oct 2025",
+    role: "PhD in CSE, JRF, started in July 2026",
     email: "chandrasekar.s@research.iiiit.ac.in",
     photo: "/team/chandrasekar_s.jpeg",
     category: "PhD Students",

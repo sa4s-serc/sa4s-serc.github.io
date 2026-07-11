@@ -9,7 +9,7 @@ const iconBtnCls = "w-9 h-9 bg-[#E8E2D8] hover:bg-[#2D6A4F] hover:text-white tex
 const textBtnCls = "px-3 py-1.5 bg-[#E8E2D8] hover:bg-[#2D6A4F] hover:text-white text-[#6B6455] rounded-lg flex items-center justify-center transition-all duration-150 text-xs font-medium";
 
 function MemberButtons({ member, align = "center" }: { member: TeamMember; align?: "center" | "start" }) {
-  const wrap = align === "start" ? "justify-start" : "justify-center";
+  const wrap = align === "start" ? "justify-center sm:justify-start" : "justify-center";
   return (
     <div className={`flex ${wrap} mt-4 gap-2 flex-wrap`}>
       {member.email && (
