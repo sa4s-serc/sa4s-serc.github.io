@@ -11,7 +11,11 @@ export interface SpotlightItem {
   link: string;
   image: string;
   homepage: boolean;
+  video: string;
+  gallery: string[];
 }
+
+const IMAGE_EXT_RE = /\.(jpe?g|png|webp|gif)$/i;
 
 const VIRTUAL_ID = 'virtual:spotlight';
 const RESOLVED_ID = '\0virtual:spotlight';
@@ -41,7 +45,7 @@ function parseFields(text: string): Record<string, string> {
   return fields;
 }
 
-function parseSpotlightFile(filename: string, text: string): SpotlightItem | null {
+function parseSpotlightFile(filename: string, text: string, root: string): SpotlightItem | null {
   const f = parseFields(text);
   if (!f.TITLE) return null;
 
@@ -54,6 +58,38 @@ function parseSpotlightFile(filename: string, text: string): SpotlightItem | nul
   const rawImage = f.IMAGE || '';
   const image = rawImage.startsWith('/') ? rawImage : rawImage ? `/images/spotlight/${rawImage}` : '';
 
+  const rawVideo = f.VIDEO || '';
+  const video = rawVideo.startsWith('/') ? rawVideo : rawVideo ? `/images/spotlight/${rawVideo}` : '';
+
+  const galleryFolder = f.GALLERY || '';
+  const excluded = new Set(
+    (f.EXCLUDE || '')
+      .split(/[\n,]/)
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean)
+  );
+  const first = (f.FIRST || '')
+    .split(/[\n,]/)
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+
+  let gallery: string[] = [];
+  if (galleryFolder) {
+    const dir = join(root, 'public', 'images', 'spotlight', galleryFolder);
+    if (existsSync(dir)) {
+      const names = readdirSync(dir).filter(
+        (name) => IMAGE_EXT_RE.test(name) && !excluded.has(name.toLowerCase())
+      );
+      names.sort((a, b) => {
+        const ai = first.indexOf(a.toLowerCase());
+        const bi = first.indexOf(b.toLowerCase());
+        if (ai !== -1 || bi !== -1) return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+        return a < b ? -1 : a > b ? 1 : 0;
+      });
+      gallery = names.map((name) => `/images/spotlight/${galleryFolder}/${name}`);
+    }
+  }
+
   return {
     date,
     title: f.TITLE,
@@ -63,6 +99,8 @@ function parseSpotlightFile(filename: string, text: string): SpotlightItem | nul
     link: f.LINK || '#',
     image,
     homepage: 'HOMEPAGE' in f,
+    video,
+    gallery,
   };
 }
 
@@ -79,7 +117,7 @@ function loadSpotlightItems(root: string): SpotlightItem[] {
     .map((f) => {
       try {
         const text = readFileSync(join(dir, f), 'utf-8');
-        return parseSpotlightFile(f, text);
+        return parseSpotlightFile(f, text, root);
       } catch {
         return null;
       }

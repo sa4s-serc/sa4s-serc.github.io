@@ -32,6 +32,14 @@ const galleryImages: GalleryImage[] = [
   { id: '17', src: '/gallery/pic5.jpeg',                alt: 'Gallery Image 5',        caption: 'Gallery Image 5',        date: '2024-01-01', event: 'General' },
   { id: '18', src: '/gallery/sustaind.png',             alt: 'SustAInd team',          caption: 'SustAInd team',          date: '2024-01-01', event: 'Project group' },
   { id: '19', src: '/images/spotlight/2026sercdinner.jpg', alt: 'April 2026 Team Dinner', caption: 'April 2026 Team Dinner', date: '2026-04-01', event: 'Social' },
+
+  // SERI 2026 conference — selection of highlights
+  { id: 'seri-big1', src: '/images/spotlight/seri2026/big1.jpeg',     alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
+  { id: 'seri-big2', src: '/images/spotlight/seri2026/big2.png',      alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
+  { id: 'seri-big3', src: '/images/spotlight/seri2026/big3.JPG',      alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
+  { id: 'seri-thumb', src: '/images/spotlight/seri2026/THUMBNAIL.jpg', alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
+  { id: 'seri-21', src: '/images/spotlight/seri2026/DSC02319.JPG',       alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
+  { id: 'seri-23', src: '/images/spotlight/seri2026/Pic23213.jpg',       alt: 'SERI 2026', caption: 'SERI 2026', date: '2026-07-18', event: 'SERI 2026' },
 ];
 
 const sortedGalleryImages = [...galleryImages].sort((a, b) => b.date.localeCompare(a.date));

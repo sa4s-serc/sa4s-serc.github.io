@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -111,8 +111,104 @@ function Card({ item, onClick }: { item: SpotlightItem; onClick: () => void }) {
   );
 }
 
+// ── Mosaic gallery ────────────────────────────────────────────────────────────
+// Bento pattern: images named big1/big2/... always take the largest slot;
+// everything else cycles through a repeating rhythm of wide/tall/large/small
+// cells so the grid reads as a designed mosaic rather than a thumbnail sheet.
+function isFeatured(src: string) {
+  return /\/big\d+\.\w+$/i.test(src);
+}
+const BENTO_PATTERN = [
+  'col-span-2 row-span-2',
+  '',
+  'row-span-2',
+  '',
+  'col-span-2',
+  '',
+  '',
+  'row-span-2',
+  'col-span-2 row-span-2',
+  '',
+  'col-span-2',
+  '',
+];
+function bentoSpan(src: string, order: number) {
+  if (isFeatured(src)) return 'col-span-2 row-span-2';
+  return BENTO_PATTERN[order % BENTO_PATTERN.length];
+}
+
+function GalleryMosaic({ images, title }: { images: string[]; title: string }) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const close = () => setActiveIndex(null);
+  const step = (dir: -1 | 1) => {
+    if (activeIndex === null) return;
+    setActiveIndex((activeIndex + dir + images.length) % images.length);
+  };
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className="mb-10">
+      <h2 className="text-sm font-semibold tracking-wide uppercase text-[#6B6455] mb-4">
+        Gallery
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 auto-rows-[160px] sm:auto-rows-[190px] md:auto-rows-[220px] gap-3 grid-flow-dense">
+        {images.map((src, i) => (
+          <button
+            key={src}
+            onClick={() => setActiveIndex(i)}
+            className={`group relative overflow-hidden rounded-xl border border-[#D8D2C4] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F] ${bentoSpan(src, i)}`}
+          >
+            <img
+              src={publicUrl(src)}
+              alt={`${title} photo ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200" />
+          </button>
+        ))}
+      </div>
+
+      {activeIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+          onClick={close}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowLeft') step(-1);
+            if (e.key === 'ArrowRight') step(1);
+          }}
+          tabIndex={0}
+        >
+          <div className="relative max-w-4xl max-h-full p-4" onClick={(e) => e.stopPropagation()}>
+            <button onClick={close} className="absolute top-4 right-4 text-white/70 hover:text-white z-10" aria-label="Close">
+              <X size={28} />
+            </button>
+            <button onClick={() => step(-1)} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10" aria-label="Previous image">
+              <ChevronLeft size={40} />
+            </button>
+            <button onClick={() => step(1)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white z-10" aria-label="Next image">
+              <ChevronRight size={40} />
+            </button>
+            <img
+              src={publicUrl(images[activeIndex])}
+              alt={`${title} photo ${activeIndex + 1}`}
+              className="max-w-full max-h-[80vh] object-contain rounded"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Detail view ───────────────────────────────────────────────────────────────
 function Detail({ item, onBack }: { item: SpotlightItem; onBack: () => void }) {
+  const hasGallery = item.gallery && item.gallery.length > 0;
+
   return (
     <motion.div
       key="detail"
@@ -120,42 +216,57 @@ function Detail({ item, onBack }: { item: SpotlightItem; onBack: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className="max-w-2xl mx-auto"
+      className={`mx-auto ${hasGallery ? 'max-w-6xl' : 'max-w-2xl'}`}
     >
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm text-[#6B6455] hover:text-[#2D6A4F] transition-colors duration-150 mb-8 group"
-      >
-        <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform duration-150" />
-        Back
-      </button>
+      <div className={hasGallery ? 'max-w-2xl mx-auto' : ''}>
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm text-[#6B6455] hover:text-[#2D6A4F] transition-colors duration-150 mb-8 group"
+        >
+          <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform duration-150" />
+          Back
+        </button>
 
-      {item.tag && (
-        <span className={`inline-block text-[9px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full mb-4 ${tagClass(item.tag)}`}>
-          {item.tag}
-        </span>
-      )}
+        {item.tag && (
+          <span className={`inline-block text-[9px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full mb-4 ${tagClass(item.tag)}`}>
+            {item.tag}
+          </span>
+        )}
 
-      <h1 className="text-4xl md:text-5xl font-bold text-[#1A1710] leading-tight mb-3">
-        {item.title}
-      </h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-[#1A1710] leading-tight mb-3">
+          {item.title}
+        </h1>
 
-      <p className="text-sm text-[#9A8F80] mb-8">{formatDate(item.date)}</p>
+        <p className="text-sm text-[#9A8F80] mb-8">{formatDate(item.date)}</p>
+      </div>
 
-      {item.image && (
-        <div className="rounded-2xl overflow-hidden mb-8 border border-[#D8D2C4] aspect-video">
+      {item.video ? (
+        <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden mb-8 border border-[#D8D2C4] aspect-video bg-black">
+          <video
+            src={publicUrl(item.video)}
+            poster={item.image ? publicUrl(item.image) : undefined}
+            controls
+            preload="none"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ) : item.image ? (
+        <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden mb-8 border border-[#D8D2C4] aspect-video">
           <img
             src={publicUrl(item.image)}
             alt={item.title}
             className="w-full h-full object-cover"
           />
         </div>
-      )}
+      ) : null}
 
-      <div className="mb-10">
-        <SpotlightContent content={item.content} />
+      <div className={hasGallery ? 'max-w-2xl mx-auto' : ''}>
+        <div className="mb-10">
+          <SpotlightContent content={item.content} />
+        </div>
       </div>
 
+      {hasGallery && <GalleryMosaic images={item.gallery} title={item.title} />}
     </motion.div>
   );
 }
