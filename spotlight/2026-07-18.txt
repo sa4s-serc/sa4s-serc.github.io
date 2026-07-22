@@ -1,0 +1,12 @@
+[HOMEPAGE]
+[TITLE] SERC Hosts the SERI 2026 Conference
+[TAG] Conference
+[CONTENT] SERC at IIIT Hyderabad recently hosted the SERI 2026, a major conference that brought together researchers, practitioners, and students for several days of talks, workshops, posters and discussions. Across three days, we had close to 𝟯𝟱𝟬 𝘂𝗻𝗶𝗾𝘂𝗲 𝗽𝗮𝗿𝘁𝗶𝗰𝗶𝗽𝗮𝗻𝘁𝘀 from academia and industry across the country. The new 𝗜𝗻𝗱𝘂𝘀𝘁𝗿𝘆 𝗗𝗮𝘆, itself brought together around 𝟭𝟱𝟬 𝗽𝗮𝗿𝘁𝗶𝗰𝗶𝗽𝗮𝗻𝘁𝘀! SERI had about 𝟳 𝗶𝗻𝘃𝗶𝘁𝗲𝗱 𝘁𝗮𝗹𝗸𝘀, 𝟱 𝘀𝗽𝗼𝘁𝗹𝗶𝗴𝗵𝘁 𝘁𝗮𝗹𝗸𝘀 𝗺𝗼𝗿𝗲 𝘁𝗵𝗮𝗻 𝟯𝟬 𝗿𝗲𝘀𝗲𝗮𝗿𝗰𝗵/𝗽𝗿𝗮𝗰𝘁𝗶𝗰𝗲 𝗽𝗿𝗲𝘀𝗲𝗻𝘁𝗮𝘁𝗶𝗼𝗻𝘀, 𝟭𝟬 𝗽𝗼𝘀𝘁𝗲𝗿𝘀 𝗮𝗻𝗱 𝟯 𝗽𝗮𝗻𝗲𝗹 𝗱𝗶𝘀𝗰𝘂𝘀𝘀𝗶𝗼𝗻𝘀 across the days.
+
+[IMAGE] seri2026/THUMBNAIL.jpg
+[VIDEO] seri2026/videoseri2026.mp4
+[GALLERY] seri2026
+[EXCLUDE] DSC01338.JPG, big1.jpeg, big3.JPG
+[FIRST] DSC02319.JPG
+[LINK] #
+[DATE] 2026-07-18
