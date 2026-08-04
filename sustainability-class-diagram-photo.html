@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Software Sustainability — Corpus Graph</title>
+    <style>
+      :root {
+        --forest: #14532d;
+        --text: #0f172a;
+        --muted: #475569;
+        --radius: 14px;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        color: var(--text);
+        background: #f3faf6;
+        line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── hero ── */
+      .hero {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 35%, #ccfbf1 65%, #fef9c3 100%);
+        border-bottom: 1px solid rgba(20,83,45,0.12);
+        padding: 2.5rem 1.25rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34,197,94,0.18), transparent 70%),
+          radial-gradient(ellipse 60% 40% at 100% 100%, rgba(234,179,8,0.08), transparent 55%);
+        pointer-events: none;
+      }
+      .hero-inner { position: relative; z-index: 1; }
+      .hero h1 {
+        font-size: clamp(1.65rem, 3.5vw, 2.55rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--forest);
+      }
+      .hero .subtitle {
+        margin: 0.75rem auto 0;
+        max-width: 40rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* ── shell ── */
+      .graph-shell {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 2.5rem;
+      }
+
+      .graph-stage {
+        position: relative;
+        background: linear-gradient(165deg, #f8fcf9 0%, #f0fdf4 40%, #ecfdf5 100%);
+        border-radius: 20px;
+        border: 1px solid rgba(20,83,45,0.14);
+        box-shadow: 0 4px 24px rgba(15,23,42,0.06);
+        overflow: hidden;
+        aspect-ratio: 1300 / 900;
+        min-height: 500px;
+      }
+
+      .graph-stage > svg {
+        position: absolute;
+        inset: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+      }
+
+      .graph-overlay {
+        position: absolute;
+        width: 1300px;
+        height: 900px;
+        left: 0;
+        top: 0;
+        transform-origin: top left;
+      }
+
+      /* ── Hub (center) ── */
+      .hub {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0;
+        z-index: 10;
+      }
+      .hub-badge {
+        width: 80px; height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#22c55e 0%,#15803d 45%,#0d9488 100%);
+        box-shadow: 0 8px 28px rgba(21,128,61,0.35);
+        display: flex; align-items: center; justify-content: center;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .hub h2 {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--forest);
+        letter-spacing: -0.02em;
+        margin-top: 14px;
+        white-space: nowrap;
+        background: rgba(255,255,255,0.6);
+        padding: 4px 12px;
+        border-radius: 12px;
+      }
+
+      /* ── Pillar node ── */
+      .pillar-node {
+        border-radius: 12px;
+        background: linear-gradient(180deg,#365314 0%,#1a2e05 100%);
+        border: 1px solid #14532d;
+        padding: 10px 18px;
+        text-align: center;
+        box-shadow: 0 4px 14px rgba(20,83,45,0.25);
+        display: inline-block;
+        z-index: 10;
+        position: relative;
+      }
+      .pillar-node h3 {
+        font-size: 18px; font-weight: 800;
+        color: #fff; line-height: 1.25; letter-spacing: 0.01em;
+      }
+
+      /* Groups */
+      .pillar-group {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .papers {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .papers-col {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .papers-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        justify-items: center;
+      }
+
+      /* ── Paper sticky cards ── */
+      .pub {
+        border-radius: 10px;
+        border: 1px solid rgba(20,83,45,0.22);
+        background: linear-gradient(180deg,#fffef7 0%,#fef9e7 72%,#fcefc5 100%);
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #1e293b;
+        line-height: 1.35;
+        box-shadow: 2px 3px 8px rgba(0,0,0,0.07);
+        text-align: center;
+        max-width: 260px;
+        z-index: 5;
+        position: relative;
+      }
+      .pub .inv { font-weight: 600; color: #64748b; font-size: 0.9em; }
+
+      .footnote {
+        margin: 1.75rem auto 0;
+        max-width: 580px;
+        padding: 0.85rem 1rem;
+        border-radius: var(--radius);
+        border: 1px dashed rgba(20,83,45,0.28);
+        background: rgba(255,255,255,0.85);
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-align: center;
+      }
+      .footnote strong { color: var(--text); }
+
+      /* Arrow connecting logic is dynamic */
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <h1>Software Sustainability</h1>
+        <p class="subtitle">
+          Corpus graph aligned with Lago pillars (plus Economic): central outlook,
+          pillar hubs, and publications as connected notes.
+        </p>
+      </div>
+    </header>
+
+    <div class="graph-shell">
+      <div class="graph-stage" id="stage" aria-label="Sustainability corpus graph">
+
+        <svg id="svg-lines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 900" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f6212" opacity="0.75"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <div class="graph-overlay" id="overlay">
+
+          <!-- ══ HUB (center ~650, 450) ══ -->
+          <div class="hub" id="hub" style="left:490px;top:380px;width:320px;">
+            <div class="hub-badge" id="hub-badge">
+              <!-- Leaf icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 22 12 12"/>
+              </svg>
+            </div>
+            <h2 id="hub-text">Software Sustainability</h2>
+          </div>
+
+          <!-- ══ ENVIRONMENTAL — LEFT ══ -->
+          <div class="pillar-group" id="group-env" style="left: 30px; top: 180px; width: 420px;">
+            <div class="pillar-node" id="pn-env" style="margin-bottom: 20px;">
+              <h3>Environmental</h3>
+            </div>
+            <div class="papers" id="papers-env">
+              <div class="pub">Dissecting Transformers CLEAR</div>
+              <div class="pub">Generating Energy-Efficient Code via LLMs</div>
+              <div class="pub">SWEnergy</div>
+              <div class="pub">Greening AI with SE</div>
+              <div class="pub">EcoMLS</div>
+              <div class="pub">EdgeMLBalancer</div>
+              <div class="pub">Leveraging ML for IoT / energy QoS</div>
+              <div class="pub">LEAF</div>
+              <div class="pub">Digital Twin Smart City</div>
+            </div>
+          </div>
+
+          <!-- ══ SOCIAL — TOP ══ -->
+          <div class="pillar-group" id="group-soc" style="left: 250px; top: 40px; width: 800px;">
+            <div class="papers" id="papers-soc" style="margin-bottom: 20px;">
+              <div class="pub">Engineering End-to-End Remote Labs IoT</div>
+              <div class="pub">Semi-Automated Certification ML Aviation</div>
+              <div class="pub">Human Behavior-Oriented Arch. Design</div>
+            </div>
+            <div class="pillar-node" id="pn-soc">
+              <h3>Social</h3>
+            </div>
+          </div>
+
+          <!-- ══ TECHNICAL — RIGHT ══ -->
+          <div class="pillar-group" id="group-tec" style="right: 30px; top: 220px; width: 420px;">
+            <div class="pillar-node" id="pn-tec" style="margin-bottom: 20px;">
+              <h3>Technical</h3>
+            </div>
+            <div class="papers-col" id="papers-tec">
+              <div class="pub">HarmonE / Harmonica</div>
+              <div class="pub">Towards Architecting Sustainable MLOps</div>
+              <div class="pub">Can LLMs Generate ADRs?</div>
+              <div class="pub">DRAFT-ing ADRs using LLMs</div>
+              <div class="papers">
+                <div class="pub">AgenticAKM</div>
+                <div class="pub">Agile4MLS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ ECONOMIC — BOTTOM ══ -->
+          <div class="pillar-group" id="group-eco" style="left: 250px; top: 580px; width: 800px;">
+            <div class="pillar-node" id="pn-eco" style="margin-bottom: 20px;">
+              <h3>Economic</h3>
+            </div>
+            <div class="papers" id="papers-eco">
+              <div class="pub">POSEIDON</div>
+              <div class="pub">Engineering LLM MOYA CloudOps</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <aside class="footnote">
+        <strong>Note:</strong> Aligns with <strong>sustainability_diagram_altrenate.txt</strong>
+        (mindmap) plus Economic. Links are illustrative, not a full decision map.
+      </aside>
+    </div>
+
+    <script>
+    (function () {
+      const VW = 1300, VH = 900;
+      const stage   = document.getElementById('stage');
+      const overlay = document.getElementById('overlay');
+
+      function scaleOverlay() {
+        const sw = stage.clientWidth;
+        const sh = stage.clientHeight;
+        const s  = Math.min(sw / VW, sh / VH);
+        const ox = (sw - VW * s) / 2;
+        const oy = (sh - VH * s) / 2;
+        overlay.style.transform = `translate(${ox}px, ${oy}px) scale(${s})`;
+      }
+
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('svg-lines');
+
+      function svgPath(d, dashed, arrow) {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', d);
+        p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', '#3f6212');
+        p.setAttribute('stroke-width', dashed ? '2.5' : '1.5');
+        p.setAttribute('stroke-linecap', 'round');
+        p.setAttribute('stroke-linejoin', 'round');
+        if (dashed) p.setAttribute('stroke-dasharray', '8 8');
+        else        p.setAttribute('stroke-dasharray', '4 4');
+        p.setAttribute('opacity', dashed ? '0.75' : '0.5');
+        if (arrow)  p.setAttribute('marker-end', 'url(#arr)');
+        return p;
+      }
+
+      function curve(x1, y1, x2, y2, dashed, arrow) {
+        const dx = x2 - x1, dy = y2 - y1;
+        
+        let cp1x, cp1y, cp2x, cp2y;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          // Horizontal curve
+          cp1x = x1 + dx * 0.4; cp1y = y1;
+          cp2x = x2 - dx * 0.4; cp2y = y2;
+        } else {
+          // Vertical curve
+          cp1x = x1; cp1y = y1 + dy * 0.4;
+          cp2x = x2; cp2y = y2 - dy * 0.4;
+        }
+        
+        const d = `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+        return svgPath(d, dashed, arrow);
+      }
+
+      function line(x1, y1, x2, y2, dashed) {
+        const d = `M ${x1} ${y1} L ${x2} ${y2}`;
+        return svgPath(d, dashed, false);
+      }
+
+      function getCenter(id) {
+        const el = document.getElementById(id);
+        return { x: el.offsetLeft + el.offsetWidth / 2, y: el.offsetTop + el.offsetHeight / 2 };
+      }
+
+      function getEdge(id, edge) {
+        const el = document.getElementById(id);
+        const rect = {
+          left: el.offsetLeft, top: el.offsetTop,
+          right: el.offsetLeft + el.offsetWidth, bottom: el.offsetTop + el.offsetHeight,
+          cx: el.offsetLeft + el.offsetWidth / 2, cy: el.offsetTop + el.offsetHeight / 2
+        };
+        // Note: For elements inside pillar-groups, offsetLeft is relative to the group.
+        // We need coordinates relative to the overlay.
+        
+        // Let's create a robust getRect relative to overlay
+        let cur = el;
+        let left = 0, top = 0;
+        while (cur && cur !== overlay) {
+          left += cur.offsetLeft;
+          top += cur.offsetTop;
+          cur = cur.offsetParent;
+        }
+        
+        return {
+          left: left, top: top,
+          right: left + el.offsetWidth, bottom: top + el.offsetHeight,
+          cx: left + el.offsetWidth / 2, cy: top + el.offsetHeight / 2
+        };
+      }
+
+      function drawLines() {
+        const defs = svg.querySelector('defs');
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        if (defs) svg.appendChild(defs);
+
+        const hubBadge = getEdge('hub-badge');
+        const hubText = getEdge('hub-text');
+        
+        const env = getEdge('pn-env');
+        const soc = getEdge('pn-soc');
+        const tec = getEdge('pn-tec');
+        const eco = getEdge('pn-eco');
+
+        // Hub to pillars (curved dashed)
+        // Hub Left to Env Right
+        svg.appendChild(curve(hubBadge.left - 10, hubBadge.cy, env.right, env.cy, true, true));
+        // Hub Top to Soc Bottom
+        svg.appendChild(curve(hubBadge.cx, hubBadge.top - 10, soc.cx, soc.bottom, true, true));
+        // Hub Right to Tec Left
+        svg.appendChild(curve(hubBadge.right + 10, hubBadge.cy, tec.left, tec.cy, true, true));
+        // Hub Bottom to Eco Top
+        svg.appendChild(curve(hubText.cx, hubText.bottom + 10, eco.cx, eco.top, true, true));
+
+        // Pillars to Papers (straight dotted)
+        const papersEnv = getEdge('papers-env');
+        svg.appendChild(line(env.cx, env.bottom, env.cx, papersEnv.top, false));
+
+        const papersSoc = getEdge('papers-soc');
+        svg.appendChild(line(soc.cx, soc.top, soc.cx, papersSoc.bottom, false));
+
+        const papersTec = getEdge('papers-tec');
+        svg.appendChild(line(tec.cx, tec.bottom, tec.cx, papersTec.top, false));
+
+        const papersEco = getEdge('papers-eco');
+        svg.appendChild(line(eco.cx, eco.bottom, eco.cx, papersEco.top, false));
+      }
+
+      function update() {
+        scaleOverlay();
+        drawLines();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { requestAnimationFrame(update); });
+      } else {
+        requestAnimationFrame(update);
+      }
+      window.addEventListener('resize', function() {
+        clearTimeout(window._rTimer);
+        window._rTimer = setTimeout(update, 60);
+      });
+      
+      // Delay update to handle font loading
+      setTimeout(update, 100);
+      setTimeout(update, 500);
+      setTimeout(update, 1000);
+    })();
+    </script>
+  </body>
+</html>
