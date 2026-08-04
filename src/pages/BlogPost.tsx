@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft } from 'lucide-react';
+import { Calendar, User, Users, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,6 +7,77 @@ import rehypeRaw from 'rehype-raw';
 import { blogPosts } from '@/lib/posts';
 import { useEffect, useState } from 'react';
 import { publicUrl } from '@/lib/utils';
+import { defaultPhoto, teamMembers } from '@/data/teamData';
+import { memberSlug } from '@/pages/Team';
+
+function findTeamMember(authorName: string) {
+  const target = authorName.trim().toLowerCase();
+  return teamMembers.find((m) => m.name.trim().toLowerCase() === target);
+}
+
+function parseAuthors(author: string) {
+  return author
+    .split(/,|&|\band\b/i)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function AuthorCard({ author }: { author: string }) {
+  const authors = parseAuthors(author);
+  const isGroup = authors.length > 1;
+  const single = !isGroup ? findTeamMember(authors[0]) : null;
+  const singlePhoto = single?.photo && single.photo !== '' ? single.photo : defaultPhoto;
+
+  return (
+    <div className="bg-[#173B29] border border-[#2D6A4F]/40 rounded-xl px-4 py-3 shadow-lg flex flex-col items-center text-center w-40">
+      {isGroup ? (
+        <div className="w-14 h-14 rounded-full bg-[#2D6A4F]/40 ring-2 ring-[#2D6A4F]/50 mb-2 flex items-center justify-center">
+          <Users size={26} className="text-[#8DB8A2]" />
+        </div>
+      ) : (
+        <img
+          src={publicUrl(singlePhoto)}
+          alt={authors[0]}
+          loading="lazy"
+          decoding="async"
+          className="w-14 h-14 rounded-full object-cover ring-2 ring-[#2D6A4F]/50 mb-2"
+        />
+      )}
+      <p className="text-xs text-[#8DB8A2] tracking-wide uppercase mb-0.5">
+        {isGroup ? 'Authors' : 'Author'}
+      </p>
+      <p className="text-sm font-semibold text-[#EDE8DF] leading-snug space-x-1">
+        {authors.map((name, i) => {
+          const member = findTeamMember(name);
+          return (
+            <span key={name}>
+              {member ? (
+                <Link
+                  to={`/team#${memberSlug(member.name)}`}
+                  className="hover:text-[#52B788] hover:underline transition-colors duration-150"
+                >
+                  {name}
+                </Link>
+              ) : (
+                name
+              )}
+              {i < authors.length - 1 && <span className="text-[#8DB8A2]">,</span>}
+            </span>
+          );
+        })}
+      </p>
+      {!isGroup && single && (
+        <Link
+          to={`/team#${memberSlug(single.name)}`}
+          className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-[#52B788] hover:text-[#EDE8DF] transition-colors duration-150"
+        >
+          View profile
+          <ArrowRight size={11} />
+        </Link>
+      )}
+    </div>
+  );
+}
 
 
       
@@ -88,7 +159,12 @@ export default function BlogPost() {
     <div className="min-h-screen bg-[#FAF7F2]">
 
       {/* Header */}
-      <div className="bg-[#0C2118] border-b border-[#1C4030] py-12">
+      <div className="relative bg-[#0C2118] border-b border-[#1C4030] py-12">
+        {post.author && (
+          <div className="hidden lg:block absolute top-1/2 right-[max(1rem,calc(50%-42rem+1rem))] -translate-y-1/2 z-10">
+            <AuthorCard author={post.author} />
+          </div>
+        )}
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Link
@@ -98,7 +174,7 @@ export default function BlogPost() {
               <ArrowLeft size={15} className="mr-2" />
               Back to all posts
             </Link>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#EDE8DF] mb-4 leading-snug">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#EDE8DF] mb-4 leading-snug pr-0 lg:pr-44">
               {post.title}
             </h1>
             {post.excerpt && (
@@ -139,6 +215,12 @@ export default function BlogPost() {
                 ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-5 space-y-1.5 text-[#6B6455]" {...props} />,
                 li: ({node, ...props}) => <li className="mb-1" {...props} />,
                 a:  ({node, ...props}) => <a className="text-[#2D6A4F] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                blockquote: ({node, ...props}) => (
+                  <blockquote
+                    className="not-italic border-none my-6 pl-5 md:pl-6 py-1 border-l-4 border-[#2D6A4F] text-base md:text-lg font-medium leading-snug text-[#1A1710] [&>p]:mb-0"
+                    {...props}
+                  />
+                ),
                 img: ({node, ...props}) => {
                   const src = props.src ? publicUrl(props.src) : '';
                   return (
@@ -154,6 +236,12 @@ export default function BlogPost() {
             >
               {post.content}
             </ReactMarkdown>
+          )}
+
+          {post.author && (
+            <div className="lg:hidden mt-10 pt-8 border-t border-[#D8D2C4] flex justify-center">
+              <AuthorCard author={post.author} />
+            </div>
           )}
         </div>
       </div>

@@ -1,9 +1,14 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Mail, Linkedin, Globe } from "lucide-react";
 import { categories, defaultPhoto, teamMembers } from "../data/teamData";
 import { publicUrl } from "../lib/utils";
 import type { TeamMember } from "../data/team/teamTypes";
+
+export function memberSlug(name: string) {
+  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
 
 const iconBtnCls = "w-9 h-9 bg-[#E8E2D8] hover:bg-[#2D6A4F] hover:text-white text-[#6B6455] rounded-lg flex items-center justify-center transition-all duration-150";
 const textBtnCls = "px-3 py-1.5 bg-[#E8E2D8] hover:bg-[#2D6A4F] hover:text-white text-[#6B6455] rounded-lg flex items-center justify-center transition-all duration-150 text-xs font-medium";
@@ -43,7 +48,7 @@ function MemberButtons({ member, align = "center" }: { member: TeamMember; align
 
 function FacultyCard({ member }: { member: TeamMember }) {
   return (
-    <div className="col-span-1 md:col-span-2 lg:col-span-3 bg-[#EAE4D6] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl p-6 flex flex-col sm:flex-row gap-6 items-center sm:items-start transition-all duration-200">
+    <div id={memberSlug(member.name)} className="col-span-1 md:col-span-2 lg:col-span-3 bg-[#EAE4D6] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl p-6 flex flex-col sm:flex-row gap-6 items-center sm:items-start transition-all duration-200 scroll-mt-24">
       <img
         src={publicUrl(member.photo === "" ? defaultPhoto : member.photo)}
         alt={member.name}
@@ -71,7 +76,7 @@ function FacultyCard({ member }: { member: TeamMember }) {
 function MemberCard({ member }: { member: TeamMember }) {
   const isAlumni = member.category === "Alumni";
   return (
-    <div className="relative bg-[#F0EBE1] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl p-5 text-center transition-all duration-200">
+    <div id={memberSlug(member.name)} className="relative bg-[#F0EBE1] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl p-5 text-center transition-all duration-200 scroll-mt-24">
       {isAlumni && (
         <span className="absolute top-3 right-3 text-[9px] tracking-[0.18em] uppercase font-semibold text-[#9A8F80]">
           Alumni
@@ -100,6 +105,21 @@ function MemberCard({ member }: { member: TeamMember }) {
 
 const Team = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    setActiveCategory("All");
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = document.getElementById(id);
+    if (el) {
+      requestAnimationFrame(() => {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.classList.add("ring-2", "ring-[#2D6A4F]");
+        setTimeout(() => el.classList.remove("ring-2", "ring-[#2D6A4F]"), 2000);
+      });
+    }
+  }, [location.hash]);
 
   const filteredMembers =
     activeCategory === "All"

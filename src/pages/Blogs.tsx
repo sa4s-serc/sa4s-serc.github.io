@@ -94,9 +94,10 @@ const Blogs = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
           {currentPosts.map((post) =>
             post && post.slug ? (
-              <div
+              <Link
                 key={post.slug}
-                className="bg-[#F0EBE1] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl overflow-hidden hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
+                to={`/blogs/${post.slug}`}
+                className="group bg-[#F0EBE1] border border-[#D8D2C4] hover:border-[#2D6A4F]/40 rounded-xl overflow-hidden hover:-translate-y-0.5 transition-all duration-200 flex flex-col"
               >
                 {post.thumbnail && <BlogCardImage src={post.thumbnail} alt={post.title || 'Blog post thumbnail'} />}
                 <div className="p-5 flex flex-col flex-1">
@@ -116,15 +117,12 @@ const Blogs = () => {
                       {post.author || 'SA4S'}
                     </span>
                   </div>
-                  <Link
-                    to={`/blogs/${post.slug}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2D6A4F] hover:text-[#1A1710] transition-colors duration-150 mt-auto group"
-                  >
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2D6A4F] group-hover:text-[#1A1710] transition-colors duration-150 mt-auto">
                     Read more
                     <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-150" />
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             ) : null
           )}
         </div>
