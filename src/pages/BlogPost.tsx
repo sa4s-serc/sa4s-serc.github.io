@@ -46,26 +46,22 @@ function AuthorCard({ author }: { author: string }) {
       <p className="text-xs text-[#8DB8A2] tracking-wide uppercase mb-0.5">
         {isGroup ? 'Authors' : 'Author'}
       </p>
-      <p className="text-sm font-semibold text-[#EDE8DF] leading-snug space-x-1">
-        {authors.map((name, i) => {
+      <div className="text-sm font-semibold text-[#EDE8DF] leading-snug flex flex-col gap-0.5">
+        {authors.map((name) => {
           const member = findTeamMember(name);
-          return (
-            <span key={name}>
-              {member ? (
-                <Link
-                  to={`/team#${memberSlug(member.name)}`}
-                  className="hover:text-[#52B788] hover:underline transition-colors duration-150"
-                >
-                  {name}
-                </Link>
-              ) : (
-                name
-              )}
-              {i < authors.length - 1 && <span className="text-[#8DB8A2]">,</span>}
-            </span>
+          return member ? (
+            <Link
+              key={name}
+              to={`/team#${memberSlug(member.name)}`}
+              className="hover:text-[#52B788] hover:underline transition-colors duration-150"
+            >
+              {name}
+            </Link>
+          ) : (
+            <span key={name}>{name}</span>
           );
         })}
-      </p>
+      </div>
       {!isGroup && single && (
         <Link
           to={`/team#${memberSlug(single.name)}`}

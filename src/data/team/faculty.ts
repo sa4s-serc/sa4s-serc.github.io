@@ -2,7 +2,7 @@ import type { TeamMember } from "./teamTypes";
 
 export const facultyMembers: TeamMember[] = [
   {
-    name: "Karthik Vaidyanathan",
+    name: "Karthik Vaidhyanathan",
     role: "Assistant Professor at the Software Engineering Research Center, IIIT-Hyderabad from 2022",
     email: "karthikv1392@gmail.com",
     photo: "/team/karthik_vaidyanathan.jpg",
