@@ -98,7 +98,7 @@ export const dualDegreeStudents: TeamMember[] = [
     role: "Undergraduate Researcher, started in April 2026",
     email: "shreyash.chandak@research.iiit.ac.in",
     linkedin: "https://www.linkedin.com/in/shreyash-chandak/",
-    photo: "/team/shreyash_chandak.jpeg",
+    photo: "/team/shreyash_chandak.jpg",
     website: "https://researchweb.iiit.ac.in/~shreyash.chandak/",
     category: "Undergraduate Researchers",
   },

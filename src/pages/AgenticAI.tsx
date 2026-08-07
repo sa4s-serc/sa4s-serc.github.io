@@ -184,7 +184,7 @@ const AgenticAI = () => {
 
           <div className="mb-10">
             <p className="mb-5 text-center text-xs font-semibold uppercase tracking-[0.2em] text-[#6B6455]">Industry</p>
-            <div className="flex items-center justify-center">
+            <div className="flex flex-wrap items-center justify-center gap-5">
               <a
                 href="https://montycloud.com"
                 target="_blank"
@@ -195,6 +195,18 @@ const AgenticAI = () => {
                   src={publicUrl("/images/collabpic/montycloud.png")}
                   alt="MontyCloud"
                   className="h-14 w-auto object-contain transition-transform duration-200 group-hover:scale-110"
+                />
+              </a>
+              <a
+                href="https://lloydstechnologycentre.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-3 rounded-xl border border-[#D8D2C4] bg-[#FAF7F2] px-10 py-6 hover:border-[#2D6A4F]/40 transition-all duration-150"
+              >
+                <img
+                  src={publicUrl("/images/collabpic/lloyds-technology-centre.png")}
+                  alt="Lloyds Technology Centre"
+                  className="h-14 w-auto scale-[1.6] object-contain transition-transform duration-200 group-hover:scale-110"
                 />
               </a>
             </div>

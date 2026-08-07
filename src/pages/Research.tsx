@@ -24,7 +24,7 @@ const collaborators = [
   { name: 'Smart City Living Lab, IIIT Hyderabad', logo: '/images/collabpic/scrc.png' },
   { name: 'MontyCloud', logo: '/images/collabpic/montycloud.png', small: true },
   { name: 'Qualcomm', logo: '/images/collabpic/qualcomm.png', small: true },
-  { name: 'Lloyds Banking Group', logo: '/images/collabpic/lloyds-bank.jpg' },
+  { name: 'Lloyds Technology Centre', logo: '/images/collabpic/lloyds-technology-centre.png' },
 ];
 
 const Research: React.FC = () => {
