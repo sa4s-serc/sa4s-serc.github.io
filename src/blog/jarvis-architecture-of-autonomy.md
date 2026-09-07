@@ -1,9 +1,9 @@
 ---
 title: "The Architecture of Autonomy: Why Building JARVIS is a Systems Engineering Problem"
-excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+excerpt: "An intelligent system is not one that acts without humans. It is one that has the capacity to act independently while remaining strictly aligned with boundaries and goals."
 date: "2026-08-19"
 author: "Prakhar Singhal"
-category: "AI/ML"
+category: "Self Adaptation"
 thumbnail: "/images/blogpic/JARVIS.png"
 ---
 
