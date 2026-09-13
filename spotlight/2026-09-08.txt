@@ -1,0 +1,21 @@
+[HOMEPAGE]
+[TITLE] Best Reviewer Award and CASA Keynote at ECSA 2026
+[TAG] Conference
+[PREVIEW] Karthik Vaidhyanathan received the Best Reviewer Award at ECSA 2026 and delivered the keynote at the CASA Workshop in Bolzano on architecting autonomy under uncertainty.
+[CONTENT] Karthik Vaidhyanathan received the 𝗕𝗲𝘀𝘁 𝗥𝗲𝘃𝗶𝗲𝘄𝗲𝗿 𝗔𝘄𝗮𝗿𝗱 at ECSA 2026 and delivered the keynote 𝗪𝗵𝗲𝗻 𝗔𝗱𝗮𝗽𝘁𝗮𝘁𝗶𝗼𝗻 𝗕𝗲𝗰𝗼𝗺𝗲𝘀 𝗔𝗴𝗲𝗻𝘁𝗶𝗰: 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝗶𝗻𝗴 𝗔𝘂𝘁𝗼𝗻𝗼𝗺𝘆 𝘂𝗻𝗱𝗲𝗿 𝗨𝗻𝗰𝗲𝗿𝘁𝗮𝗶𝗻𝘁𝘆 at the CASA Workshop at ECSA 2026 in Bolzano, Italy.
+
+![Best Reviewer Award at ECSA 2026](/images/spotlight/best_reviewerecsa.png)
+
+The talk took up a question that sits at the centre of current work in the area: what happens when the mechanisms responsible for adaptation themselves become agentic. Tracing how the self-adaptation community has treated uncertainty, runtime reasoning and learning over the years, and drawing on recent SA4S work on agentic self-adaptation and uncertainty in GenAI-based systems, it set out a possible progression from engineered rules, to learning, to reasoning, and then to whatever follows.
+
+Agentic AI provides new machinery for reasoning about and potentially generating adaptations at runtime. It also introduces a paradox. Agents are brought in to manage uncertainty, yet the agents themselves become new sources of uncertainty, along with new interactions between those sources. The keynote closed on the architectural question this raises: should autonomy itself become an adaptation variable?
+
+![Keynote at the CASA Workshop](/images/spotlight/ecsa261.png)
+
+![Discussions at ECSA 2026 in Bolzano](/images/spotlight/ecsa262.png)
+
+Our thanks to the CASA organisers Claudia Raibulet, Luciana Rebelo, Mirgita Frasheri and Samuele Giussani, and to the wider ECSA community, for the invitation and for the discussions that carried on well past the session.
+
+[Slides](https://lnkd.in/dEVpsH27)
+[IMAGE] /images/spotlight/ecsamain.png
+[DATE] 2026-09-08

@@ -1,0 +1,16 @@
+[HOMEPAGE]
+[TITLE] Orchestrating at Scale: SA4S at the nasscom AI Confluence
+[TAG] Conference
+[PREVIEW] Karthik Vaidhyanathan spoke at FinAI Confluence 2026 on India's opportunity to build the orchestration layer for an AI-native economy. Harmonica has been accepted at Agentic AI Confluence 2026.
+[CONTENT] At 𝗙𝗶𝗻𝗔𝗜 𝗖𝗼𝗻𝗳𝗹𝘂𝗲𝗻𝗰𝗲 𝟮𝟬𝟮𝟲, Karthik Vaidhyanathan spoke on India's opportunity to build the orchestration layer for an AI-native economy. India has already built some of the most widely used digital public infrastructure in the world. The question he put to the audience was whether it can now build the equivalent layer for AI.
+
+As autonomous agents begin to interact across organisational boundaries, the difficulty moves beyond building stronger models. How do agents establish trust in one another? How is uncertainty and non-deterministic behaviour managed across them? And how are such systems built to operate autonomously while keeping meaningful human control in place? Orchestration at scale, he argued, is where the next significant opportunity lies.
+
+The discussion continues at 𝗔𝗴𝗲𝗻𝘁𝗶𝗰 𝗔𝗜 𝗖𝗼𝗻𝗳𝗹𝘂𝗲𝗻𝗰𝗲 𝟮𝟬𝟮𝟲, on 24 September in Bengaluru, under the theme Rise of the Orchestration Economy.
+
+SA4S will also feature on the technical programme. Our work 𝗛𝗮𝗿𝗺𝗼𝗻𝗶𝗰𝗮: 𝗔 𝗦𝗲𝗹𝗳-𝗮𝗱𝗮𝗽𝘁𝗮𝘁𝗶𝗼𝗻 𝗘𝘅𝗲𝗺𝗽𝗹𝗮𝗿 𝗳𝗼𝗿 𝗦𝘂𝘀𝘁𝗮𝗶𝗻𝗮𝗯𝗹𝗲 𝗠𝗟𝗢𝗽𝘀 has been accepted at the conference.
+
+[Event Website](https://lnkd.in/d4VTz3Sc)
+[Watch the Session](https://lnkd.in/dtgJCfM4)
+[IMAGE] /images/spotlight/nasscom.jpeg
+[DATE] 2026-09-03
