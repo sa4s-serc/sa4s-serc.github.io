@@ -15,16 +15,27 @@ const researchAreas = [
     description: 'As code generation shifts toward autonomous, multi-agent development workflows, software architecture becomes essential for designing systems that are modular, maintainable, and efficient. This research area studies how architectural techniques—including memory management, agent coordination, and hybrid SLM–LLM pipelines—can improve the accuracy, scalability, and robustness of AI-assisted software engineering. We also investigate energy-aware architectures that minimize computational overhead while maintaining high-quality code generation, with the goal of building sustainable and trustworthy agentic development systems.',  },
 ];
 
-const collaborators = [
+const logoSizes = {
+  xs: 'max-h-8',
+  sm: 'max-h-12',
+  base: 'max-h-16',
+  md: 'max-h-20',
+  lg: 'max-h-28',
+} as const;
+
+const collaborators: { name: string; logo: string; size?: keyof typeof logoSizes }[] = [
+  { name: 'Anusandhan National Research Foundation (ANRF)', logo: '/images/collabpic/anrf.png', size: 'md' },
+  { name: 'ABB', logo: '/images/collabpic/abb.png' },
+  { name: 'CEMILAC, DRDO', logo: '/images/collabpic/cemilacdrdo.png', size: 'md' },
+  { name: 'Lloyds Technology Centre', logo: '/images/collabpic/lloyds-technology-centre.png', size: 'lg' },
   { name: 'Frame Lab, University of L\'Aquila', logo: '/images/collabpic/framelab.png' },
   { name: 'DeepSE Group, Politechnico di Milano', logo: '/images/collabpic/deepse.png' },
   { name: 'S2 Group, VU', logo: '/images/collabpic/s2.png' },
   { name: 'Middlesex University', logo: '/images/collabpic/middlesex.png' },
+  { name: 'MontyCloud', logo: '/images/collabpic/montycloud.png', size: 'sm' },
+  { name: 'Qualcomm', logo: '/images/collabpic/qualcomm.png', size: 'xs' },
   { name: 'Linnaeus University', logo: '/images/collabpic/lnu.png' },
-  { name: 'Smart City Living Lab, IIIT Hyderabad', logo: '/images/collabpic/scrc.png' },
-  { name: 'MontyCloud', logo: '/images/collabpic/montycloud.png', small: true },
-  { name: 'Qualcomm', logo: '/images/collabpic/qualcomm.png', small: true },
-  { name: 'Lloyds Technology Centre', logo: '/images/collabpic/lloyds-technology-centre.png' },
+  { name: 'Smart City Living Lab, IIIT Hyderabad', logo: '/images/collabpic/scrc.png', size: 'md' },
 ];
 
 const Research: React.FC = () => {
@@ -62,7 +73,7 @@ const Research: React.FC = () => {
             {collaborators.map((collaborator) => (
               <div key={collaborator.name} className="flex justify-center">
                 <img
-                  className={`w-auto object-contain transition-transform duration-200 hover:scale-110 ${'small' in collaborator && collaborator.small ? 'max-h-8' : 'max-h-16'}`}
+                  className={`w-auto object-contain transition-transform duration-200 hover:scale-110 ${logoSizes[collaborator.size ?? 'base']}`}
                   src={publicUrl(collaborator.logo)}
                   alt={collaborator.name}
                 />
