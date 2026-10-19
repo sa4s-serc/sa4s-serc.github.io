@@ -210,7 +210,29 @@ export default function BlogPost() {
                 ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-5 space-y-1.5 text-[#6B6455]" {...props} />,
                 ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-5 space-y-1.5 text-[#6B6455]" {...props} />,
                 li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                a:  ({node, ...props}) => <a className="text-[#2D6A4F] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                a:  ({node, href, ...props}) => {
+                  // In-page anchors (e.g. citation markers linking to the references
+                  // list) must scroll within the page rather than open a new tab.
+                  if (href?.startsWith('#')) {
+                    return (
+                      <a
+                        href={href}
+                        className="text-[#2D6A4F] hover:underline"
+                        onClick={(e) => {
+                          const el = document.getElementById(href.slice(1));
+                          if (!el) return;
+                          e.preventDefault();
+                          // Offset for the 64px fixed header, which would otherwise
+                          // cover the target.
+                          const top = el.getBoundingClientRect().top + window.scrollY - 88;
+                          window.scrollTo({ top, behavior: 'smooth' });
+                        }}
+                        {...props}
+                      />
+                    );
+                  }
+                  return <a className="text-[#2D6A4F] hover:underline" href={href} target="_blank" rel="noopener noreferrer" {...props} />;
+                },
                 blockquote: ({node, ...props}) => (
                   <blockquote
                     className="not-italic border-none my-6 pl-5 md:pl-6 py-1 border-l-4 border-[#2D6A4F] text-base md:text-lg font-medium leading-snug text-[#1A1710] [&>p]:mb-0"
