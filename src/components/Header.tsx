@@ -11,14 +11,14 @@ const primaryNav: NavItem[] = [
   { name: 'Spotlight',    path: '/spotlight' },
   { name: 'Research',     path: '/research' },
   { name: 'Publications', path: '/publications' },
-  { name: 'News',         path: '/news' },
   { name: 'Team',         path: '/team' },
 ];
 
 const drawerNav: NavItem[] = [
   { name: 'Tools & Systems', path: '/tools' },
   { name: 'Agentic AI',      path: '/agenticai' },
-  { name: 'AutoSE',          path: '/autose' },
+  { name: 'AutoSE (Research)', path: '/autose' },
+  { name: 'News',            path: '/news' },
   { name: 'SustAInd ↗',     path: 'https://sa4s-serc.github.io/sustaind/', external: true },
   { name: 'Blogs',           path: '/blogs' },
   { name: 'Projects',        path: '/work' },
@@ -61,11 +61,11 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 gap-4">
 
-            <NavLink to="/" onClick={close} className="flex items-center space-x-3 shrink-0">
-              <img src={publicUrl("/images/logos/sa4s.png")} alt="SA4S Logo" className="w-9 h-9 object-contain" />
-              <div>
-                <div className="font-semibold text-[#EDE8DF] text-sm tracking-wide">SA4S Research Group</div>
-                <div className="text-[10px] text-[#8DB8A2] tracking-wider uppercase">SERC - IIIT Hyderabad</div>
+            <NavLink to="/" onClick={close} className="flex items-center space-x-3 min-w-0">
+              <img src={publicUrl("/images/logos/sa4s.png")} alt="SA4S Logo" className="w-9 h-9 object-contain shrink-0" />
+              <div className="min-w-0">
+                <div className="font-semibold text-[#EDE8DF] text-sm tracking-wide truncate">SA4S Research Group</div>
+                <div className="text-[10px] text-[#8DB8A2] tracking-wider uppercase truncate">SERC - IIIT Hyderabad</div>
               </div>
             </NavLink>
 
@@ -81,13 +81,24 @@ const Header = () => {
 
               <div className="hidden md:block w-px h-5 bg-[#1C4030] mx-2" />
 
+              {/* AutoSE — launch entry point, kept quiet but always present */}
+              <a
+                href="https://autose.dev"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="flex items-center px-3.5 py-2 mr-1.5 rounded-lg bg-[#7FD1A0] hover:bg-[#A6E3C0] text-[#0C2118] transition-colors duration-150 shrink-0"
+              >
+                <span className="text-sm font-bold tracking-wide">AutoSE</span>
+              </a>
+
               <button
                 onClick={() => setIsOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1F4A30] hover:bg-[#2D6A4F] text-[#C4DDD1] hover:text-[#EDE8DF] transition-colors duration-150 shrink-0"
                 aria-label="Open navigation menu"
               >
                 <Menu size={18} />
-                <span className="text-sm font-semibold tracking-wide">Menu</span>
+                <span className="hidden sm:inline text-sm font-semibold tracking-wide">Menu</span>
               </button>
             </div>
 

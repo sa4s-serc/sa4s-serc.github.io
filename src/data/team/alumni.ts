@@ -2,6 +2,20 @@ import type { TeamMember } from "./teamTypes";
 
 export const alumni: TeamMember[] = [
     {
+      name: "Mahisha Ramesh",
+      role: "Research Engineer",
+      email: "mahisha26r@gmail.com",
+      photo: "/team/mahisha_ramesh.jpeg",
+      scholar: "https://scholar.google.com/citations?user=-_rnAjMAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/mahisha-ramesh-903a2b232/",
+      category: "Alumni",
+      education: [
+        "Mtech in CSE with AI specialisation in IIIT Delhi",
+        "Worked with MontyCloud company on Project Marvin",
+        "Built agentic AI systems that help Managed Service Providers (MSPs) streamline CloudOps through intelligent memory, context-aware reasoning, and smarter automation.",
+      ],
+    },
+    {
       name: "Adyansh Kakran",
       role: "Undergraduate Researcher, started in May 2023",
       email: "adyansh.kakran@research.iiit.ac.in",

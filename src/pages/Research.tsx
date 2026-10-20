@@ -13,6 +13,10 @@ const researchAreas = [
   {
     title: 'Code Generation',
     description: 'As code generation shifts toward autonomous, multi-agent development workflows, software architecture becomes essential for designing systems that are modular, maintainable, and efficient. This research area studies how architectural techniques—including memory management, agent coordination, and hybrid SLM–LLM pipelines—can improve the accuracy, scalability, and robustness of AI-assisted software engineering. We also investigate energy-aware architectures that minimize computational overhead while maintaining high-quality code generation, with the goal of building sustainable and trustworthy agentic development systems.',  },
+  {
+    title: 'Empirical Studies in Software Engineering',
+    description: 'By grounding software architecture in empirical evidence, we systematically analyze engineering practices, trade-offs, and design artifacts. We formulate research questions and hypotheses, design experiments to test them on a wide range of real-world subjects, and analyze the results with rigorous statistical methods. Through these data-driven and experimental studies, we derive lessons and insights for both practitioners and researchers, and develop practical methodologies and decision-making frameworks to guide practitioners in designing reliable, maintainable, and sustainable architectures.',
+  },
 ];
 
 const logoSizes = {
