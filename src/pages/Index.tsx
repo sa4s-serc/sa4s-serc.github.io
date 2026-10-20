@@ -68,7 +68,7 @@ const Index = () => {
       {/* ── AutoSE launch ─────────────────────────── */}
       {/* no z-index here: the page's grain and vignette overlays sit at z-5, and
           lifting the section above them made this band read lighter than the rest */}
-      <section className="relative bg-[#FAF7F2] pt-10 pb-2">
+      <section id="autose" className="relative scroll-mt-24 bg-[#FAF7F2] pt-10 pb-2">
         <div className="container mx-auto px-4">
           <div className="relative">
             {/* desktop only: the dashboard hides behind the card and peeks over its
@@ -94,8 +94,8 @@ const Index = () => {
             />
 
             <div className="relative grid gap-7 p-6 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-10 lg:p-8">
-              <div className="min-w-0">
-                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <div className="min-w-0 text-center lg:text-left">
+                <div className="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 lg:justify-start">
                   <span className="inline-flex items-center gap-2 rounded-full border border-[#2D6A4F]/50 bg-[#102A1C] px-3 py-1">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="absolute inline-flex h-full w-full rounded-full bg-[#7FD1A0] opacity-60 motion-safe:animate-ping" />
@@ -116,7 +116,7 @@ const Index = () => {
                 </h2>
 
                 <motion.ul
-                  className="mt-6 grid gap-x-7 gap-y-3 text-sm text-[#C4DDD1] sm:grid-cols-2 lg:text-[0.95rem]"
+                  className="mx-auto mt-6 grid w-fit gap-x-7 gap-y-3 text-left text-sm text-[#C4DDD1] sm:grid-cols-2 lg:mx-0 lg:w-auto lg:text-[0.95rem]"
                   initial="hidden"
                   whileInView="shown"
                   viewport={{ once: true, margin: '-60px' }}
@@ -142,7 +142,7 @@ const Index = () => {
                 </motion.ul>
 
                 {/* provenance — SA4S first, then the ANRF grant */}
-                <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-[#142E1E] pt-5">
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-3 border-t border-[#142E1E] pt-5 lg:justify-start">
                   {/* cream chip so the ANRF mark, which has dark type, stays legible */}
                   <div className="flex shrink-0 items-center gap-3.5 rounded-xl bg-[#EDE8DF] px-4 py-2.5">
                     <img
@@ -199,7 +199,7 @@ const Index = () => {
                 </div>
 
                 {/* actions sit directly under the install block */}
-                <div className="relative z-10 mt-5 flex flex-wrap items-center gap-3">
+                <div className="relative z-10 mt-5 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                   <a
                     href="https://autose.dev"
                     target="_blank"
@@ -241,12 +241,12 @@ const Index = () => {
             <h2 className="text-xl lg:text-2xl text-[#2D6A4F] tracking-[0.25em] uppercase font-semibold">What We Work On</h2>
           </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-3 md:grid-cols-2">
             {researchAreas.map((area, i) => (
               <motion.button
                 key={area.abbr}
                 onClick={() => navigate('/research')}
-                className="group flex gap-4 text-left border border-[#D8D2C4] hover:border-[#2D6A4F]/45 rounded-xl p-5 bg-[#F0EBE1] hover:bg-[#EAE4D6] transition-all duration-200 w-full md:w-[calc(33.333%-0.5rem)]"
+                className="group flex h-full gap-4 text-left border border-[#D8D2C4] hover:border-[#2D6A4F]/45 rounded-xl p-5 bg-[#F0EBE1] hover:bg-[#EAE4D6] transition-all duration-200 w-full"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}

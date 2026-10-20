@@ -39,7 +39,7 @@ const AutoSELaunchBar = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-40 border-t border-[#1C4030] bg-[#0C2118]/95 backdrop-blur-sm transition-opacity duration-700 ease-out ${
+      className={`fixed bottom-0 left-0 right-0 z-40 hidden border-t border-[#1C4030] bg-[#0C2118]/95 backdrop-blur-sm transition-opacity duration-700 ease-out sm:block ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
     >

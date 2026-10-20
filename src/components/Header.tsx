@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { publicUrl } from '../lib/utils';
 
@@ -25,8 +25,36 @@ const drawerNav: NavItem[] = [
   { name: 'Gallery',         path: '/gallery' },
 ];
 
-// Mobile drawer shows every page
-const allNav = [...primaryNav, ...drawerNav];
+const autoSeNav: NavItem = { name: 'AutoSE', path: '#autose' };
+
+/**
+ * Scrolls to the AutoSE section on the home page, clearing the fixed header.
+ * `delay` waits out a route change, since Layout snaps a new page to the top.
+ */
+function scrollToAutoSE(delay = 0) {
+  const start = () => {
+    let frames = 0;
+    const tick = () => {
+      const el = document.getElementById('autose');
+      if (el) {
+        window.scrollTo({
+          top: el.getBoundingClientRect().top + window.scrollY - 80,
+          behavior: 'smooth',
+        });
+        return;
+      }
+      // the home page is lazy-loaded, so wait for it to mount
+      if (frames++ < 60) requestAnimationFrame(tick);
+    };
+    tick();
+  };
+  if (delay) window.setTimeout(start, delay);
+  else start();
+}
+
+// Mobile drawer shows every page. The header AutoSE button is hidden on phones,
+// so AutoSE rides near the top of the drawer instead, just under Spotlight.
+const allNav = [primaryNav[0], primaryNav[1], autoSeNav, ...primaryNav.slice(2), ...drawerNav];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,6 +73,20 @@ const Header = () => {
   }, [isOpen]);
 
   const close = () => setIsOpen(false);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const goToAutoSE = (e: React.MouseEvent) => {
+    e.preventDefault();
+    close();
+    if (pathname === '/') {
+      scrollToAutoSE();
+    } else {
+      navigate('/');
+      scrollToAutoSE(140);
+    }
+  };
 
   const primaryLinkClass = (isActive: boolean) =>
     `px-3 py-2 rounded text-sm font-medium transition-all duration-150 ${
@@ -83,11 +125,9 @@ const Header = () => {
 
               {/* AutoSE — launch entry point, kept quiet but always present */}
               <a
-                href="https://autose.dev"
-                target="_blank"
-                rel="noreferrer"
-                onClick={close}
-                className="flex items-center px-3.5 py-2 mr-1.5 rounded-lg bg-[#7FD1A0] hover:bg-[#A6E3C0] text-[#0C2118] transition-colors duration-150 shrink-0"
+                href="/#autose"
+                onClick={goToAutoSE}
+                className="hidden md:flex items-center px-3.5 py-2 mr-1.5 rounded-lg bg-[#7FD1A0] hover:bg-[#A6E3C0] text-[#0C2118] transition-colors duration-150 shrink-0"
               >
                 <span className="text-sm font-bold tracking-wide">AutoSE</span>
               </a>
@@ -148,6 +188,22 @@ const Header = () => {
                 {item.name}
               </span>
             );
+
+            // in-page anchor (AutoSE) — scroll to the section on the home page
+            if (item.path.startsWith('#')) {
+              return (
+                <a
+                  key={item.path}
+                  href={`/${item.path}`}
+                  onClick={goToAutoSE}
+                  style={sharedStyle}
+                  className="group flex items-center justify-between py-4 border-b border-[#1C4030] text-[#F0EBE1] hover:text-white hover:border-[#2D6A4F] transition-all duration-300"
+                >
+                  {label}
+                  <ArrowRight size={16} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-150" />
+                </a>
+              );
+            }
 
             if (item.external) {
               return (
