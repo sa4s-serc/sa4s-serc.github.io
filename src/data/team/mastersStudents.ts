@@ -34,4 +34,14 @@ export const mastersStudents: TeamMember[] = [
       "Worked as an RE earlier on the LLoyds Sustainability project",
     ],
   },
+  {
+    name: "Pranav Reddy M",
+    role: "Masters Student",
+    email: "pranav.reddy@research.iiit.ac.in",
+    linkedin: "https://www.linkedin.com/in/pranav-red912/",
+    photo: "/team/pranav_reddy.jpeg",
+    scholar: "https://scholar.google.com/citations?user=DuRFwEwAAAAJ&hl=en",
+    category: "Masters Students",
+    education: ["Working on software architecture for agentic systems"],
+  },
 ];

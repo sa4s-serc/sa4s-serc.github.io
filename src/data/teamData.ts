@@ -29,6 +29,6 @@ export const categories = [
   "PhD Students",
   "Masters Students",
   "Undergraduate Researchers",
-  "Research Staff",
+  // "Research Staff",
   "Alumni",
 ] as const;
