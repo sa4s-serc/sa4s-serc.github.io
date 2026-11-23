@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#04170f">
 <title>GreenAI Lab · IIIT Hyderabad</title>
-<meta name="robots" content="noindex, nofollow">  <!-- draft for review: keep it out of search engines; remove when it goes public -->
+<meta name="robots" content="noindex, nofollow">  <!-- keeps the page out of search engines until it is linked from the SA4S site; remove then -->
 <meta name="description" content="The GreenAI Lab at IIIT Hyderabad measures how much electricity AI machines really use, where it goes, what it costs and how much CO₂ it causes. Live numbers and good practices for GreenAI experiments.">
 <meta property="og:title" content="GreenAI Lab · IIIT Hyderabad">
 <meta property="og:description" content="How much energy does AI really use? Live measurements from our lab, and good practices for measuring it yourself.">
@@ -336,9 +336,7 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
 .fields li:last-child{border-bottom:0}
 .fields b{color:var(--ink);font-weight:500;width:170px;flex:none}
 .btn{display:inline-flex;align-items:center;padding:14px 24px;border-radius:99px;background:var(--leaf);color:#04170f;font-weight:600;font-size:16px;text-decoration:none}
-.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
 .btnnote{display:block;font-size:13px;color:var(--mute);margin-top:10px}
-.draftbar{position:fixed;right:16px;bottom:16px;z-index:25;font-size:13px;color:#04170f;background:#ffb84d;border-radius:99px;padding:7px 14px;font-weight:600}
 
 @media (max-width:1100px){.machines{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:860px){
@@ -569,8 +567,8 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
       <div>
         <h2>Suggest a <b>practice</b></h2>
         <p class="lede">Anyone can suggest a practice. The lab team reviews each one before it appears, so the list stays checked and short. Accepted practices are added with credit to whoever suggested them.</p>
-        <a class="btn" href="#suggest" aria-disabled="true" id="suggestBtn">Suggest a practice</a>
-        <span class="btnnote">Draft: the form link goes here once we choose between a Google Form and a GitHub issue form.</span>
+        <a class="btn" href="mailto:sa4sserc@gmail.com?subject=GreenAI%20Lab%3A%20practice%20suggestion&body=The%20practice%20%28one%20line%29%3A%0A%0A%0AWhy%20it%20matters%20%28a%20measurement%2C%20a%20paper%20or%20an%20experience%20that%20supports%20it%29%3A%0A%0A%0ALink%20to%20data%2C%20code%20or%20a%20paper%20%28optional%29%3A%0A%0A%0AYour%20name%20and%20group%20%28optional%2C%20for%20credit%20on%20the%20site%29%3A%0A" id="suggestBtn">Suggest a practice by email</a>
+        <span class="btnnote">Opens an email to <a href="mailto:sa4sserc@gmail.com">sa4sserc@gmail.com</a> with these four questions filled in.</span>
       </div>
       <ul class="fields">
         <li><b>The practice</b>In one line.</li>
@@ -1380,7 +1378,7 @@ document.addEventListener('click', function(e){
   var a = up(e.target, 'a'); if (!a) return;
   if (a.getAttribute('data-paper')) track('open_paper', {paper: a.getAttribute('data-paper')});
   else if (a.parentNode && a.parentNode.id === 'nav') track('nav', {to: a.getAttribute('href')});
-  if (a.id === 'suggestBtn' && a.getAttribute('aria-disabled') === 'true') e.preventDefault();
+  if (a.id === 'suggestBtn') track('suggest_practice');
 });
 // the bar gets its background only once it is stuck to the top
 var navEl = $('nav');
@@ -1396,6 +1394,5 @@ if (window.IntersectionObserver) {
 start();
 })();
 </script>
-<div class="draftbar">Draft for review</div>
 </body>
 </html>
