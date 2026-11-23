@@ -1,0 +1,1401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04170f">
+<title>GreenAI Lab · IIIT Hyderabad</title>
+<meta name="robots" content="noindex, nofollow">  <!-- draft for review: keep it out of search engines; remove when it goes public -->
+<meta name="description" content="The GreenAI Lab at IIIT Hyderabad measures how much electricity AI machines really use, where it goes, what it costs and how much CO₂ it causes. Live numbers and good practices for GreenAI experiments.">
+<meta property="og:title" content="GreenAI Lab · IIIT Hyderabad">
+<meta property="og:description" content="How much energy does AI really use? Live measurements from our lab, and good practices for measuring it yourself.">
+<meta property="og:image" content="img/logo-160.webp">
+<link rel="icon" href="img/logo-96.webp">
+<script>
+// Google Analytics. Set GA_ID once the GreenAI Lab property exists (open question in the content draft).
+// Empty = nothing is loaded and nothing is tracked.
+var GA_ID = '';
+if (GA_ID) {
+  var ga = document.createElement('script'); ga.async = true; ga.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID; document.head.appendChild(ga);
+  window.dataLayer = window.dataLayer || []; window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date()); gtag('config', GA_ID);
+}
+function track(name, params){ if (window.gtag) gtag('event', name, params || {}); }
+</script>
+<style>
+:root{--slow:2;
+  --bg:#04170f; --bg2:#0a2a1c; --ink:#ecfff5; --mute:#8db7a2; --line:rgba(150,255,205,.14);
+  --glass:rgba(160,255,210,.06); --leaf:#3ddc97; --mint:#9dffd2; --lime:#d6f26a;
+  --gpu:#4be3a4; --cpu:#d6f26a; --rest:#5f9c88;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;color:var(--ink);overflow-x:hidden;
+  font-family:"Inter","SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.wrap{max-width:1260px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+/* ---------- living background ---------- */
+.bgfx{position:fixed;top:0;left:0;right:0;bottom:0;overflow:hidden;z-index:0;
+  background:linear-gradient(180deg,#04170f 0%,#07231a 55%,#04170f 100%)}
+.bgfx i{position:absolute;border-radius:50%;opacity:.55}
+.bgfx .a1{width:70vw;height:70vw;left:-20vw;top:-30vw;background:radial-gradient(circle,rgba(61,220,151,.30),transparent 62%);}
+.bgfx .a2{width:60vw;height:60vw;right:-18vw;top:10vh;background:radial-gradient(circle,rgba(214,242,106,.14),transparent 62%);}
+.bgfx .a3{width:80vw;height:50vw;left:10vw;bottom:-28vw;background:radial-gradient(circle,rgba(40,180,140,.24),transparent 62%);}
+
+/* ---------- top bar ---------- */
+.top{height:106px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;font-weight:600;letter-spacing:-.01em;font-size:21px}
+.brand .mark{width:66px;height:66px;margin-right:12px}
+.brand span{color:var(--mute);font-weight:400;margin-left:8px}
+.status{display:flex;align-items:center;font-size:14px;color:var(--mute);padding:7px 14px;border-radius:99px;background:var(--glass);border:1px solid var(--line)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--leaf);margin-right:8px;animation:ping calc(2s * var(--slow)) ease-out infinite}
+.status.sample .dot{background:#ffb84d}
+.status b{font-weight:500;color:var(--ink);margin-left:12px}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(61,220,151,.7)}100%{box-shadow:0 0 0 10px rgba(61,220,151,0)}}
+
+/* ---------- hero ---------- */
+.hero{height:min(780px,calc(100vh - 70px));min-height:440px;display:flex;flex-direction:column;padding-bottom:8px}
+.head{display:flex;align-items:flex-end;justify-content:space-between}
+.eyebrow{margin:0;font-size:19px;color:var(--mute)}
+.big{font-size:128px;line-height:.98;font-weight:250;letter-spacing:-.045em;display:flex;align-items:baseline;
+  background:linear-gradient(100deg,#ffffff 0%,#9dffd2 55%,#d6f26a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.big small{font-size:42px;font-weight:350;letter-spacing:-.02em;margin-left:12px}
+.equiv{margin:4px 0 0;font-size:17px;color:var(--mute)}
+.equiv b{color:var(--ink);font-weight:500}
+.today{display:flex;margin-bottom:8px}
+.chip{padding:14px 18px;margin-left:12px;border-radius:20px;background:var(--glass);border:1px solid var(--line);min-width:214px}
+.chip label{display:block;font-size:13px;color:var(--mute);margin-bottom:4px}
+.chip strong{font-size:34px;font-weight:350;letter-spacing:-.02em}
+.chip strong i{font-style:normal;font-size:20px;color:var(--mute);margin-right:3px}
+.money{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.money em{font-style:normal;font-size:14px;color:var(--mute);margin-left:14px;white-space:nowrap}
+.mean{display:flex;align-items:center;font-size:15px;color:var(--ink);margin-top:5px;white-space:nowrap}
+.mean svg{width:19px;height:19px;margin-right:8px;flex:none}
+.chip strong{color:var(--lime)}
+
+/* The bench is three SVGs stacked in one box: fxUnder (moving dots, glows), scene (the still drawings, tappable)
+   and fxOver (blinking lights). Only the thin fx layers change every frame, so the tablet doesn't redraw the
+   detailed machine drawings 60 times a second. */
+.stage{position:relative;flex:1 1 0;width:100%;min-height:0;height:0}
+.stage svg{position:absolute;top:0;left:0;width:100%;height:100%;display:block;overflow:visible}
+.fx{pointer-events:none}
+.fx [data-of]{transition:opacity 1s var(--ease)}
+.intro .fx [data-of]{opacity:0}
+.fx.joff .jx{opacity:0}
+.fx.joff [data-of="jetson"] .halo{display:none}
+.fx.joff [data-of="jetson"]{opacity:.6;filter:grayscale(1)}
+.fx.joff [data-of="jetson"] .fan{animation:none}
+.hint{text-align:center;font-size:14px;color:var(--mute);animation:nudge calc(2.4s * var(--slow)) ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(4px);opacity:.55}}
+
+/* scene pieces */
+.ln{fill:var(--mute);font-size:17px}
+.lw{fill:var(--ink);font-size:42px;font-weight:300;letter-spacing:-1.5px}
+.lw .u{font-size:18px;fill:var(--mute);letter-spacing:0}
+.cable{fill:none;stroke:rgba(157,255,210,.22);stroke-width:2.5;stroke-linecap:round}
+.data{fill:var(--lime);opacity:.9}
+.pulse{fill:#eafff5;stroke:rgba(100,255,190,.35);stroke-width:7}
+.mach{cursor:pointer;transition:opacity .4s}
+.mach .lift{transition:transform .45s var(--ease)}
+.mach:active .lift{transform:translateY(-6px)}
+.halo{fill:var(--leaf);opacity:.28;animation:halo calc(3.2s * var(--slow)) ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes halo{50%{opacity:.5;transform:scale(1.12)}}
+.intro .mach,.intro .lab{opacity:0}
+.mach,.lab{transition:opacity 1s var(--ease)}
+.led{animation:blink calc(1.8s * var(--slow)) ease-in-out infinite}
+.blink{animation:blink calc(1.1s * var(--slow)) steps(2,end) infinite}
+.blink.b2{animation-duration:calc(.7s * var(--slow))}.blink.b3{animation-duration:calc(1.9s * var(--slow))}
+@keyframes blink{50%{opacity:.25}}
+.fan{transform-box:fill-box;transform-origin:center;animation:spin calc(var(--spin,1s) * var(--slow)) linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- scroll sections ---------- */
+section.block{padding:84px 0 10px}
+section,[id]{scroll-margin-top:72px}
+h2{font-size:46px;font-weight:300;letter-spacing:-.03em;margin:0 0 10px}
+h2 b{font-weight:300;color:var(--leaf)}
+.lede{font-size:18px;color:var(--mute);margin:0 0 30px;max-width:740px;line-height:1.55}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.card{background:var(--glass);border-radius:26px;padding:26px;border:1px solid var(--line)}
+.card h3{margin:0 0 6px;font-size:19px;font-weight:500}
+
+#sankey{width:100%;height:auto;display:block}
+.rib{fill:none;opacity:.42;transition:opacity .3s}
+.fl{fill:none;stroke:rgba(255,255,255,.75);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1 20;animation:dash calc(1s * var(--slow)) linear infinite}
+@keyframes dash{to{stroke-dashoffset:-21}}
+.sk-n{fill:var(--ink);font-size:19px}.sk-s{fill:var(--mute);font-size:15px}
+
+.gridbox{display:grid;grid-template-columns:5fr 7fr;grid-gap:20px}
+.gnow{font-size:96px;font-weight:250;letter-spacing:-.04em;line-height:1;color:var(--mint)}
+.gunit{font-size:15px;color:var(--mute);margin:8px 0 22px}
+.cmp{font-size:16px;line-height:1.6;margin:0;color:#cfeedd}
+.cmp b{font-weight:600;color:var(--ink)}
+.bars{height:190px;display:flex;align-items:flex-end;margin-top:12px}
+.bars i{flex:1;margin:0 1.5px;border-radius:5px 5px 1px 1px;height:0;transition:height 1.1s var(--ease);display:block;min-width:2px}
+.axis{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);margin-top:8px}
+.note{font-size:13px;color:var(--mute);margin:14px 0 0;line-height:1.55}
+
+.forest{display:flex;flex-wrap:wrap;margin-top:18px;min-height:60px}
+.forest svg{width:34px;height:42px;margin:0 3px 6px 0;transform:scale(0);transform-origin:50% 100%;transition:transform .7s var(--ease)}
+.forest svg.up{transform:scale(1)}
+.seg.per{display:inline-flex;margin:0}
+.seg.per button{padding:13px 24px;font-size:16px}
+.imp3,.eq3{display:grid;grid-template-columns:repeat(3,1fr);grid-gap:20px;margin:20px 0}
+.eq3{grid-template-columns:repeat(2,1fr)}
+.imp3 label{display:block;font-size:14px;color:var(--mute);margin-bottom:6px}
+.imp3 strong{font-size:76px;font-weight:250;letter-spacing:-.045em;line-height:1;color:var(--mint)}
+.imp3 em{font-style:normal;font-size:20px;color:var(--mute);margin-left:8px}
+.mbar{display:flex;height:24px;border-radius:9px;overflow:hidden;margin:14px 0 12px;background:rgba(255,255,255,.06)}
+.mbar b{display:block;flex:0 0 0;transition:flex-basis 1s var(--ease)}
+.mleg{display:grid;grid-template-columns:repeat(4,1fr);grid-gap:20px;font-size:15px;color:var(--mute)}
+.mleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}
+.mleg strong{display:block;color:var(--ink);font-weight:400;font-size:22px;margin-top:4px}
+.eq3 .card{display:flex;align-items:center}
+.eq3 svg{width:46px;height:46px;flex:none;margin-right:16px}
+.eq3 p{margin:0;font-size:16px;line-height:1.5;color:#cfeedd}
+.eq3 b{color:var(--mint);font-weight:600;font-size:19px}
+.treeline{font-size:22px;font-weight:300;letter-spacing:-.01em;line-height:1.4;margin:0}
+.treeline b{color:var(--leaf);font-weight:500}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);grid-gap:20px}
+.steps .k{display:inline-flex;width:36px;height:36px;border-radius:50%;background:var(--leaf);color:#04170f;
+  align-items:center;justify-content:center;font-weight:600;font-size:15px;margin-bottom:14px}
+.steps p{margin:6px 0 0;color:var(--mute);font-size:15px;line-height:1.6}
+footer{padding:60px 0 70px;color:var(--mute);font-size:13px}
+.credits{display:flex;align-items:stretch;border-top:1px solid var(--line);padding-top:34px;margin-bottom:26px}
+.credits .who{flex:1;display:flex;align-items:center;margin-right:20px}
+.credits .who:last-child{margin-right:0}
+.credits .logo{flex:none;margin-right:18px;display:flex;align-items:center}
+.credits .logo img{display:block;height:72px;width:auto}
+.credits label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.credits p{margin:0;font-size:15px;line-height:1.5;color:#cfeedd}
+.credits sup{color:var(--leaf);font-size:11px}
+.fnote{margin:0 0 14px;font-size:13px;line-height:1.6}
+.fnote a{color:var(--mint);text-decoration:none;border-bottom:1px solid rgba(157,255,210,.4)}
+.topr{display:flex;align-items:center}
+.pcol{display:flex;flex-direction:column;align-items:flex-end;margin-left:14px;padding-top:14px}
+.partners{display:flex;align-items:center}
+.partners span{display:flex;align-items:center;margin-left:28px}
+.partners img{display:block;height:48px;width:auto}
+.sust{display:inline-flex;align-items:center;margin-top:2px;margin-right:-6px;padding:9px 6px 9px 12px;font-size:14px;color:var(--mute);text-decoration:none;border-radius:99px}
+.sust b{font-weight:700;font-size:16px;letter-spacing:-.01em;margin:0 6px 0 5px}
+.sust .s1{color:#4cb553}.sust .s2{color:#f7801e}
+.sust i{font-style:normal;color:var(--ink);font-size:20px;line-height:1;margin-left:6px}
+.sust:active{background:var(--glass)}
+@media (max-width:720px){.credits{flex-direction:column}.credits .who{margin:0 0 18px}.partners span{margin-left:14px}.partners img{height:26px}}
+
+/* ---------- inspector (tap a machine) ---------- */
+.insp{position:fixed;top:0;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:43% 57%;
+  background:radial-gradient(120% 90% at 20% 50%,#0d3a27 0%,#04170f 62%);
+  opacity:0;transform:scale(.55);pointer-events:none;transition:opacity .45s,transform .6s var(--ease);overflow:hidden}
+.insp.on{opacity:1;transform:none;pointer-events:auto}
+.x{position:absolute;top:18px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--glass);border:1px solid var(--line);
+  font-size:24px;line-height:50px;text-align:center;z-index:3}
+.left{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0 16px}
+.mv{position:relative;width:100%;flex:1;min-height:0;cursor:pointer}
+.mv svg{position:absolute;top:0;left:0;width:100%;height:100%}
+.mv .in{clip-path:inset(0 0 100% 0);-webkit-clip-path:inset(0 0 100% 0);transition:clip-path 1.2s linear,-webkit-clip-path 1.2s linear}
+.mv.xray .in{clip-path:inset(0 0 0 0);-webkit-clip-path:inset(0 0 0 0)}
+.scan{position:absolute;left:12%;right:12%;height:3px;top:0;border-radius:3px;background:var(--mint);opacity:0;
+  box-shadow:0 0 22px 6px rgba(100,255,190,.55);pointer-events:none}
+.mv.scanning .scan{animation:scan 1.2s linear}
+@keyframes scan{0%{top:2%;opacity:1}95%{opacity:1}100%{top:98%;opacity:0}}
+.part{stroke-width:1.1;transition:opacity .35s,fill-opacity .8s;cursor:pointer}
+.p-gpu{fill:var(--gpu);stroke:var(--gpu)}.p-cpu{fill:var(--cpu);stroke:var(--cpu)}.p-rest{fill:var(--rest);stroke:var(--rest)}
+.wire{fill:none;stroke:rgba(157,255,210,.28);stroke-width:.8}
+.tag{font-size:7px;fill:#eafff5;font-weight:600;letter-spacing:.4px;pointer-events:none}
+.hl-gpu .part:not(.p-gpu),.hl-cpu .part:not(.p-cpu),.hl-rest .part:not(.p-rest){opacity:.12}
+.seg{display:flex;padding:4px;border-radius:99px;background:var(--glass);border:1px solid var(--line);margin-top:6px}
+.seg button{padding:10px 22px;border-radius:99px;font-size:15px;color:var(--mute);transition:background .3s,color .3s}
+.seg button.on{background:var(--leaf);color:#04170f;font-weight:600}
+.right{padding:34px 44px 30px 8px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.right h3{margin:0;font-size:38px;font-weight:350;letter-spacing:-.025em}
+.right .sub{margin:4px 0 0;color:var(--mute);font-size:15px}
+.sh-w{font-size:104px;font-weight:250;letter-spacing:-.045em;line-height:1;margin-top:14px;color:var(--mint)}
+.sh-w small{font-size:30px;color:var(--mute);margin-left:8px;font-weight:350;letter-spacing:0}
+.sh-cap{font-size:14px;color:var(--mute);margin:2px 0 0}
+.lab2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:22px 0 8px}
+.prow{display:flex;align-items:center;width:100%;padding:11px 14px;border-radius:16px;margin-bottom:6px;text-align:left;
+  background:var(--glass);border:1px solid transparent;transition:border-color .3s,background .3s}
+.prow.on{border-color:var(--leaf);background:rgba(61,220,151,.14)}
+.prow i{width:12px;height:12px;border-radius:4px;margin-right:12px;flex:none}
+.prow span{width:190px;font-size:16px;flex:none}
+.prow u{flex:1;text-decoration:none;color:var(--mute);font-size:14px}
+div.prow{cursor:default}
+.prow em{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden;margin-right:14px}
+.prow em b{display:block;height:100%;border-radius:4px;width:0;transition:width .9s var(--ease)}
+.prow strong{font-weight:500;font-size:20px;white-space:nowrap}
+.prow strong small{font-size:13px;color:var(--mute);font-weight:400;margin-left:6px}
+.spark{width:100%;height:92px;display:block}
+.range{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);margin-top:4px}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);grid-gap:8px}
+.tile{background:var(--glass);border-radius:16px;padding:12px 14px}
+.tile label{display:block;font-size:12px;color:var(--mute);margin-bottom:5px;white-space:nowrap}
+.tile strong{font-size:23px;font-weight:400;letter-spacing:-.02em}
+.tile em{font-style:normal;font-size:12px;color:var(--mute);margin-left:3px}
+
+/* ---------- the Jetson: small, on the bench; its details open when tapped ---------- */
+.mv .cbl{fill:none;stroke:rgba(157,255,210,.35);stroke-width:3;stroke-linecap:round}
+.mv.joff .pulse{display:none}.mv.joff svg{filter:grayscale(.7);opacity:.75}
+.tiles.t3{grid-template-columns:repeat(3,1fr)}
+.jw{font-size:30px}.jw .u{font-size:15px}
+.joffl{display:none;font-size:14px}
+.jx,.jlab,#g_jetson .lift{transition:opacity .6s,filter .6s}
+#scene.joff .jx{opacity:0}
+#scene.joff #g_jetson .lift{opacity:.6;filter:grayscale(1)}
+#scene.joff #g_jetson .halo{display:none}
+#scene.joff #g_jetson .fan{animation:none}
+#scene.joff .jw{display:none}
+#scene.joff .joffl{display:inline}
+
+
+@media (max-height:680px){.big{font-size:84px}.big small{font-size:30px}.eyebrow{font-size:16px}.equiv{font-size:15px}.chip{padding:10px 14px;min-width:0}.chip strong{font-size:27px}.mean{font-size:14px}.top{height:94px}.hero{height:calc(100vh - 60px)}.brand .mark{width:52px;height:52px}.partners img{height:40px}}
+@media (max-width:1100px){.big{font-size:104px}.chip{min-width:0;padding:12px 16px}.chip strong{font-size:25px}}
+/* very short screens (e.g. the tablet with a scaled-up display and Chrome's bars showing): smaller header, more room for the bench */
+@media (max-height:560px){.big{font-size:64px}.big small{font-size:24px}.eyebrow{font-size:14px}.equiv{font-size:13px;margin-top:2px}
+  .chip{padding:8px 12px}.chip strong{font-size:22px}.chip strong i{font-size:14px}.money{margin-bottom:2px}.money em{font-size:12px}.mean{font-size:12px;margin-top:2px}.mean svg{width:15px;height:15px}
+  .top{height:68px}.hero{height:calc(100vh - 56px);min-height:360px}.pcol{padding-top:6px}.partners img{height:26px}.sust{margin-top:3px;font-size:12px;padding:2px}.sust b{font-size:13px}.brand .mark{width:36px;height:36px}.brand{font-size:17px}.hint{font-size:12px}}
+@media (max-width:860px){
+  .wrap{padding:0 16px}.head{display:block}.today{margin-top:14px}.chip{margin:0 8px 0 0;flex:1}
+  .big{font-size:76px}.big small{font-size:28px}h2{font-size:32px}
+  .hero{height:auto}.stage{height:44vh;flex:none}
+  .gridbox,.steps,.imp3,.eq3{grid-template-columns:1fr}.mleg{grid-template-columns:repeat(2,1fr)}.imp3 strong{font-size:56px}.seg.per button{padding:10px 12px;font-size:14px}
+  .insp{display:block;overflow-y:auto}.left{height:52vh}.right{padding:10px 18px 30px}
+  .sh-w{font-size:72px}.prow span{width:120px;font-size:14px}.tiles{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ================= public site: navigation, "What we do", practices ================= */
+a{color:var(--mint)}
+/* The bar runs the full width of the window, its links lined up with the page. It is see-through at the top of
+   the page and only gets its dark background once it sticks to the top while scrolling. */
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;margin:0 calc(50% - 50vw);padding:10px calc(50vw - 50%);
+  border-bottom:1px solid transparent;transition:background .3s,border-color .3s;
+  overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav.stuck{background:rgba(4,23,15,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav a{color:var(--mute);text-decoration:none;font-size:15px;padding:8px 14px;border-radius:99px;margin-right:4px;transition:color .3s,background .3s}
+.nav a:hover,.nav a.on{color:var(--ink);background:var(--glass)}
+
+.about{padding:90px 0 30px;max-width:980px}
+.kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);margin:0 0 18px;font-weight:600}
+h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin:0 0 26px;
+  background:linear-gradient(100deg,#ffffff 0%,#9dffd2 60%,#d6f26a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:23px;line-height:1.5;color:#cfeedd;margin:0 0 30px;max-width:820px;font-weight:300}
+.nowline{display:inline-flex;align-items:center;flex-wrap:wrap;font-size:16px;color:var(--mute);padding:10px 18px;border-radius:99px;background:var(--glass);border:1px solid var(--line)}
+.nowline b{color:var(--ink);font-weight:500;margin:0 5px}
+.nowline a{margin-left:12px;text-decoration:none;color:var(--mint)}
+
+.why{display:grid;grid-template-columns:5fr 7fr;grid-gap:40px;align-items:center}
+.why blockquote{margin:0;font-size:44px;line-height:1.12;font-weight:250;letter-spacing:-.03em;color:var(--mint)}
+.why p{margin:0;font-size:19px;line-height:1.65;color:#cfeedd}
+.gapnote{margin:20px 0 0;font-size:16px;line-height:1.6;color:var(--mute);max-width:820px}
+.gapnote b{color:var(--ink);font-weight:500}
+
+.machines{display:grid;grid-template-columns:repeat(5,1fr);grid-gap:16px}
+.machines .card{padding:22px}
+.machines .ty{display:inline-block;font-size:12px;color:var(--leaf);border:1px solid rgba(61,220,151,.35);border-radius:99px;padding:3px 10px;margin-bottom:12px}
+.machines p{margin:6px 0 0;font-size:15px;line-height:1.55;color:var(--mute)}
+.who2{margin:26px 0 0;font-size:16px;line-height:1.6;color:var(--mute);max-width:820px}
+.who2 b{color:var(--ink);font-weight:500}
+
+.livehead{display:flex;align-items:flex-end;justify-content:space-between;padding-top:96px;margin-bottom:6px}
+.livehead .lede{margin-bottom:0}
+.livehead .status{flex:none;margin-left:20px}
+
+.pjump{display:flex;flex-wrap:wrap;margin:0 0 10px}
+.pjump a{font-size:15px;color:var(--ink);text-decoration:none;padding:9px 16px;border-radius:99px;background:var(--glass);border:1px solid var(--line);margin:0 8px 8px 0}
+.pjump a i{font-style:normal;color:var(--mute);margin-left:6px}
+.pgroup{display:flex;align-items:baseline;font-size:28px;font-weight:350;letter-spacing:-.02em;margin:54px 0 8px}
+.pgroup span{font-size:14px;color:var(--leaf);font-weight:600;margin-right:14px;letter-spacing:.08em}
+.pintro{font-size:16px;line-height:1.6;color:var(--mute);margin:0 0 16px;max-width:820px}
+.plist{display:grid;grid-template-columns:1fr 1fr;grid-gap:16px;margin-top:16px}
+.pr{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:24px 26px}
+.pr h4{margin:0 0 8px;font-size:19px;font-weight:500;line-height:1.35}
+.pr > p{margin:0;font-size:16px;line-height:1.6;color:#cfeedd}
+.pr code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:rgba(255,255,255,.07);padding:1px 6px;border-radius:6px}
+.trade{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:rgba(214,242,106,.07);border:1px solid rgba(214,242,106,.2);font-size:15px;line-height:1.55;color:#e6f5c4}
+.trade em{font-style:normal;font-weight:600;color:var(--lime);margin-right:4px}
+.ev{list-style:none;margin:14px 0 0;padding:0}
+.ev li{font-size:14px;line-height:1.55;color:var(--mute);padding:10px 0 0;margin-top:10px;border-top:1px solid var(--line)}
+.ev li em{font-style:normal;display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-right:6px}
+.ev .lab em{color:var(--leaf)}
+.ev .run em{color:var(--leaf)}
+.ev .paper em{color:#f7a35c}
+.ev .paper em a{color:#f7a35c;text-decoration:none;border-bottom:1px solid rgba(247,163,92,.45)}
+.more{margin:30px 0 0;font-size:16px;color:var(--mute)}
+
+.suggest{display:grid;grid-template-columns:5fr 6fr;grid-gap:40px;padding:36px}
+.suggest h2{margin-bottom:12px}
+.suggest .lede{margin-bottom:22px}
+.fields{list-style:none;margin:0;padding:0}
+.fields li{display:flex;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.5;color:var(--mute)}
+.fields li:last-child{border-bottom:0}
+.fields b{color:var(--ink);font-weight:500;width:170px;flex:none}
+.btn{display:inline-flex;align-items:center;padding:14px 24px;border-radius:99px;background:var(--leaf);color:#04170f;font-weight:600;font-size:16px;text-decoration:none}
+.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+.btnnote{display:block;font-size:13px;color:var(--mute);margin-top:10px}
+.draftbar{position:fixed;right:16px;bottom:16px;z-index:25;font-size:13px;color:#04170f;background:#ffb84d;border-radius:99px;padding:7px 14px;font-weight:600}
+
+@media (max-width:1100px){.machines{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:860px){
+  .nav{padding-top:8px;padding-bottom:8px}.nav a{font-size:14px;padding:7px 11px}
+  .about{padding:50px 0 10px}h1{font-size:46px}.lead{font-size:19px}
+  .why,.suggest{grid-template-columns:1fr;grid-gap:20px}.why blockquote{font-size:32px}.why p{font-size:17px}
+  .machines,.plist{grid-template-columns:1fr}
+  .livehead{display:block;padding-top:60px}.livehead .status{margin:14px 0 0;display:inline-flex}
+  .top{height:76px}.brand{font-size:18px}.brand .mark{width:46px;height:46px}.top .pcol{display:none}
+  .today{flex-direction:column}.chip{margin:0 0 8px;width:100%}
+  .pgroup{font-size:23px;margin-top:40px}.suggest{padding:24px}.fields li{display:block}.fields b{display:block;width:auto}
+}
+/* animations out of sight (scrolled away, or behind the machine panel) are paused; see updateStill() */
+.still,.still *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<!-- shared textures for the machine drawings -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8e0f15"/><stop offset=".12" stop-color="#e2252c"/><stop offset=".88" stop-color="#d81f26"/><stop offset="1" stop-color="#7d0c12"/></linearGradient>
+  <linearGradient id="gChamp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3d8b9"/><stop offset="1" stop-color="#8d8364"/></linearGradient>
+  <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1ecdf"/><stop offset=".5" stop-color="#a9a391"/><stop offset="1" stop-color="#d9d3c3"/></linearGradient>
+  <linearGradient id="gShelf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(190,255,225,.30)"/><stop offset="1" stop-color="rgba(190,255,225,.04)"/></linearGradient>
+  <pattern id="pHex" width="10" height="17" patternUnits="userSpaceOnUse"><rect width="10" height="17" fill="#1d1d20"/><circle cx="5" cy="4.25" r="3.7" fill="#050506"/><circle cx="0" cy="12.75" r="3.7" fill="#050506"/><circle cx="10" cy="12.75" r="3.7" fill="#050506"/></pattern>
+  <pattern id="pChev" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#0b0c0d"/><path d="M-2,18 L18,-2 M-10,10 L10,-10 M6,26 L26,6" stroke="#25272b" stroke-width="4.5"/></pattern>
+  <pattern id="pFoam" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#2a2720"/>
+    <g fill="#d2c6a3"><circle cx="3" cy="4" r="1.3"/><circle cx="9" cy="2" r=".9"/><circle cx="15" cy="5" r="1.5"/><circle cx="20" cy="2" r=".8"/><circle cx="6" cy="9" r="1"/><circle cx="12" cy="10" r="1.4"/><circle cx="19" cy="11" r="1.1"/><circle cx="2" cy="15" r="1.2"/><circle cx="8" cy="16" r="1.5"/><circle cx="15" cy="17" r=".9"/><circle cx="20" cy="18" r="1.3"/><circle cx="5" cy="21" r=".8"/><circle cx="12" cy="21" r="1.1"/></g></pattern>
+</defs></svg>
+
+<div class="bgfx"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><img class="mark" src="img/logo-160.webp" alt="GreenAI Lab logo">GreenAI Lab <span>IIIT Hyderabad</span></div>
+    <div class="topr">
+      <div class="pcol">
+      <div class="partners">
+        <span><img src="img/sa4s-tuned.png" alt="SA4S logo"></span>
+        <span><img src="img/serc-tuned.png" alt="SERC, IIIT Hyderabad logo"></span>
+        <span><img src="img/anrf-tuned.png" alt="ANRF logo"></span>
+      </div>
+      <a class="sust" href="https://sa4s-serc.github.io/sustaind/" aria-label="Part of SustAInd, Sustainable AI for India">Part of<b><span class="s1">Sust</span><span class="s2">AInd</span></b>Sustainable AI for India<i>›</i></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav" id="nav">
+    <a href="#about">What we do</a><a href="#live">Live from the lab</a><a href="#practices">Good practices</a>
+  </nav>
+
+  <!-- ================= What we do ================= -->
+  <div id="about">
+  <section class="about">
+    <p class="kicker">What we do</p>
+    <h1>How much energy does AI really use?</h1>
+    <p class="lead">The GreenAI Lab at IIIT Hyderabad measures how much electricity our machines really use, where it goes, what it costs and how much CO₂ it causes.</p>
+    <div class="nowline"><i class="dot"></i>Right now the lab is drawing<b><span class="num" id="labW2">—</span> W</b><a href="#live">See it live ↓</a></div>
+  </section>
+
+  <section class="block reveal" id="why">
+    <div class="why">
+      <blockquote>You can’t reduce what you don’t measure.</blockquote>
+      <p>AI work is usually judged on accuracy and speed, rarely on energy, so its real cost stays hidden. Measuring shows where the energy goes, so we can act on it: choose the models, hardware and settings that do the same work with less, and check that a change really saved energy.</p>
+    </div>
+  </section>
+
+  <section class="block reveal" id="how">
+    <h2>What we measure, <b>and how</b></h2>
+    <p class="lede">We measure different kinds of machines side by side: a desktop AI computer with an Arm processor (DGX Spark), two Intel workstations with NVIDIA graphics cards, and a small edge AI board (Jetson).</p>
+    <div class="steps">
+      <div class="card"><b class="k">1</b><h3>At the plug</h3><p>A smart plug between the socket and each machine measures its total power: the number the electricity bill is based on.</p></div>
+      <div class="card"><b class="k">2</b><h3>Inside the machine</h3><p>The processor and the graphics card report their own power. A small program on each machine reads them every 5 seconds.</p></div>
+      <div class="card"><b class="k">3</b><h3>Put together</h3><p>We collect every reading, keep all of it, and turn energy into cost (₹8 per kWh) and CO₂ (0.675 kg per kWh, the national grid average).</p></div>
+    </div>
+    <p class="gapnote">The gap between the plug and the chips is <b>the rest of the machine</b>: memory, motherboard, fans, disks and power-supply losses.</p>
+  </section>
+
+  <section class="block reveal" id="machines">
+    <h2>The <b>machines</b></h2>
+    <p class="lede">Different kinds of AI hardware on one bench, so the same experiment can be checked on each.</p>
+    <div class="machines">
+      <div class="card"><span class="ty">Desktop AI computer (Arm)</span><h3>DGX Spark</h3><p>NVIDIA GB10: 20-core Arm CPU and Blackwell GPU sharing 128 GB of memory</p></div>
+      <div class="card"><span class="ty">Workstation (Intel + NVIDIA)</span><h3>A4000</h3><p>Dell Precision 3680: Intel i9-14900, RTX 4000 Ada (20 GB)</p></div>
+      <div class="card"><span class="ty">Workstation (Intel + NVIDIA)</span><h3>A2000</h3><p>Lenovo ThinkStation P5: Intel Xeon w3-2435, RTX 2000 Ada (16 GB)</p></div>
+      <div class="card"><span class="ty">Edge AI board (Arm)</span><h3>Jetson Orin Nano</h3><p>A palm-sized computer for running AI on the spot</p></div>
+      <div class="card"><span class="ty">The lab’s data hub</span><h3>Raspberry Pi</h3><p>Does all the collecting, storing and calculating</p></div>
+    </div>
+    <p class="who2"><b>Who we are.</b> The lab is built by the SA4S research group at the Software Engineering Research Centre (SERC), IIIT Hyderabad, and supported by the Anusandhan National Research Foundation (ANRF) under the SustAInd (Sustainable AI for India) project.</p>
+  </section>
+
+  </div>
+
+  <!-- ================= Live from the lab ================= -->
+  <div id="live">
+  <div class="livehead">
+    <div>
+      <h2>Live from the <b>lab</b></h2>
+      <p class="lede">Real readings from the lab’s machines, updated every minute.</p>
+    </div>
+    <div class="status" id="status" style="display:none"><i class="dot"></i><span id="statusText">Sample data, lab not reachable</span></div>
+  </div>
+
+  <section class="hero intro" id="hero">
+    <div class="head">
+      <div>
+        <p class="eyebrow">Right now, the lab's machines are drawing</p>
+        <div class="big"><span class="num" id="labW">—</span><small>watts</small></div>
+        <p class="equiv" id="equiv">&nbsp;</p>
+      </div>
+      <div class="today">
+        <div class="chip"><label>Today so far</label>
+          <div class="money"><strong><i>₹</i><span class="num" id="tCost">—</span></strong><em><span class="num" id="tKwh">—</span> kWh</em></div>
+          <div class="mean"><svg viewBox="0 0 40 40"><path d="M5 25v-5l4-8h20l5 8v5z" fill="none" stroke="#9dffd2" stroke-width="3" stroke-linejoin="round"/><circle cx="12" cy="27" r="4" fill="#9dffd2"/><circle cx="28" cy="27" r="4" fill="#9dffd2"/></svg><span id="tCar">—</span></div></div>
+        <div class="chip"><label>Last 7 days</label>
+          <div class="money"><strong><i>₹</i><span class="num" id="wCost">—</span></strong><em><span class="num" id="wKwh">—</span> kWh</em></div>
+          <div class="mean"><svg viewBox="0 0 40 40"><path d="M5 25v-5l4-8h20l5 8v5z" fill="none" stroke="#9dffd2" stroke-width="3" stroke-linejoin="round"/><circle cx="12" cy="27" r="4" fill="#9dffd2"/><circle cx="28" cy="27" r="4" fill="#9dffd2"/></svg><span id="wCar">—</span></div></div>
+        <div class="chip"><label>Last 30 days</label>
+          <div class="money"><strong><i>₹</i><span class="num" id="aCost">—</span></strong><em><span class="num" id="aKwh">—</span> kWh</em></div>
+          <div class="mean"><svg viewBox="0 0 40 40"><path d="M5 25v-5l4-8h20l5 8v5z" fill="none" stroke="#9dffd2" stroke-width="3" stroke-linejoin="round"/><circle cx="12" cy="27" r="4" fill="#9dffd2"/><circle cx="28" cy="27" r="4" fill="#9dffd2"/></svg><span id="aCar">—</span></div></div>
+      </div>
+    </div>
+    <div class="stage">
+      <svg class="fx" id="fxUnder" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg>
+      <svg id="scene" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax meet"></svg>
+      <svg class="fx" id="fxOver" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg>
+    </div>
+    <div class="hint">Tap a machine or the Raspberry Pi to look inside</div>
+  </section>
+
+  <section class="block reveal" id="split">
+    <h2>Where does the <b>power</b> go?</h2>
+    <p class="lede">The plug sees everything a machine draws. Software on the machine can only see what its processor and graphics card use. The rest is memory, motherboard, fans, disks and power-supply losses.</p>
+    <div class="card"><svg id="sankey" viewBox="0 0 1200 390"></svg></div>
+  </section>
+
+  <section class="block reveal" id="grid">
+    <h2>How <b>clean</b> is the electricity right now?</h2>
+    <p class="lede">The same job causes more or less CO₂ depending on when it runs, because the mix of solar, wind, hydro and coal on the grid changes through the day.</p>
+    <div class="gridbox">
+      <div class="card">
+        <div class="gnow num" id="gNow">—</div>
+        <div class="gunit">grams of CO₂ per kWh · southern India grid, this hour</div>
+        <p class="cmp" id="gCmp"></p>
+      </div>
+      <div class="card">
+        <h3>The last 24 hours</h3>
+        <div class="bars" id="gBars"></div>
+        <div class="axis" id="gAxis"></div>
+        <p class="note" id="gNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block reveal" id="impact">
+    <h2>What does it <b>add up</b> to?</h2>
+    <p class="lede">One day looks small. Tap a longer period and watch it grow.</p>
+    <div class="seg per" id="per">
+      <button data-k="today" class="on">Today</button><button data-k="week">Last 7 days</button>
+      <button data-k="all">Last 30 days</button>
+    </div>
+    <p class="note" id="iNote" style="margin:10px 0 0"></p>
+    <div class="imp3">
+      <div class="card"><label>Energy used</label><strong class="num" id="iKwh">—</strong><em>kWh</em></div>
+      <div class="card"><label>Electricity cost</label><strong class="num" id="iCost">—</strong><em>₹</em></div>
+      <div class="card"><label>CO₂ caused</label><strong class="num" id="iCo2">—</strong><em>kg</em></div>
+    </div>
+    <div class="card">
+      <h3>Which machine used it</h3>
+      <div class="mbar" id="iBar"><b></b><b></b><b></b><b></b></div>
+      <div class="mleg" id="iLeg"></div>
+    </div>
+    <div class="eq3">
+      <div class="card"><svg viewBox="0 0 40 40"><path d="M6 19 20 7l14 12v14H6z" fill="none" stroke="#9dffd2" stroke-width="2.4" stroke-linejoin="round"/><rect x="16" y="23" width="8" height="10" fill="#9dffd2"/></svg>
+        <p>The same electricity would run a typical Indian home for <b id="iHome">—</b>.</p></div>
+      <div class="card"><svg viewBox="0 0 40 40"><path d="M5 25v-5l4-8h20l5 8v5z" fill="none" stroke="#9dffd2" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="27" r="4" fill="#9dffd2"/><circle cx="28" cy="27" r="4" fill="#9dffd2"/></svg>
+        <p>The CO₂ equals driving a petrol car for <b id="iCar">—</b>.</p></div>
+    </div>
+    <p class="note">Rough comparisons: a home uses about 3 kWh a day and a petrol car emits about 0.15 kg of CO₂ per km. Cost assumes ₹8 per kWh.</p>
+  </section>
+
+  </div>
+
+  <!-- ================= Good practices ================= -->
+  <section class="block" id="practices">
+    <h2>Good practices for <b>GreenAI</b> experiments</h2>
+    <p class="lede">How to measure the energy of an AI experiment properly, and how to serve language models with less energy, from what we learned running this lab and our own GPU runs.</p>
+    <div class="pjump"><a href="#p-setup">Setting up<i>4</i></a><a href="#p-running">While it runs<i>3</i></a><a href="#p-reporting">Comparing and reporting<i>3</i></a><a href="#p-serving">Serving language models efficiently<i>3</i></a></div>
+  <div class="reveal" id="p-setup">
+    <h3 class="pgroup"><span>01</span>Setting up</h3>
+    <div class="plist">
+      <article class="pr"><h4>Measure at the plug, not only the chip.</h4><p>Processor and GPU counters (RAPL, NVML) leave out memory, storage, fans and power-supply losses. Say which parts your tools cover, and don’t call a CPU-plus-GPU total whole-machine energy.</p><ul class="ev"><li class="lab"><em>In our lab</em>under load the DGX Spark’s GPU reports about 40 W while its plug reads about 125 W.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>RAPL and NVML report only processor and graphics energy, so their totals are a partial cost, not what the machine draws from the wall.</li></ul></article>
+      <article class="pr"><h4>Record the idle baseline and subtract it.</h4><p>Measure each machine with your workload stopped, then remove that draw from every trace you report.</p><ul class="ev"><li class="lab"><em>In our lab</em>the DGX Spark draws about 25 W idle and about 123 W under load.</li></ul></article>
+      <article class="pr"><h4>Count only your own work.</h4><p>Run on an otherwise idle machine where you can, and track your workload by its process ID so other software isn’t counted against you.</p><ul class="ev"><li class="lab"><em>In our lab</em>several people run experiments on the same machines, sometimes at the same time.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2606.10702" target="_blank" rel="noopener" data-paper="Watts and Debts">Watts and Debts</a> (ESEM 2026)</em>the study follows the model server by its process ID and subtracts its energy from the total to get the framework’s own cost.</li></ul></article>
+      <article class="pr"><h4>Measure what your monitoring itself costs.</h4><p>Don’t start a new process (such as <code>nvidia-smi</code>) for every sample.</p><ul class="ev"><li class="lab"><em>In our lab</em>our reader uses under 0.1% of one CPU core. One GPU reading cost 3–7 ms of CPU per read, about 100 times the rest, so we stopped reading it.</li></ul></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-running">
+    <h3 class="pgroup"><span>02</span>While it runs</h3>
+    <div class="plist">
+      <article class="pr"><h4>Warm up, repeat, then average.</h4><p>Discard warm-up runs and compare the average of several runs, not a single reading.</p></article>
+      <article class="pr"><h4>Record temperature and power limits.</h4><p>A GPU held back by its power limit or by heat runs slower, which changes energy per task.</p><ul class="ev"><li class="lab"><em>In our lab</em>during one experiment the A2000’s GPU sat at its 70 W limit at 85–86 °C, held back by the power limit the whole time.</li></ul></article>
+      <article class="pr"><h4>Where you can’t read energy counters, use stand-ins.</h4><p>On many virtual machines and cloud servers, runtime and output tokens are good proxies for energy.</p><ul class="ev"><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>energy closely tracked wall-clock time (R = 0.89) and output tokens (R = 0.88), while memory use showed almost no link.</li></ul></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-reporting">
+    <h3 class="pgroup"><span>03</span>Comparing and reporting</h3>
+    <div class="plist">
+      <article class="pr"><h4>Compare on the same machine with the same tool, and check across machines.</h4><p>Absolute energy figures don’t carry over between setups, so claim only the effects that hold on every machine you test.</p><ul class="ev"><li class="lab"><em>In our lab</em>we run Arm and Intel machines side by side, so the same experiment can be checked on both.</li></ul></article>
+      <article class="pr"><h4>Report energy per completed task, next to accuracy and time.</h4><p>A cheap run may simply have failed or given up early.</p></article>
+      <article class="pr"><h4>Write down the setup.</h4><p>Hardware, driver version, model, quantization, batch size, power limit, sampling interval, and the tariff and CO₂ factor you used.</p></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-serving">
+    <h3 class="pgroup"><span>04</span>Serving language models efficiently</h3>
+    <p class="pintro">These save energy when you run models for real work. In an energy experiment each one is also a setting that changes what you measure, so choose it on purpose, keep it the same across the runs you compare, and report it.</p>
+    <div class="plist">
+      <article class="pr"><h4>Batch requests when serving.</h4><p>A GPU decoding several requests together gets much more done in the same time, which lowers the energy per token.</p><p class="trade"><em>The trade-off:</em>when you measure energy per task, the GPU’s power can’t be split exactly between requests running together, so run them one at a time or report the batch size.</p><ul class="ev"><li class="run"><em>In our runs</em>two requests at once gave 1.4–1.9 times the throughput of one.</li></ul></article>
+      <article class="pr"><h4>Use lower precision where quality allows.</h4><p>8-bit (FP8) models need less memory and often run on one GPU instead of two.</p><p class="trade"><em>The trade-off:</em>lower precision can cost accuracy, and a model that writes longer answers can use more energy per task, so measure energy and accuracy together and report the precision you used.</p></article>
+      <article class="pr"><h4>Shut down servers you aren’t using.</h4><p>A GPU with a model loaded keeps drawing power while it waits.</p></article>
+    </div>
+  </div>
+    <p class="more">For more, and the papers behind many of these points, see <a href="https://sa4s-serc.github.io/sustaind/practices" target="_blank" rel="noopener">SustAInd: Best Practices</a>.</p>
+  </section>
+
+  <section class="block reveal" id="suggest">
+    <div class="card suggest">
+      <div>
+        <h2>Suggest a <b>practice</b></h2>
+        <p class="lede">Anyone can suggest a practice. The lab team reviews each one before it appears, so the list stays checked and short. Accepted practices are added with credit to whoever suggested them.</p>
+        <a class="btn" href="#suggest" aria-disabled="true" id="suggestBtn">Suggest a practice</a>
+        <span class="btnnote">Draft: the form link goes here once we choose between a Google Form and a GitHub issue form.</span>
+      </div>
+      <ul class="fields">
+        <li><b>The practice</b>In one line.</li>
+        <li><b>Why it matters</b>A measurement, a paper or an experience that supports it.</li>
+        <li><b>A link</b>To data, code or a paper, if there is one.</li>
+        <li><b>Your name and group</b>Optional, for credit on the site.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="credits">
+      <div class="who"><div class="logo"><img src="img/sa4s-tuned.png" alt="SA4S logo"></div>
+        <div><label>Built by</label><p>The SA4S research group</p></div></div>
+      <div class="who"><div class="logo"><img src="img/serc-tuned.png" alt="SERC, IIIT Hyderabad logo"></div>
+        <div><label>At</label><p>Software Engineering Research Centre (SERC), IIIT Hyderabad</p></div></div>
+      <div class="who"><div class="logo"><img src="img/anrf-tuned.png" alt="Anusandhan National Research Foundation (ANRF) logo"></div>
+        <div><label>Supported by</label><p>Anusandhan National Research Foundation (ANRF), under the SustAInd project<sup>1</sup></p></div></div>
+    </div>
+    <p class="fnote"><sup>1</sup> SustAInd, Sustainable AI for India: <a href="https://sa4s-serc.github.io/sustaind/">sa4s-serc.github.io/sustaind</a></p>
+    IIIT Hyderabad GreenAI Lab · live numbers update every minute · inside views of the machines are simplified drawings, not exact layouts
+  </footer>
+</div>
+
+<div class="insp" id="insp" aria-hidden="true">
+  <button class="x" id="close" aria-label="Close">×</button>
+  <div class="left">
+    <div class="mv" id="mv"><div class="scan"></div></div>
+    <div class="seg" id="seg"><button data-v="out">Outside</button><button data-v="in" class="on">Inside</button></div>
+  </div>
+  <div class="right">
+    <h3 id="shName"></h3><p class="sub" id="shSub"></p>
+    <div class="sh-w"><span class="num" id="shW">—</span><small id="shUnit">W</small></div>
+    <div class="sh-cap" id="shCap"></div>
+    <div class="lab2" id="shRowsLab"></div>
+    <div id="shRows"></div>
+    <p class="note" id="shNote" style="margin-top:6px"></p>
+    <p class="cmp" id="shPiText" style="display:none;margin-top:14px">This small computer does all of the lab’s measuring work. It asks every smart plug and every machine for its readings, stores them, works out the cost and CO₂, and serves this page.</p>
+    <div id="shJet" style="display:none">
+      <p class="cmp" id="jCmp" style="margin-top:14px">&nbsp;</p>
+      <p class="cmp" style="margin-top:10px;color:var(--mute)">A palm-sized computer for running AI on the spot. A plug meter is too coarse for something this small, so a sensor on its power cable reads it 50 times a second. Its energy is included in the lab totals.</p>
+      <div id="jHour">
+      <div class="lab2">The last hour</div>
+      <svg class="spark" id="jSpark" viewBox="0 0 440 92" preserveAspectRatio="none"></svg>
+      <div class="range"><span>60 min ago</span><span id="jRange"></span><span>now</span></div>
+      </div>
+      <div class="lab2">Today so far</div>
+      <div class="tiles t3">
+        <div class="tile"><label>Energy</label><strong class="num" id="jWh">—</strong><em>Wh</em></div>
+        <div class="tile"><label>Cost</label><strong class="num" id="jCost">—</strong><em>₹</em></div>
+        <div class="tile"><label>Highest</label><strong class="num" id="jPeak">—</strong><em>W</em></div>
+      </div>
+    </div>
+    <div id="shMachine">
+    <div class="lab2">The last hour</div>
+    <svg class="spark" id="shSpark" viewBox="0 0 440 92" preserveAspectRatio="none"></svg>
+    <div class="range"><span>60 min ago</span><span id="shRange"></span><span>now</span></div>
+    <div class="lab2">Today so far</div>
+    <div class="tiles">
+      <div class="tile"><label>Energy</label><strong class="num" id="shKwh">—</strong><em>kWh</em></div>
+      <div class="tile"><label>Cost</label><strong class="num" id="shCost">—</strong><em>₹</em></div>
+      <div class="tile"><label>CO₂</label><strong class="num" id="shCo2">—</strong><em>kg</em></div>
+      <div class="tile"><label>GPU busy</label><strong class="num" id="shUtil">—</strong><em>%</em></div>
+      <div class="tile"><label>GPU temp</label><strong class="num" id="shTemp">—</strong><em>°C</em></div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+'use strict';
+var Q = new URLSearchParams(location.search);
+// On the Pi the page's own web server passes queries to Prometheus. When previewing on a laptop, read the lab Pi directly.
+// The public site can't reach the lab's Prometheus (it is on the campus network). The Pi writes every answer the page
+// needs into one file, live.json, once a minute (tools/snapshot.py), and the page reads that. ?prom=<url> reads a
+// Prometheus directly instead, for testing on campus.
+var PROM = Q.get('prom') || '';
+var LIVE = Q.get('live') || 'live.json';
+var TABLET = Q.get('tablet') === '1';
+var SLOW = parseFloat(Q.get('slow')) || 2;   // all looping animations run this many times slower (calmer, a little lighter on the tablet)
+document.documentElement.style.setProperty('--slow', SLOW);
+var TARIFF = 8, CEA = 0.675, FAN_W = 75, TREE_KG_YEAR = 22, HOME_KWH_DAY = 3, CAR_KG_KM = 0.15;
+var START = 1793199238;  // 28 Oct 2026, when continuous measuring began
+
+// Bench layout: the five devices are spaced so the gaps between their drawn bodies are equal (about 98 units);
+// each halo is sized to its own device so the pools of light don't run into each other.
+var M = [
+  {id:'dgx_spark', name:'DGX Spark', sub:'NVIDIA GB10 · 128 GB unified memory', cpu:false, cx:188, view:'50 116 200 216', sc:1.15, top:132, halo:68},
+  {id:'a4000', name:'A4000', sub:'Dell Precision 3680 · RTX 4000 Ada graphics card', cpu:true, cx:392, view:'60 62 180 270', sc:1.1, top:76, halo:92},
+  {id:'a2000', name:'A2000', sub:'Lenovo ThinkStation P5 · RTX 2000 Ada graphics card', cpu:true, cx:609, view:'60 14 180 318', sc:1, top:28, halo:82}
+];
+var PI = {id:'pi', pi:true, name:'Raspberry Pi', sub:'Raspberry Pi 4 · where all the lab’s measuring and calculating happens', cx:1035, view:'66 206 210 124', sc:1.2, top:228};
+// The Jetson sits small on the bench next to the A2000. Tapping it opens its own details (no power split:
+// it is measured on its DC cable, not with a plug and inside sensors).
+var JB = {id:'jetson', jet:true, name:'Jetson Orin Nano', sub:'NVIDIA’s palm-sized AI computer · measured on its power cable', short:'Jetson', cx:810, sc:.8, top:186};
+var JOBS = [['tapo_scrape','Smart plugs','every 2 seconds',30],['dgx_spark_host','DGX Spark','every 5 seconds',12],['a4000_host','A4000','every 5 seconds',12],
+  ['a2000_host','A2000','every 5 seconds',12],['jetson_dc','Jetson board','every 2 seconds',30],['grid_carbon','Grid carbon intensity','every minute',1]];
+var PARTS = [['gpu','Graphics card'],['cpu','Processor'],['rest','Rest of the machine']];
+// Readings taken from the lab on 15 Nov 2026, used only if the Pi cannot be reached.
+var SAMPLE = {
+  dgx_spark:{w:122,today:1165,gpu:38,util:95},
+  a4000:{w:194,today:2247,cpu:51,gpu:128,util:95,temp:80},
+  a2000:{w:174,today:1966,cpu:68,gpu:62,util:97,temp:86}
+};
+var S = {m:{}, pi:{}, per:{}, period:'today', grid:null, gridHist:[], live:true, open:null, seen:{}, j:{hist:[]}};
+// The Jetson counts in the lab totals and the "which machine" bar. Measured on its DC cable, so its
+// adapter's losses are left out. S.j.last = time of its last reading, for the "not connected" state.
+var JSAMPLE = {w:5.6, v:19.05, a:.29, wh:42, peak:11};
+M.forEach(function(m){ S.m[m.id] = {hist:[]}; });
+function $(id){ return document.getElementById(id); }
+function byId(id){ return M.concat([PI, JB]).filter(function(m){ return m.id === id; })[0]; }
+
+/* ================= machine drawings (300 x 340 box, feet at y = 320) ================= */
+function fan(cx, cy, r){
+  var s = '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r+1.5)+'" fill="#03130c" stroke="rgba(157,255,210,.5)" stroke-width=".8"/><g class="fan">';
+  for (var a = 0; a < 360; a += 60)
+    s += '<ellipse cx="'+cx+'" cy="'+(cy-r*.52)+'" rx="'+(r*.2)+'" ry="'+(r*.46)+'" transform="rotate('+a+' '+cx+' '+cy+')" fill="#b9ffe0" opacity=".85"/>';
+  return s + '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*.2)+'" fill="#eafff5"/></g>';
+}
+// Jetson Orin Nano dev kit from above, traced from a photo of the lab's board: 200 x 240, taller than wide,
+// 40-pin header along the top, heatsink with fan on the left, module edge, ports down the right side.
+function JBOARD(){
+  var pins = '';
+  for (var x = 0; x < 20; x++) pins += '<circle cx="'+(37+x*5.2)+'" cy="16" r="1.2" fill="#d9b23c"/><circle cx="'+(37+x*5.2)+'" cy="21.5" r="1.2" fill="#d9b23c"/>';
+  return '<rect x="0" y="0" width="200" height="240" rx="8" fill="#0c1411" stroke="rgba(157,255,210,.45)" stroke-width="1.5"/>'+
+    '<rect x="33" y="12" width="106" height="13" rx="1.5" fill="#101213"/>'+ pins +
+    '<rect x="2" y="54" width="102" height="142" rx="5" fill="#15191b" stroke="#2c3438"/>'+
+    '<text x="14" y="125" font-size="8" font-weight="700" fill="#6f7c76" letter-spacing=".8" transform="rotate(-90 14 125)" text-anchor="middle">NVIDIA</text>'+
+    fan(56, 126, 34)+
+    '<rect x="105" y="40" width="25" height="156" rx="2" fill="#1d2326" stroke="#2c3438"/><rect x="112" y="46" width="11" height="144" rx="1" fill="#101416"/>'+
+    '<rect x="170" y="10" width="22" height="22" rx="3" fill="#c9cdd0"/><rect x="174" y="18" width="14" height="5" rx="2.5" fill="#2c3337"/>'+
+    '<rect x="140" y="34" width="52" height="38" rx="2" fill="#c9cdd0"/><rect x="146" y="40" width="40" height="26" rx="1" fill="#a9aeb2"/>'+
+    '<rect x="150" y="75" width="46" height="34" rx="2" fill="#cdd1d4"/><rect x="156" y="88" width="34" height="5" rx="1" fill="#2f6fd6"/>'+
+    '<rect x="150" y="116" width="46" height="34" rx="2" fill="#cdd1d4"/><rect x="156" y="129" width="34" height="5" rx="1" fill="#2f6fd6"/>'+
+    '<rect x="166" y="157" width="32" height="36" rx="2" fill="#b0b5b9"/><rect x="170" y="167" width="24" height="16" rx="1" fill="#2c3337"/>'+
+    '<rect x="168" y="200" width="32" height="26" rx="3" fill="#111517" stroke="#3a4246"/><circle cx="184" cy="213" r="5.5" fill="#2c3337"/>'+
+    '<rect x="53" y="210" width="36" height="8" rx="1" fill="#1f2427" stroke="#3a4246" stroke-width=".8"/><rect x="104" y="210" width="38" height="8" rx="1" fill="#1f2427" stroke="#3a4246" stroke-width=".8"/>'+
+    '<circle class="led" cx="160" cy="9" r="3" fill="var(--leaf)"/>';
+}
+function part(cls, x, y, w, h, rx){ return '<rect class="part p-'+cls+'" data-p="'+cls+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(rx||3)+'"/>'; }
+function tag(x, y, t){ return '<text class="tag" x="'+x+'" y="'+y+'">'+t+'</text>'; }
+
+var OUT = {
+  a2000: function(){ // Lenovo ThinkStation P5: red frame, black honeycomb front
+    var p = '';
+    [98,114,130,146].forEach(function(y, i){ p += '<rect x="178" y="'+y+'" width="9" height="5" rx="1" fill="#2c2c30"/><rect class="blink b'+(i%3+1)+'" x="190" y="'+(y+1)+'" width="4" height="3" fill="#f4f6ff"/>'; });
+    return '<rect x="92" y="28" width="116" height="292" rx="9" fill="url(#gRed)"/>'+
+      '<rect x="100" y="36" width="100" height="268" rx="3" fill="#060607"/>'+
+      '<rect x="102" y="52" width="68" height="250" fill="url(#pHex)"/>'+
+      '<circle class="blink b3" cx="128" cy="150" r="2" fill="#bfe3ff" opacity=".7"/><circle class="blink b2" cx="139" cy="196" r="1.6" fill="#fff" opacity=".6"/><circle class="blink" cx="121" cy="120" r="1.4" fill="#ffd9a0" opacity=".6"/>'+
+      '<rect x="112" y="42" width="74" height="6" rx="2" fill="#4c4c50"/>'+
+      '<rect x="172" y="54" width="27" height="248" fill="#0f0f10"/><rect x="174" y="60" width="23" height="124" rx="3" fill="#1a1a1c"/>'+
+      '<circle cx="185.5" cy="76" r="6.5" fill="#0b0b0c" stroke="#5a5a5f"/><circle class="led" cx="185.5" cy="76" r="2.6" fill="#fff"/>'+ p +
+      '<circle cx="182" cy="166" r="3" fill="none" stroke="#56565a"/><rect x="177" y="190" width="14" height="22" rx="2" fill="#222225"/>'+
+      '<rect x="149" y="84" width="19" height="80" rx="2" fill="#141416" stroke="#2c2c30"/><circle cx="158.5" cy="98" r="5.5" fill="#26262a"/><circle cx="158.5" cy="150" r="4" fill="none" stroke="#3a3a3e"/>'+
+      '<text x="110" y="286" font-size="12.5" font-weight="700" fill="#8f8f93" letter-spacing="-.5">ThinkStation</text>'+
+      '<circle class="led" cx="118.6" cy="274.6" r="1.9" fill="#ff3b30"/><text x="181" y="286" font-size="9" font-weight="700" fill="#e2252c">P5</text>';
+  },
+  a4000: function(){ // Dell Precision 3680: black tower, diagonal mesh, round logo
+    return '<rect x="96" y="314" width="16" height="6" fill="#0a0a0b"/><rect x="188" y="314" width="16" height="6" fill="#0a0a0b"/>'+
+      '<rect x="88" y="76" width="124" height="240" rx="7" fill="#17181a"/>'+
+      '<rect x="88" y="76" width="124" height="62" rx="7" fill="#202124"/><rect x="88" y="126" width="124" height="12" fill="#17181a"/>'+
+      '<rect x="96" y="108" width="108" height="5.5" rx="1" fill="#09090a"/><rect x="151" y="109.5" width="9" height="2.5" rx="1" fill="#45464a"/>'+
+      '<text x="97" y="127" font-size="7.5" fill="#b0b3b8">Precision 3680</text>'+
+      '<rect x="92" y="140" width="101" height="172" rx="13" fill="url(#pChev)"/>'+
+      '<circle cx="142" cy="250" r="15.5" fill="#0c0d0e" stroke="#8c8f94" stroke-width="1.7"/><text x="142" y="253" text-anchor="middle" font-size="8.2" font-weight="700" fill="#8c8f94">DELL</text>'+
+      '<circle cx="202.5" cy="149" r="4.5" fill="#0b0b0c" stroke="#5a5a5f"/><circle class="led" cx="202.5" cy="149" r="1.8" fill="#fff"/>'+
+      '<circle cx="202.5" cy="163" r="2" fill="none" stroke="#4a4b4f"/>'+
+      '<rect class="blink b3" x="199" y="176" width="7" height="8" rx="1.5" fill="#3ddc97"/>'+
+      '<rect x="199.5" y="194" width="6" height="9" rx="1" fill="#2b2c30"/><rect x="199.5" y="207" width="6" height="9" rx="1" fill="#2b2c30"/><rect x="199.5" y="220" width="6" height="9" rx="1" fill="#2b2c30"/><rect x="200" y="236" width="5" height="20" rx="1" fill="#222326"/>'+
+      '<text x="196" y="306" font-size="5" fill="#777">core</text>';
+  },
+  dgx_spark: function(){ // DGX Spark standing upright
+    return '<g transform="translate(0,-3) rotate(-90 150 229)">'+
+      '<rect x="56" y="196" width="188" height="66" rx="5" fill="url(#gChamp)"/>'+
+      '<rect x="61" y="200" width="178" height="58" rx="3" fill="url(#pFoam)"/>'+
+      '<rect x="68" y="205" width="34" height="48" rx="13" fill="url(#gMetal)"/><rect x="73" y="211" width="11" height="36" rx="5.5" fill="#77725f"/>'+
+      '<text transform="translate(89 215) rotate(90)" font-size="6.5" font-weight="700" fill="#4a4636" letter-spacing=".6">NVIDIA</text>'+
+      '<rect x="198" y="205" width="34" height="48" rx="13" fill="url(#gMetal)"/><rect x="216" y="211" width="11" height="36" rx="5.5" fill="#77725f"/>'+
+      '<circle class="led" cx="236" cy="200" r="1.6" fill="#9dffd2"/></g>';
+  },
+  jetson: function(){ // Jetson Orin Nano dev kit, seen from above (the same drawing as its tap panel, smaller)
+    return '<g transform="translate(94,186) scale(.56)">'+ JBOARD() +'</g>';
+  },
+  pi: function(){ // Raspberry Pi 4, seen from above
+    var pins = '';
+    for (var x = 0; x < 20; x++) pins += '<circle cx="'+(104+x*4.1)+'" cy="238.5" r="1" fill="#d9b23c"/><circle cx="'+(104+x*4.1)+'" cy="242" r="1" fill="#d9b23c"/>';
+    return '<path d="M216,296 C238,296 246,312 268,316" fill="none" stroke="#e6b800" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="M106,316 C100,326 84,318 70,322" fill="none" stroke="#f2f4f3" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<rect x="88" y="230" width="124" height="86" rx="6" fill="#1b7d45" stroke="#35c06f" stroke-width="1.2"/>'+
+      '<path d="M96,252 H116 V270 M150,290 H176 V300 M124,296 V306 H140" fill="none" stroke="#2fa35f" stroke-width="1"/>'+
+      '<circle cx="94" cy="236" r="2.6" fill="none" stroke="#d9b23c" stroke-width="1.4"/><circle cx="184" cy="236" r="2.6" fill="none" stroke="#d9b23c" stroke-width="1.4"/>'+
+      '<circle cx="94" cy="310" r="2.6" fill="none" stroke="#d9b23c" stroke-width="1.4"/><circle cx="184" cy="310" r="2.6" fill="none" stroke="#d9b23c" stroke-width="1.4"/>'+
+      '<rect x="101" y="236" width="82" height="8.5" rx="1" fill="#101213"/>'+ pins +
+      '<rect x="118" y="258" width="28" height="28" rx="2.5" fill="#d3d7da"/><rect x="122" y="262" width="20" height="20" rx="1.5" fill="#b3b8bc"/>'+
+      '<rect class="glow" x="118" y="258" width="28" height="28" rx="2.5" fill="#9dffd2" opacity=".0"/>'+
+      '<rect x="154" y="262" width="17" height="17" rx="1.5" fill="#15181a"/><rect x="100" y="270" width="12" height="18" rx="1" fill="#c9cdd0"/>'+
+      '<rect x="192" y="234" width="24" height="17" rx="1.5" fill="#cdd1d4"/><rect x="192" y="255" width="24" height="17" rx="1.5" fill="#cdd1d4"/><rect x="192" y="284" width="24" height="24" rx="1.5" fill="#b0b5b9"/>'+
+      '<rect x="100" y="310" width="13" height="7" rx="1.5" fill="#d3d7da"/><rect x="120" y="311" width="11" height="6" rx="1" fill="#c0c5c9"/><rect x="136" y="311" width="11" height="6" rx="1" fill="#c0c5c9"/><circle cx="160" cy="313" r="3.5" fill="#15181a"/>'+
+      '<circle class="led" cx="93" cy="298" r="5.5" fill="#ff3b30" opacity=".35"/><circle class="led" cx="93" cy="298" r="2.2" fill="#ff5a4f"/>'+
+      '<circle class="blink b2" cx="93" cy="288" r="1.8" fill="#7dff9f"/>';
+  }
+};
+var IN = {
+  a2000: function(){
+    return '<rect x="100" y="36" width="100" height="268" rx="3" fill="#03130c" stroke="var(--mint)" stroke-width="1"/>'+
+      '<path class="wire" d="M106,44 H194 V238 H106 Z M150,132 V150 M150,186 V250 M124,132 V150"/>'+
+      part('rest',178,62,5,66,1.5)+part('rest',186,62,5,66,1.5)+part('rest',106,62,5,66,1.5)+
+      part('cpu',118,66,54,60,6)+ fan(145,96,22)+ tag(120,62,'PROCESSOR')+
+      part('gpu',106,150,88,36,4)+ fan(128,168,12.5)+ fan(164,168,12.5)+ tag(108,146,'GRAPHICS CARD')+
+      part('rest',108,200,40,22,3)+ tag(110,197,'DISK')+
+      part('rest',106,250,88,46,4)+ fan(172,273,14)+ tag(110,266,'POWER')+ tag(110,275,'SUPPLY');
+  },
+  a4000: function(){
+    return '<rect x="88" y="76" width="124" height="240" rx="7" fill="#03130c" stroke="var(--mint)" stroke-width="1"/>'+
+      '<path class="wire" d="M96,86 H204 V250 H96 Z M150,154 V176 M150,212 V262"/>'+
+      part('rest',180,92,5,60,1.5)+part('rest',189,92,5,60,1.5)+part('rest',197,92,5,60,1.5)+
+      part('cpu',106,96,58,58,6)+ fan(135,125,22)+ tag(108,92,'PROCESSOR')+
+      part('gpu',96,176,108,38,4)+ fan(122,195,13)+ fan(160,195,13)+ tag(98,172,'GRAPHICS CARD')+
+      part('rest',98,226,40,20,3)+ tag(100,223,'DISK')+
+      part('rest',96,262,108,46,4)+ fan(180,285,14)+ tag(100,280,'POWER')+ tag(100,289,'SUPPLY');
+  },
+  dgx_spark: function(){
+    return '<rect x="117" y="132" width="66" height="188" rx="5" fill="#03130c" stroke="var(--mint)" stroke-width="1"/>'+
+      '<path class="wire" d="M150,178 V188 M150,208 V216 M150,262 V270 M150,284 V290"/>'+
+      fan(150,158,17)+ part('rest',126,188,48,20,3)+ tag(133,201,'MEMORY')+
+      part('gpu',126,216,48,46,5)+ tag(142,242,'GPU')+
+      part('rest',126,270,48,14,3)+ tag(141,280,'DISK')+ part('rest',126,290,48,22,3)+ tag(137,304,'POWER');
+  }
+};
+function mini(m){ return '<svg viewBox="'+m.view+'">'; }
+
+/* ================= the Jetson board, seen from above, with the sensor on its cable (tap panel) ================= */
+var JART = (function(){
+  var lead = 'M470,195 H232', dots = '', wires = '', hdr = '';
+  for (var k = 0; k < 4; k++) dots += '<circle class="pulse" r="2.6"><animateMotion dur="'+(2.4*SLOW)+'s" begin="-'+(k*.6*SLOW).toFixed(2)+'s" repeatCount="indefinite" path="'+lead+'"/></circle>';
+  // four wires from the sensor's header up to the ESP32: power, ground, SDA, SCL
+  ['#e0503c','#9aa3a0','#e8c13a','#3fbf6a'].forEach(function(c, i){
+    var x0 = 311 + i*8, x1 = 318 + i*10;
+    wires += '<path d="M'+x0+',178 C'+x0+',152 '+x1+',146 '+x1+',121" fill="none" stroke="'+c+'" stroke-width="1.6" stroke-linecap="round"/>';
+    hdr += '<circle cx="'+x0+'" cy="180" r="1.6" fill="#d9b23c"/>';
+  });
+  var esp = '';
+  for (var e = 0; e < 11; e++) esp += '<circle cx="'+(306+e*7.4)+'" cy="88" r="1.3" fill="#d9b23c"/><circle cx="'+(306+e*7.4)+'" cy="117" r="1.3" fill="#d9b23c"/>';
+  return '<svg viewBox="-6 -24 482 276">'+
+    '<g transform="translate(36,-18)">'+ JBOARD() +'</g>'+
+    '<path class="cbl" d="'+lead+'"/>'+ dots + wires +
+    // INA219 breakout sitting on the power cable
+    '<rect x="300" y="174" width="50" height="42" rx="3" fill="#24338f" stroke="#6b86e8" stroke-width="1"/>'+
+    '<rect x="303" y="186" width="10" height="20" rx="1.5" fill="#2bbf6a"/><circle cx="308" cy="191" r="2" fill="#bfe8cc"/><circle cx="308" cy="201" r="2" fill="#bfe8cc"/>'+
+    '<rect x="326" y="194" width="10" height="8" rx="1" fill="#0d1b3d"/><rect x="340" y="190" width="5" height="12" rx="1" fill="#c7ccd0"/>'+ hdr +
+    // ESP32 dev board
+    '<rect x="298" y="84" width="88" height="38" rx="3" fill="#15191b" stroke="#3a4246"/>'+ esp +
+    '<rect x="344" y="92" width="34" height="22" rx="2" fill="#c9cdd0"/><text x="361" y="106" font-size="6.5" font-weight="700" fill="#7d8286" text-anchor="middle">ESP32</text>'+
+    '<rect x="290" y="96" width="10" height="14" rx="1.5" fill="#9aa1a5"/><circle class="led" cx="330" cy="103" r="2.2" fill="#e0503c"/>'+
+    // Wi-Fi to the Pi
+    '<g fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" opacity=".85"><path d="M403,82 a10,10 0 0,1 14,0"/><path d="M398,76 a17,17 0 0,1 24,0"/><path d="M393,70 a24,24 0 0,1 34,0"/></g><circle cx="410" cy="88" r="2.2" fill="var(--lime)"/>'+
+    '<text class="ln" x="410" y="56" text-anchor="middle" style="font-size:12px;fill:var(--lime)">to the Pi, over Wi-Fi</text>'+
+    '<text class="ln" x="356" y="138" style="font-size:12px">ESP32</text>'+
+    '<text class="ln" x="325" y="234" text-anchor="middle" style="font-size:12px">INA219 sensor</text>'+
+    '<text class="ln" x="470" y="186" text-anchor="end" style="font-size:12px">from the adapter</text>'+
+    '<text class="ln" x="136" y="240" text-anchor="middle" style="font-size:13px">Jetson Orin Nano</text></svg>';
+})();
+
+/* ================= numbers that count up ================= */
+function fmt(v, d){ return v.toLocaleString('en-IN', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+function setNum(el, v, d){
+  d = d || 0;
+  if (v == null || isNaN(v)) { el.textContent = '—'; el._v = null; return; }
+  var from = el._v == null ? 0 : el._v, t0 = performance.now();
+  el._v = v;
+  if (el._raf) cancelAnimationFrame(el._raf);
+  (function step(t){
+    var k = Math.min(1, (t - t0) / 900); k = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt(from + (v - from) * k, d);
+    if (k < 1) el._raf = requestAnimationFrame(step);
+  })(t0);
+}
+function parts(m){
+  var d = S.m[m.id], gpu = d.gpu || 0, cpu = m.cpu ? (d.cpu || 0) : 0, rest = Math.max(0, (d.w || 0) - gpu - cpu);
+  return {gpu:gpu, cpu:cpu, rest:rest, tot:gpu + cpu + rest || 1};
+}
+function partName(m, k){ return k === 'rest' && !m.cpu ? 'Rest, incl. processor' : PARTS.filter(function(p){ return p[0] === k; })[0][1]; }
+
+/* ================= the bench scene ================= */
+(function(){
+  var s = '<circle cx="46" cy="478" r="20" fill="rgba(61,220,151,.14)" stroke="var(--leaf)" stroke-width="1.5"/>'+
+    '<path d="M49,465 L39,481 H47 L43,492 L54,475 H46 Z" fill="var(--mint)"/>'+
+    '<text class="ln" x="76" y="462" style="font-size:13px">from the grid</text>';
+  M.forEach(function(m){
+    var d = 'M66,478 H'+(m.cx-22)+' Q'+m.cx+',478 '+m.cx+',456 V414';
+    m.path = d;
+    s += '<path class="cable" d="'+d+'"/>';
+    for (var k = 0; k < 4; k++) s += '<circle class="pulse" r="3.2" data-pm="'+m.id+'" data-k="'+k+'"><animateMotion dur="'+(2*SLOW)+'s" begin="-'+(k*.5*SLOW)+'s" repeatCount="indefinite" path="'+d+'"/></circle>';
+  });
+  M.forEach(function(m){
+    var d = 'M'+m.cx+',404 H'+(PI.cx-70), dur = ((PI.cx-70-m.cx)/90*SLOW).toFixed(2);
+    for (var k = 0; k < 3; k++) s += '<circle class="data" r="2.6"><animateMotion dur="'+dur+'s" begin="-'+(k/3*dur).toFixed(2)+'s" repeatCount="indefinite" path="'+d+'"/></circle>';
+  });
+  s += '<rect class="shelf" x="100" y="410" width="1075" height="9" rx="4.5" fill="url(#gShelf)"/>';
+  M.forEach(function(m){
+    var ty = 410 - (320 - m.top) * m.sc;
+    s += '<rect x="'+(m.cx-14)+'" y="424" width="28" height="30" rx="7" fill="#f3f6f4"/><circle class="led" cx="'+m.cx+'" cy="439" r="3.2" fill="var(--leaf)"/>'+
+      '<g class="lab"><text class="ln" x="'+m.cx+'" y="'+(ty-60)+'" text-anchor="middle">'+m.name+'</text>'+
+      '<text class="lw" x="'+m.cx+'" y="'+(ty-16)+'" text-anchor="middle"><tspan class="num" id="w_'+m.id+'">—</tspan><tspan class="u" dx="5">W</tspan></text></g>'+
+      '<g class="mach" data-id="'+m.id+'" id="g_'+m.id+'" transform="translate('+(m.cx-150*m.sc)+','+(410-320*m.sc)+') scale('+m.sc+')">'+
+      '<ellipse class="halo" cx="150" cy="322" rx="'+m.halo+'" ry="9"/><rect x="40" y="20" width="220" height="305" fill="transparent"/>'+
+      '<g class="lift">'+ OUT[m.id]() +'</g></g>';
+  });
+  var J = JB, jd = 'M66,478 H'+(J.cx-22)+' Q'+J.cx+',478 '+J.cx+',456 V414', jy = 410 - (320 - J.top) * J.sc;
+  s += '<path class="cable" d="'+jd+'"/>';
+  for (var jk = 0; jk < 4; jk++) s += '<circle class="pulse jx" r="3.2" data-pm="jetson" data-k="'+jk+'"><animateMotion dur="'+(6*SLOW)+'s" begin="-'+(jk*1.5*SLOW)+'s" repeatCount="indefinite" path="'+jd+'"/></circle>';
+  var jdd = 'M'+J.cx+',404 H'+(PI.cx-70), jdur = ((PI.cx-70-J.cx)/90*SLOW).toFixed(2);
+  for (var jk2 = 0; jk2 < 2; jk2++) s += '<circle class="data jx" r="2.6"><animateMotion dur="'+jdur+'s" begin="-'+(jk2/2*jdur).toFixed(2)+'s" repeatCount="indefinite" path="'+jdd+'"/></circle>';
+  // its sensor sits on the power cable, where the other machines have a smart plug
+  s += '<rect x="'+(J.cx-13)+'" y="425" width="26" height="28" rx="5" fill="#1d3f8f" stroke="#5b86e5"/><rect x="'+(J.cx-7)+'" y="431" width="9" height="7" rx="1.5" fill="#2bbf6a"/>'+
+    '<rect x="'+(J.cx-1)+'" y="443" width="9" height="4" rx="1" fill="#0d1b3d"/>'+
+    '<g class="lab jlab"><text class="ln" x="'+J.cx+'" y="'+(jy-50)+'" text-anchor="middle">'+J.short+'</text>'+
+    '<text class="lw jw" x="'+J.cx+'" y="'+(jy-14)+'" text-anchor="middle"><tspan class="num" id="w_jetson">—</tspan><tspan class="u" dx="4">W</tspan></text>'+
+    '<text class="ln joffl" x="'+J.cx+'" y="'+(jy-18)+'" text-anchor="middle">not connected</text></g>'+
+    '<g class="mach" data-id="jetson" id="g_jetson" transform="translate('+(J.cx-150*J.sc)+','+(410-320*J.sc)+') scale('+J.sc+')">'+
+    '<ellipse class="halo" cx="150" cy="322" rx="86" ry="9" style="fill:var(--lime)"/><rect x="50" y="150" width="200" height="175" fill="transparent"/>'+
+    '<g class="lift">'+ OUT.jetson() +'</g></g>';
+  var py = 410 - (320 - PI.top) * PI.sc;
+  s += '<g class="lab"><text class="ln" x="'+PI.cx+'" y="'+(py-44)+'" text-anchor="middle">Raspberry Pi</text>'+
+    '<text class="ln" x="'+PI.cx+'" y="'+(py-18)+'" text-anchor="middle" style="fill:var(--lime);font-size:15px">does all the processing</text></g>'+
+    '<g class="mach" data-id="pi" id="g_pi" transform="translate('+(PI.cx-150*PI.sc)+','+(410-320*PI.sc)+') scale('+PI.sc+')">'+
+    '<ellipse class="halo" cx="150" cy="322" rx="92" ry="8" style="fill:var(--lime)"/><rect x="60" y="150" width="200" height="175" fill="transparent"/>'+
+    '<g class="lift">'+ OUT.pi() +'</g></g>'+
+    '<text class="ln" x="'+(PI.cx-78)+'" y="398" text-anchor="end" style="font-size:12px;fill:var(--lime)">readings →</text>';
+  $('scene').innerHTML = s;
+  splitLayers($('scene'), $('fxUnder'), $('fxOver'));
+})();
+// Move the animated pieces out of the bench drawing into the thin layers below and above it, keeping their
+// exact position (the transforms of every group they sat in) and colour, and their drawing order.
+function splitLayers(scene, under, over){
+  var UNDER = '.cable,.pulse,.data,.shelf,.halo', OVER = '.led,.blink,.fan';
+  [].slice.call(scene.querySelectorAll(UNDER + ',' + OVER)).forEach(function(el){
+    var m = scene.createSVGMatrix();
+    for (var n = el.parentNode; n && n !== scene; n = n.parentNode)
+      if (n.transform && n.transform.baseVal.numberOfItems) m = n.transform.baseVal.consolidate().matrix.multiply(m);
+    var cs = getComputedStyle(el);
+    el.style.fill = cs.fill; el.style.stroke = cs.stroke; el.style.strokeWidth = cs.strokeWidth;
+    var g = document.createElementNS('http://www.w3.org/2000/svg', 'g'), mach = el.closest ? el.closest('.mach') : null;
+    g.setAttribute('transform', 'matrix(' + [m.a, m.b, m.c, m.d, m.e, m.f].join(' ') + ')');
+    if (mach) g.setAttribute('data-of', mach.getAttribute('data-id'));
+    (el.matches(OVER) ? over : under).appendChild(g); g.appendChild(el);
+  });
+}
+function setPulse(m, w){
+  var dur = (w ? Math.max(.7, Math.min(6, 300 / w)) : 6) * SLOW;
+  if (m._dur && Math.abs(dur - m._dur) / m._dur < .15) return;
+  m._dur = dur;
+  [].forEach.call(document.querySelectorAll('[data-pm="'+m.id+'"]'), function(c){
+    var a = c.firstChild; a.setAttribute('dur', dur.toFixed(2) + 's'); a.setAttribute('begin', '-' + (c.getAttribute('data-k') / 4 * dur).toFixed(2) + 's');
+  });
+}
+
+/* ================= power flow diagram ================= */
+var SK = {x0:260, x1:900, top:28, h:330, gap:24, nw:12};
+(function(){
+  var s = '';
+  M.forEach(function(m){ PARTS.forEach(function(p){
+    s += '<path class="rib" id="r_'+m.id+'_'+p[0]+'" stroke="var(--'+p[0]+')"/><path class="fl" id="f_'+m.id+'_'+p[0]+'"/>'; }); });
+  M.forEach(function(m){
+    s += '<rect id="n_'+m.id+'" x="'+SK.x0+'" width="'+SK.nw+'" rx="4" fill="#eafff5"/>'+
+      '<text class="sk-n" id="nt_'+m.id+'" x="'+(SK.x0-20)+'" text-anchor="end">'+m.name+'</text><text class="sk-s num" id="ns_'+m.id+'" x="'+(SK.x0-20)+'" text-anchor="end"></text>';
+  });
+  PARTS.forEach(function(p){
+    s += '<rect id="n_'+p[0]+'" x="'+SK.x1+'" width="'+SK.nw+'" rx="4" fill="var(--'+p[0]+')"/>'+
+      '<text class="sk-n" id="nt_'+p[0]+'" x="'+(SK.x1+SK.nw+20)+'">'+p[1]+'</text><text class="sk-s num" id="ns_'+p[0]+'" x="'+(SK.x1+SK.nw+20)+'"></text>';
+  });
+  $('sankey').innerHTML = s;
+})();
+function place(id, y, h, sub){
+  $('n_'+id).setAttribute('y', y); $('n_'+id).setAttribute('height', Math.max(2, h));
+  $('nt_'+id).setAttribute('y', y + h/2 - 2); $('ns_'+id).setAttribute('y', y + h/2 + 20); $('ns_'+id).textContent = sub;
+}
+function renderFlow(){
+  var tot = 0, sum = {gpu:0, cpu:0, rest:0}, P = {};
+  M.forEach(function(m){ var p = P[m.id] = parts(m); tot += p.tot; sum.gpu += p.gpu; sum.cpu += p.cpu; sum.rest += p.rest; });
+  if (tot < 5) return;
+  var k = (SK.h - SK.gap * 2) / tot, y = SK.top, ty = SK.top, tOff = {};
+  PARTS.forEach(function(p){ tOff[p[0]] = ty; place(p[0], ty, sum[p[0]] * k, Math.round(sum[p[0]]) + ' W · ' + Math.round(sum[p[0]] / tot * 100) + '%'); ty += sum[p[0]] * k + SK.gap; });
+  var xm = (SK.x0 + SK.x1) / 2;
+  M.forEach(function(m){
+    var p = P[m.id], off = y;
+    place(m.id, y, p.tot * k, Math.round(p.tot) + ' W');
+    PARTS.forEach(function(pt){
+      var th = p[pt[0]] * k, ys = off + th/2, yt = tOff[pt[0]] + th/2;
+      var d = 'M'+(SK.x0+SK.nw)+','+ys.toFixed(1)+' C'+xm+','+ys.toFixed(1)+' '+xm+','+yt.toFixed(1)+' '+SK.x1+','+yt.toFixed(1);
+      var r = $('r_'+m.id+'_'+pt[0]), f = $('f_'+m.id+'_'+pt[0]);
+      r.setAttribute('d', d); r.setAttribute('stroke-width', Math.max(.5, th)); r.style.display = th < .5 ? 'none' : '';
+      f.setAttribute('d', d); f.style.display = th < 2 ? 'none' : '';
+      off += th; tOff[pt[0]] += th;
+    });
+    y += p.tot * k + SK.gap;
+  });
+}
+
+/* ================= render ================= */
+function render(){
+  var lab = 0, today = 0;
+  M.forEach(function(m){ var d = S.m[m.id]; lab += d.w || 0; today += d.today || 0; });
+  var three = lab;  // the three machines on the bench, for the Jetson comparison
+  lab += S.j.w || 0; today += S.j.wh || 0;
+  setNum($('labW'), lab);
+  var kwh = today / 1000, co2 = kwh * CEA;
+  function sumOf(o){ if (!o) return null; var t = o.jetson || 0; M.forEach(function(m){ t += o[m.id] || 0; }); return t; }
+  [['t', kwh], ['w', sumOf(S.per.week)], ['a', sumOf(S.per.all)]].forEach(function(x){
+    var k = x[0], e = x[1];
+    setNum($(k + 'Cost'), e == null ? null : e * TARIFF); setNum($(k + 'Kwh'), e, e != null && e < 100 ? 1 : 0);
+    $(k + 'Car').textContent = e == null ? '—' : 'like driving ' + big(e * CEA / CAR_KG_KM) + ' km';
+  });
+  $('equiv').innerHTML = lab ? 'Every hour like this costs <b>₹' + fmt(lab / 1000 * TARIFF, 2) + '</b>, with the CO₂ of driving a petrol car <b>' + fmt(lab / 1000 * CEA / CAR_KG_KM, 1) + ' km</b>' : '&nbsp;';
+  M.forEach(function(m){ var d = S.m[m.id]; setNum($('w_' + m.id), d.w); setPulse(m, d.w); });
+  setNum($('labW2'), lab);
+  var st = $('status'), old = S.snapT && Date.now() / 1000 - S.snapT > 600;
+  st.className = 'status' + (!S.live || old ? ' sample' : '');
+  $('statusText').textContent = !S.live ? 'Sample data, lab not reachable' : !S.snapT ? 'Live' : (old ? 'Last update ' : 'Live · updated ') + clockText(S.snapT);
+  st.style.display = '';
+  S.three = three;
+  setNum($('w_jetson'), S.j.w, 1); setPulse(JB, S.j.w);
+  ['scene','fxUnder','fxOver'].forEach(function(i){ $(i).classList.toggle('joff', S.j.w == null); });
+  renderFlow(); renderGrid(lab); renderImpact();
+  if (S.open) renderInsp();
+}
+function clockText(t){ var d = new Date(t * 1000), now = new Date();
+  var hm = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  return d.toDateString() === now.toDateString() ? hm : d.toLocaleDateString('en-IN', {day:'numeric', month:'short'}) + ', ' + hm; }
+function hue(v, lo, hi){ return 150 - Math.max(0, Math.min(1, (v - lo) / ((hi - lo) || 1))) * 115; }
+function renderGrid(lab){
+  var g = S.grid, h = S.gridHist;
+  if (g == null) {
+    $('gNow').textContent = Math.round(CEA * 1000);
+    $('gCmp').textContent = 'Hourly data is not available right now, so this is the national average for the year.';
+  } else {
+    setNum($('gNow'), g);
+    var diff = Math.round((1 - g / (CEA * 1000)) * 100);
+    $('gCmp').innerHTML = 'That is <b>' + Math.abs(diff) + '% ' + (diff >= 0 ? 'cleaner' : 'dirtier') + '</b> than the national average for the year (' +
+      Math.round(CEA * 1000) + ' g). At this moment the lab causes about <b>' + Math.round(lab / 1000 * g) + ' g of CO₂ per hour</b>.';
+  }
+  if (!h.length) { $('gNote').textContent = ''; return; }
+  var lo = Infinity, hi = 0, iMin = 0;
+  h.forEach(function(p, i){ if (p[1] < lo) { lo = p[1]; iMin = i; } hi = Math.max(hi, p[1]); });
+  var box = $('gBars');
+  if (box.children.length !== h.length) box.innerHTML = h.map(function(){ return '<i></i>'; }).join('');
+  h.forEach(function(p, i){
+    var el = box.children[i];
+    el.style.background = 'hsl(' + hue(p[1], lo, hi) + ',70%,' + (i === iMin ? 70 : 52) + '%)';
+    el.style.height = (S.seen.grid ? (18 + (p[1] - lo) / ((hi - lo) || 1) * 82) : 0) + '%';
+    el.style.transitionDelay = (i * 12) + 'ms';
+  });
+  function hm(t){ var d = new Date(t * 1000); return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+  var ax = ''; for (var i = 0; i < 5; i++) ax += '<span>' + hm(h[Math.round(i * (h.length - 1) / 4)][0]) + '</span>';
+  $('gAxis').innerHTML = ax;
+  $('gNote').textContent = 'Cleanest around ' + hm(h[iMin][0]) + ' (' + Math.round(lo) + ' g), dirtiest at ' + Math.round(hi) +
+    ' g. Running a job at the cleanest hour instead of the dirtiest would cut its CO₂ by about ' + Math.round((1 - lo / hi) * 100) + '%.';
+}
+var MCOL = {dgx_spark:'#3ddc97', a4000:'#a8e6ff', a2000:'#ff8f6b', jetson:'#d6f26a'};
+var JET = {id:'jetson', name:'Jetson board'};
+var NOTES = {today:'Since midnight.', week:'The last 7 days, from the smart plugs\u2019 own energy counters.',
+  all:'The last 30 days, from the smart plugs\u2019 own energy counters.'};
+var JNOTE = ' The Jetson board is counted from its power-cable sensor, which started on 15 Nov 2026.';
+function big(v){ return v == null ? '—' : fmt(v, v < 10 ? 1 : 0); }
+function periodKwh(){ // kWh per machine for the chosen period, or null while loading
+  var k = S.period, out = {}, ok = true;
+  M.forEach(function(m){
+    var v = k === 'today' ? (S.m[m.id].today == null ? null : S.m[m.id].today / 1000)
+          : (S.per[k] ? S.per[k][m.id] : null);
+    if (v == null) ok = false; out[m.id] = v;
+  });
+  out.jetson = k === 'today' ? (S.j.wh || 0) / 1000 : (S.per[k] && S.per[k].jetson) || 0;
+  return ok ? out : null;
+}
+function renderImpact(){
+  var e = periodKwh(), tot = null;
+  $('iNote').textContent = NOTES[S.period] + JNOTE;
+  var who = M.concat([JET]);
+  if (e) { tot = 0; who.forEach(function(m){ tot += e[m.id]; }); }
+  var co2 = tot == null ? null : tot * CEA;
+  setNum($('iKwh'), tot, tot != null && tot < 100 ? 1 : 0); setNum($('iCost'), tot == null ? null : tot * TARIFF);
+  setNum($('iCo2'), co2, co2 != null && co2 < 100 ? 1 : 0);
+  if (!e) return;
+  var leg = '';
+  who.forEach(function(m, i){
+    var b = $('iBar').children[i]; b.style.background = MCOL[m.id]; b.style.flexBasis = (e[m.id] / (tot || 1) * 100) + '%';
+    var small = m === JET && e[m.id] < 1;  // the Jetson is a few Wh a day: show Wh and paise, not "0.0 kWh · ₹0"
+    leg += '<div><i style="background:'+MCOL[m.id]+'"></i>'+m.name+'<strong class="num">'+
+      (small ? fmt(e[m.id] * 1000, 0)+' Wh · ₹'+fmt(e[m.id] * TARIFF, 2) : big(e[m.id])+' kWh · ₹'+fmt(e[m.id] * TARIFF, 0))+'</strong></div>';
+  });
+  $('iLeg').innerHTML = leg;
+  var days = tot / HOME_KWH_DAY;
+  $('iHome').textContent = days < 1 ? big(days * 24) + ' hours' : days < 60 ? big(days) + ' days' : days < 730 ? big(days / 30.4) + ' months' : big(days / 365) + ' years';
+  $('iCar').textContent = big(co2 / CAR_KG_KM) + ' km';
+}
+$('per').addEventListener('click', function(e){
+  var b = up(e.target, 'button'); if (!b) return;
+  S.period = b.getAttribute('data-k');
+  [].forEach.call($('per').children, function(x){ x.className = x === b ? 'on' : ''; });
+  renderImpact();
+});
+
+/* ================= inspector ================= */
+var mv = $('mv'), insp = $('insp');
+function heat(){
+  var p = parts(S.open);
+  ['gpu','cpu','rest'].forEach(function(k){
+    var op = .16 + Math.min(1, p[k] / 140) * .7;
+    [].forEach.call(mv.querySelectorAll('.p-' + k), function(el){ el.style.fillOpacity = op; });
+  });
+  var d = S.m[S.open.id];
+  mv.style.setProperty('--spin', (d.util > 2 ? (50 / d.util + .25) : 1e4) + 's');
+}
+function renderPi(){
+  var tot = 0, upn = 0, rows = $('shRows');
+  if (rows.children.length !== JOBS.length) rows.innerHTML = JOBS.map(function(j){
+    return '<div class="prow"><i></i><span>'+j[1]+'</span><u>'+j[2]+'</u><strong class="num"></strong></div>'; }).join('');
+  JOBS.forEach(function(j, i){
+    var d = S.pi[j[0]] || {}, ok = d.up === 1, r = rows.children[i], unplugged = !ok && j[0] === 'jetson_dc';
+    if (ok) { upn++; tot += (d.n || 0) * j[3]; }
+    r.querySelector('i').style.background = ok ? 'var(--leaf)' : unplugged ? 'var(--mute)' : '#ff6b5e';
+    r.querySelector('strong').innerHTML = ok ? Math.round(d.n || 0) + '<small>readings each time</small>' : unplugged ? '<small>not connected</small>' : '<small>not reporting</small>';
+  });
+  setNum($('shW'), tot);
+  $('shNote').textContent = upn + ' of ' + JOBS.length + ' sources are reporting.';
+}
+function renderInsp(){
+  if (S.open.pi) return renderPi();
+  if (S.open.jet) return renderJetson(S.three);
+  var m = S.open, d = S.m[m.id], p = parts(m), kwh = (d.today || 0) / 1000, hl = mv.getAttribute('data-hl');
+  setNum($('shW'), d.w);
+  var rows = $('shRows'), keys = m.cpu ? ['gpu','cpu','rest'] : ['gpu','rest'];
+  if (rows.children.length !== keys.length) rows.innerHTML = keys.map(function(k){
+    return '<button class="prow" data-p="'+k+'"><i style="background:var(--'+k+')"></i><span>'+partName(m, k)+'</span><em><b style="background:var(--'+k+')"></b></em><strong class="num"></strong></button>'; }).join('');
+  keys.forEach(function(k, i){
+    var r = rows.children[i];
+    r.className = 'prow' + (hl === k ? ' on' : '');
+    r.querySelector('b').style.width = (p[k] / p.tot * 100) + '%';
+    r.querySelector('strong').innerHTML = Math.round(p[k]) + ' W<small>' + Math.round(p[k] / p.tot * 100) + '%</small>';
+  });
+  $('shNote').textContent = m.cpu ? '' : 'This machine has no sensor for its processor, so the processor is counted in the rest.';
+  setNum($('shKwh'), kwh, 2); setNum($('shCost'), kwh * TARIFF); setNum($('shCo2'), kwh * CEA, 2);
+  setNum($('shUtil'), d.util); setNum($('shTemp'), d.temp);
+  heat();
+  spark($('shSpark'), $('shRange'), d.hist, 4, 0);
+}
+function spark(svg, rangeEl, h, minPad, dec){
+  if (h.length < 2) { svg.innerHTML = ''; rangeEl.textContent = ''; return; }
+  var lo = Infinity, hi = 0; h.forEach(function(v){ lo = Math.min(lo, v[1]); hi = Math.max(hi, v[1]); });
+  var pad = Math.max(minPad, (hi - lo) * .15), a = lo - pad, b = hi + pad;
+  var pts = h.map(function(v, i){ return (i / (h.length - 1) * 440).toFixed(1) + ',' + (88 - (v[1] - a) / (b - a) * 82).toFixed(1); });
+  svg.innerHTML = '<path d="M0,92 L' + pts.join(' L') + ' L440,92 Z" fill="#3ddc97" opacity=".16"/>' +
+    '<path d="M' + pts.join(' L') + '" fill="none" stroke="#9dffd2" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
+  rangeEl.textContent = 'between ' + fmt(lo, dec) + ' and ' + fmt(hi, dec) + ' W';
+}
+function lastSeen(t){
+  if (!t) return '';
+  var d = new Date(t * 1000), mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  return d.getDate() + ' ' + mon + ', ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+}
+function renderJetson(lab){
+  var j = S.j, off = j.w == null;
+  setNum($('shW'), j.w, 1);
+  $('shCap').textContent = off ? 'not connected right now' : 'power going into the board';
+  $('jCmp').innerHTML = !off ? '<b>' + fmt(j.v || 0, 2) + ' V × ' + fmt(j.a || 0, 2) + ' A</b> going into the board.' +
+    (lab ? ' The three machines next to it draw about <b>' + fmt(Math.round(lab / j.w), 0) + ' times</b> as much.' : '') :
+    'The board is not plugged in through its sensor at the moment' + (j.last ? ' (last reading ' + lastSeen(j.last) + ')' : '') + '. It shows up here again as soon as it is.';
+  setNum($('jWh'), j.wh, j.wh != null && j.wh < 100 ? 1 : 0);
+  setNum($('jCost'), j.wh == null ? null : j.wh / 1000 * TARIFF, 2);
+  setNum($('jPeak'), j.peak, 1);
+  mv.style.setProperty('--spin', (j.w ? Math.max(.35, 5 / j.w) : 1e4) + 's');
+  mv.classList.toggle('joff', off);
+  $('jHour').style.display = j.hist.length < 2 ? 'none' : '';
+  spark($('jSpark'), $('jRange'), j.hist, .5, 1);
+}
+function setView(v){
+  var on = v === 'in';
+  if (on !== mv.classList.contains('xray')) {
+    mv.classList.toggle('xray', on);
+    mv.classList.remove('scanning'); void mv.offsetWidth; if (on) mv.classList.add('scanning');
+  }
+  [].forEach.call($('seg').children, function(b){ b.className = b.getAttribute('data-v') === v ? 'on' : ''; });
+}
+function highlight(k){
+  var cur = mv.getAttribute('data-hl');
+  k = cur === k ? '' : k;
+  mv.setAttribute('data-hl', k);
+  mv.className = mv.className.replace(/\s*hl-\w+/g, '') + (k ? ' hl-' + k : '');
+  if (k) setView('in');
+  renderInsp();
+}
+var viewTimer = null;
+function openInsp(m, ev){
+  track('open_machine', {machine: m.id});
+  S.open = m;
+  ['shW','shKwh','shCost','shCo2','shUtil','shTemp'].forEach(function(i){ $(i)._v = null; });
+  var r = $('g_' + m.id).getBoundingClientRect();
+  insp.style.transformOrigin = (r.left + r.width / 2) + 'px ' + (r.top + r.height / 2) + 'px';
+  mv.className = 'mv'; mv.setAttribute('data-hl', '');
+  var one = m.pi || m.jet;  // no inside view
+  mv.innerHTML = m.jet ? JART : mini(m) + OUT[m.id]() + '</svg>' + (one ? '' : mini(m).replace('<svg', '<svg class="in"') + IN[m.id]() + '</svg><div class="scan"></div>');
+  $('seg').style.display = one ? 'none' : '';
+  $('shMachine').style.display = one ? 'none' : ''; $('shPiText').style.display = m.pi ? '' : 'none'; $('shJet').style.display = m.jet ? '' : 'none';
+  $('shUnit').textContent = m.pi ? 'readings a minute' : 'W';
+  $('shCap').textContent = m.pi ? 'collected from the plugs, the machines and the grid' : m.jet ? '' : 'total power, measured at the plug';
+  $('shRowsLab').textContent = m.pi ? 'What it is listening to' : m.jet ? '' : 'Where it goes · tap a row to find the part';
+  $('shRowsLab').style.display = m.jet ? 'none' : ''; $('shNote').textContent = '';
+  if (m.jet) ['jWh','jCost','jPeak'].forEach(function(i){ $(i)._v = null; });
+  $('shRows').innerHTML = '';
+  $('shName').textContent = m.name; $('shSub').textContent = m.sub;
+  setView('out');
+  insp.classList.add('on'); insp.setAttribute('aria-hidden', 'false'); updateStill();
+  renderInsp();
+  clearTimeout(viewTimer); if (!one) viewTimer = setTimeout(function(){ if (S.open === m) setView('in'); }, 900);
+}
+function closeInsp(){
+  if (!S.open) return;
+  S.open = null; clearTimeout(viewTimer);
+  insp.classList.remove('on'); insp.setAttribute('aria-hidden', 'true'); updateStill();
+  // once the panel has faded out, drop its drawing so its fans and dots stop animating unseen
+  setTimeout(function(){ if (!S.open) mv.innerHTML = ''; }, 700);
+}
+function up(el, sel){ while (el && el !== document) { if (el.matches && el.matches(sel)) return el; el = el.parentNode; } return null; }
+$('scene').addEventListener('click', function(e){ var g = up(e.target, '.mach'); if (g) openInsp(byId(g.getAttribute('data-id')), e); });
+$('close').addEventListener('click', closeInsp);
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeInsp(); });
+$('seg').addEventListener('click', function(e){ var b = up(e.target, 'button'); if (b) setView(b.getAttribute('data-v')); });
+$('shRows').addEventListener('click', function(e){ var b = up(e.target, 'button.prow'); if (b) highlight(b.getAttribute('data-p')); });
+mv.addEventListener('click', function(e){
+  if (!S.open || S.open.pi || S.open.jet) return;
+  var p = up(e.target, '.part');
+  if (p) highlight(p.getAttribute('data-p')); else setView(mv.classList.contains('xray') ? 'out' : 'in');
+});
+
+/* ================= data ================= */
+var snapP = null, snapAt = 0;
+function snapshot(){
+  if (!snapP || Date.now() - snapAt > 55000) {
+    snapAt = Date.now();
+    snapP = fetch(LIVE + (LIVE.indexOf('?') < 0 ? '?' : '&') + 'm=' + Math.floor(Date.now() / 60000), {cache:'no-store'})
+      .then(function(r){ if (!r.ok) throw new Error('live.json ' + r.status); return r.json(); })
+      .then(function(j){ S.snapT = j.t; return j; });
+    snapP.catch(function(){ snapAt = 0; });
+  }
+  return snapP;
+}
+// Keys match tools/snapshot.py: "q:<expr>" and "r:<expr>|<seconds>|<step>". "[today]" = since lab-local midnight.
+function fromSnap(key){ return snapshot().then(function(j){ if (!j.q[key]) throw new Error('not in live.json: ' + key); return j.q[key]; }); }
+function get(path){
+  var ctl = window.AbortController ? new AbortController() : null, t = setTimeout(function(){ if (ctl) ctl.abort(); }, 6000);
+  return fetch(PROM + path, ctl ? {signal: ctl.signal} : {}).then(function(r){ clearTimeout(t); return r.json(); })
+    .then(function(j){ return j.data.result; });
+}
+function q(expr){
+  if (!PROM) return fromSnap('q:' + expr);
+  return get('/api/v1/query?query=' + encodeURIComponent(expr.replace(/\[today\]/g, '[' + sinceMidnight() + 's]')));
+}
+function qr(expr, secs, step){
+  if (!PROM) return fromSnap('r:' + expr + '|' + secs + '|' + step);
+  var e = Math.floor(Date.now() / 1000);
+  return get('/api/v1/query_range?query=' + encodeURIComponent(expr) + '&start=' + (e - secs) + '&end=' + e + '&step=' + step);
+}
+function put(res, key, field){ res.forEach(function(r){ var d = S.m[r.metric[key]]; if (d) d[field] = parseFloat(r.value[1]); }); }
+function tick(){
+  return Promise.all([
+    q('sum by (room) (avg_over_time(tapo_p110_power_consumption_w[30s])) / 1000'),
+    q('sum by (room) (tapo_p110_today_energy_wh)'),
+    q('sum by (host) (avg_over_time(greenlab_cpu_power_watts{domain="package"}[30s]))'),
+    q('sum by (host) (avg_over_time(greenlab_gpu_power_watts[30s]))'),
+    q('avg by (host) (greenlab_gpu_utilization_percent)'),
+    q('max by (host) (greenlab_gpu_temperature_celsius)'),
+    q('max(greenlab_grid_carbon_intensity_g_per_kwh{type="direct"})'),
+    q('sum by (job) (scrape_samples_scraped)'),
+    q('min by (job) (up)'),
+    q('avg_over_time(greenlab_dc_input_power_watts{job="jetson_dc"}[10s])'),
+    q('greenlab_dc_input_voltage_volts{job="jetson_dc"}'),
+    q('greenlab_dc_input_current_amps{job="jetson_dc"}'),
+    q('increase(greenlab_dc_input_energy_joules_total{job="jetson_dc"}[today]) / 3600'),
+    q('max_over_time(greenlab_dc_input_power_peak_watts{job="jetson_dc"}[today])')
+  ]).then(function(r){
+    function one(x){ return x.length ? parseFloat(x[0].value[1]) : null; }
+    S.j.w = one(r[9]); S.j.v = one(r[10]); S.j.a = one(r[11]); S.j.wh = one(r[12]); S.j.peak = one(r[13]);
+    S.pi = {};
+    r[7].forEach(function(x){ (S.pi[x.metric.job] = S.pi[x.metric.job] || {}).n = parseFloat(x.value[1]); });
+    r[8].forEach(function(x){ (S.pi[x.metric.job] = S.pi[x.metric.job] || {}).up = parseFloat(x.value[1]); });
+    put(r[0], 'room', 'w'); put(r[1], 'room', 'today'); put(r[2], 'host', 'cpu'); put(r[3], 'host', 'gpu');
+    put(r[4], 'host', 'util'); put(r[5], 'host', 'temp');
+    S.grid = r[6].length ? parseFloat(r[6][0].value[1]) : null;
+    S.live = true;
+  }).catch(function(){
+    S.live = false;
+    S.per = {week:{}, all:{}}; M.forEach(function(m){ var k = SAMPLE[m.id].w * 24 / 1000; S.per.week[m.id] = k * 7; S.per.all[m.id] = k * 18; });
+    JOBS.forEach(function(j){ S.pi[j[0]] = {up:1, n:j[3] === 30 ? 40 : j[3] === 12 ? 30 : 10}; });
+    var t = Date.now() / 4000;
+    var jk = 1 + .1 * Math.sin(t * 1.7);
+    S.j.w = JSAMPLE.w * jk; S.j.v = JSAMPLE.v; S.j.a = JSAMPLE.a * jk; S.j.wh = JSAMPLE.wh; S.j.peak = JSAMPLE.peak;
+    if (!S.j.hist.length) for (var jj = 0; jj < 60; jj++) S.j.hist.push([jj, JSAMPLE.w * (1 + .15 * Math.sin(jj / 4))]);
+    M.forEach(function(m, i){
+      var s = SAMPLE[m.id], d = S.m[m.id], k = 1 + .04 * Math.sin(t + i * 2);
+      d.w = s.w * k; d.gpu = s.gpu * k; d.cpu = s.cpu; d.today = s.today; d.util = s.util; d.temp = s.temp;
+      if (!d.hist.length) for (var j = 0; j < 60; j++) d.hist.push([j, s.w * (1 + .06 * Math.sin(j / 5 + i))]);
+    });
+  }).then(render);
+}
+function sinceMidnight(){ var d = new Date(); return Math.max(60, Math.round((d - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 1000)); }
+function energy(key, win){
+  q('increase(greenlab_dc_input_energy_joules_total{job="jetson_dc"}[' + win + ']) / 3.6e6').then(function(res){
+    S.per[key] = S.per[key] || {}; S.per[key].jetson = res.length ? parseFloat(res[0].value[1]) : 0;
+  }).catch(function(){});
+  q('sum by (room) (increase(tapo_p110_month_energy_wh{room=~"dgx_spark|a4000|a2000"}[' + win + ':5m])) / 1000').then(function(res){
+    var o = {jetson:(S.per[key] || {}).jetson || 0}; res.forEach(function(r){ o[r.metric.room] = parseFloat(r.value[1]); }); S.per[key] = o; render();
+  }).catch(function(){});
+}
+function slow(){
+  energy('week', '7d'); energy('all', '30d');
+  qr('sum by (room) (tapo_p110_power_consumption_w) / 1000', 3600, 60).then(function(res){
+    res.forEach(function(r){ var d = S.m[r.metric.room]; if (d) d.hist = r.values.map(function(v){ return [v[0], parseFloat(v[1])]; }); });
+  }).catch(function(){});
+  q('max_over_time(timestamp(greenlab_dc_input_power_watts{job="jetson_dc"})[7d:2m])').then(function(res){
+    S.j.last = res.length ? parseFloat(res[0].value[1]) : null;
+  }).catch(function(){});
+  qr('avg_over_time(greenlab_dc_input_power_watts{job="jetson_dc"}[1m])', 3600, 60).then(function(res){
+    S.j.hist = res.length ? res[0].values.map(function(v){ return [v[0], parseFloat(v[1])]; }) : [];
+  }).catch(function(){});
+  qr('max(greenlab_grid_carbon_intensity_g_per_kwh{type="direct"})', 86400, 1800).then(function(res){
+    S.gridHist = res.length ? res[0].values.map(function(v){ return [v[0], parseFloat(v[1])]; }) : [];
+  }).catch(function(){});
+}
+
+/* ================= scroll reveals ================= */
+function reveal(el){ el.classList.add('in'); S.seen[el.id] = true; setTimeout(render, 200); }
+var blocks = [].slice.call(document.querySelectorAll('.reveal'));
+if (window.IntersectionObserver) {
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }); }, {threshold:.15});
+  blocks.forEach(function(b){ io.observe(b); });
+} else blocks.forEach(reveal);
+
+/* ================= only animate what can be seen ================= */
+// The page is taller than the screen. Animations scrolled out of view, or covered by the machine panel,
+// would still cost battery on the tablet, so they are paused and carry on when they come back into view.
+var ANIM = [$('fxUnder'), $('fxOver'), $('scene'), $('sankey'), document.querySelector('.top'), document.querySelector('.hint')].filter(Boolean);
+// Frame rate. On the tablet's weak chip the cost is drawing frames, not the number of things moving: anything
+// moving makes Chrome redraw 60 times a second (measured 16 Nov: 320% CPU of 800%, vs 60% with nothing moving).
+// The looping animations are slow, so they are stepped by hand FPS times a second instead (20: 140%), which
+// looks the same. One-off fades and transitions still run normally. ?fps=60 turns the stepping off.
+var FPS = parseFloat(Q.get('fps')) || 20, STEP = FPS < 60, stepper = null;
+function frozen(el){ for (var n = el; n && n.nodeType === 1; n = n.parentNode) if (n._still) return true; return false; }
+function step(){
+  var now = performance.now();
+  if (document.getAnimations) document.getAnimations().forEach(function(a){
+    var t = a.effect && a.effect.getTiming ? a.effect.getTiming() : null;
+    if (!t || t.iterations !== Infinity) return;
+    if (a._t0 == null) { a._t0 = now - (a.currentTime || 0); a.pause(); }
+    if (a.effect.target && frozen(a.effect.target)) return;
+    a.currentTime = now - a._t0;
+  });
+  [].forEach.call(document.querySelectorAll('svg'), function(s){
+    if (s._anim == null) s._anim = !!(s.pauseAnimations && !s.ownerSVGElement && s.querySelector('animate,animateMotion,animateTransform,set'));
+    if (!s._anim) return;
+    if (s._t0 == null) { s._t0 = now / 1000 - s.getCurrentTime(); s.pauseAnimations(); }
+    if (frozen(s)) return;
+    s.setCurrentTime(now / 1000 - s._t0);
+  });
+}
+function setStill(el, still){
+  if (el._still === still) return; el._still = still;
+  el.classList.toggle('still', still);
+  if (!STEP && el.pauseAnimations) { try { if (still) el.pauseAnimations(); else el.unpauseAnimations(); } catch (x) {} }
+}
+function updateStill(){ ANIM.forEach(function(el){ setStill(el, !el._inView || !!S.open); }); }
+ANIM.forEach(function(el){ el._inView = true; });
+if (window.IntersectionObserver) {
+  var vio = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target._inView = e.isIntersecting; }); updateStill(); });
+  ANIM.forEach(function(el){ vio.observe(el); });
+}
+
+/* ================= clock, sleep and wake ================= */
+function clock(){}
+var timer = null, slowTimer = null, asleep = false;
+function start(){
+  clock(); tick(); slow();
+  timer = setInterval(function(){ clock(); tick(); }, 5000);
+  slowTimer = setInterval(slow, 60000);
+  if (STEP && !stepper) { step(); stepper = setInterval(step, 1000 / FPS); }
+  setTimeout(function(){ $('hero').classList.remove('intro'); }, 150);
+}
+// No sleep screen of its own: the tablet's screen timeout turns the screen off. While the screen is off
+// (or the tab is hidden) the page stops fetching; when it comes back on it starts fresh from the top.
+function sleep(){ asleep = true; clearInterval(timer); clearInterval(slowTimer); clearInterval(stepper); stepper = null; closeInsp(); }
+function wake(){
+  asleep = false;
+  if (TABLET) {
+    window.scrollTo(0, 0);
+    $('hero').classList.add('intro');
+    [].forEach.call(document.querySelectorAll('.num'), function(el){ el._v = null; });
+  }
+  start();
+}
+
+function goFull(){ var e = document.documentElement, f = e.requestFullscreen || e.webkitRequestFullscreen; if (TABLET && f && !(document.fullscreenElement || document.webkitFullscreenElement)) { try { var r = f.call(e); if (r && r.catch) r.catch(function(){}); } catch (x) {} } }
+window.addEventListener('click', goFull);
+document.addEventListener('visibilitychange', function(){ if (document.hidden) { if (!asleep) sleep(); } else if (asleep) wake(); });
+document.addEventListener('click', function(e){
+  var a = up(e.target, 'a'); if (!a) return;
+  if (a.getAttribute('data-paper')) track('open_paper', {paper: a.getAttribute('data-paper')});
+  else if (a.parentNode && a.parentNode.id === 'nav') track('nav', {to: a.getAttribute('href')});
+  if (a.id === 'suggestBtn' && a.getAttribute('aria-disabled') === 'true') e.preventDefault();
+});
+// the bar gets its background only once it is stuck to the top
+var navEl = $('nav');
+function navStuck(){ navEl.classList.toggle('stuck', navEl.getBoundingClientRect().top <= 1 && window.scrollY > 0); }
+window.addEventListener('scroll', navStuck, {passive:true}); navStuck();
+// highlight the section you're in on the navigation bar
+if (window.IntersectionObserver) {
+  var navLinks = [].slice.call(document.querySelectorAll('#nav a'));
+  var nio = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return;
+    navLinks.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, {rootMargin:'-45% 0px -50% 0px'});
+  ['about','live','practices'].forEach(function(id){ var el = $(id); if (el) nio.observe(el); });
+}
+start();
+})();
+</script>
+<div class="draftbar">Draft for review</div>
+</body>
+</html>
