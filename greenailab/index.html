@@ -25,7 +25,7 @@ function track(name, params){ if (window.gtag) gtag('event', name, params || {})
 <style>
 :root{--slow:2;
   --bg:#04170f; --bg2:#0a2a1c; --ink:#ecfff5; --mute:#8db7a2; --line:rgba(150,255,205,.14);
-  --glass:rgba(160,255,210,.06); --leaf:#3ddc97; --mint:#9dffd2; --lime:#d6f26a;
+  --glass:rgba(160,255,210,.06); --leaf:#3ddc97; --mint:#9dffd2; --lime:#d6f26a; --warm:#ffb454;
   --gpu:#4be3a4; --cpu:#d6f26a; --rest:#5f9c88;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
@@ -52,7 +52,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .brand span{color:var(--mute);font-weight:400;margin-left:8px}
 .status{display:flex;align-items:center;font-size:14px;color:var(--mute);padding:7px 14px;border-radius:99px;background:var(--glass);border:1px solid var(--line)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--leaf);margin-right:8px;animation:ping calc(2s * var(--slow)) ease-out infinite}
-.status.sample .dot{background:#ffb84d}
+.status.sample .dot,.nowline.stale .dot{background:#ffb84d;animation:none}  /* not live: a still amber dot, no green pulse */
 .status b{font-weight:500;color:var(--ink);margin-left:12px}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(61,220,151,.7)}100%{box-shadow:0 0 0 10px rgba(61,220,151,0)}}
 
@@ -114,7 +114,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* ---------- scroll sections ---------- */
 section.block{padding:84px 0 10px}
-section,[id]{scroll-margin-top:72px}
+/* every link target lands the same distance below the sticky bar */
+section,[id]{scroll-margin-top:var(--land,96px)}
 h2{font-size:46px;font-weight:300;letter-spacing:-.03em;margin:0 0 10px}
 h2 b{font-weight:300;color:var(--leaf)}
 .lede{font-size:18px;color:var(--mute);margin:0 0 30px;max-width:740px;line-height:1.55}
@@ -276,11 +277,13 @@ a{color:var(--mint)}
   border-bottom:1px solid transparent;transition:background .3s,border-color .3s;
   overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
+.nav a.hl{color:var(--mint)}
+.nav a.hl i{font-style:normal;font-size:12px;font-weight:600;color:#04170f;background:var(--leaf);border-radius:99px;padding:1px 7px;margin-left:7px;vertical-align:1px}
 .nav.stuck{background:rgba(4,23,15,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
 .nav a{color:var(--mute);text-decoration:none;font-size:15px;padding:8px 14px;border-radius:99px;margin-right:4px;transition:color .3s,background .3s}
 .nav a:hover,.nav a.on{color:var(--ink);background:var(--glass)}
 
-.about{padding:90px 0 30px;max-width:980px}
+.about{padding:90px 0 10px;max-width:980px}
 .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);margin:0 0 18px;font-weight:600}
 h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin:0 0 26px;
   background:linear-gradient(100deg,#ffffff 0%,#9dffd2 60%,#d6f26a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -302,7 +305,7 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
 .who2{margin:26px 0 0;font-size:16px;line-height:1.6;color:var(--mute);max-width:820px}
 .who2 b{color:var(--ink);font-weight:500}
 
-.livehead{display:flex;align-items:flex-end;justify-content:space-between;padding-top:96px;margin-bottom:6px}
+.livehead{display:flex;align-items:flex-end;justify-content:space-between;padding-top:84px;margin-bottom:34px}
 .livehead .lede{margin-bottom:0}
 .livehead .status{flex:none;margin-left:20px}
 
@@ -338,19 +341,143 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
 .btn{display:inline-flex;align-items:center;padding:14px 24px;border-radius:99px;background:var(--leaf);color:#04170f;font-weight:600;font-size:16px;text-decoration:none}
 .btnnote{display:block;font-size:13px;color:var(--mute);margin-top:10px}
 
+
+.toplinks{display:flex;flex-wrap:wrap;align-items:center}
+.toplinks .nowline{margin:0 12px 10px 0}
+.plink{color:var(--ink);text-decoration:none;font-weight:500;border-color:rgba(61,220,151,.45);background:rgba(61,220,151,.1);transition:background .3s}
+.plink .nw{white-space:nowrap;font-weight:inherit;margin:0;color:inherit}
+.plink span{color:var(--leaf);margin-left:8px;transition:transform .3s;display:inline-block}
+.plink:hover{background:rgba(61,220,151,.18)}.plink:hover span{transform:translateX(4px)}
+.pband{display:grid;grid-template-columns:6fr 5fr;grid-gap:44px;align-items:center;padding:40px 44px;border-radius:30px;
+  background:linear-gradient(125deg,rgba(61,220,151,.17),rgba(214,242,106,.06) 70%);border:1px solid rgba(61,220,151,.32)}
+.pband h2{margin-bottom:14px}.pband .lede{margin-bottom:22px}
+.sugg{font-size:16px;text-decoration:none;color:var(--mint);border-bottom:1px solid rgba(157,255,210,.4)}
+.pbandr a{display:flex;align-items:center;padding:16px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:padding .3s}
+.pbandr a:last-child{border-bottom:0}
+.pbandr a:hover{padding-left:12px}
+.pbandr span{font-size:13px;color:var(--leaf);font-weight:600;letter-spacing:.08em;width:38px;flex:none}
+.pbandr b{flex:1;font-weight:400;font-size:19px}
+.pbandr i{font-style:normal;font-size:13px;color:var(--mute);margin-right:16px;white-space:nowrap}
+.pbandr i:after{content:" practices"}
+.pbandr em{font-style:normal;color:var(--leaf)}
+@media (max-width:860px){.pband{grid-template-columns:1fr;grid-gap:18px;padding:26px 22px}.pbandr b{font-size:17px}}
+/* tablets: the three period boxes fit side by side */
+@media (min-width:600px) and (max-width:860px){.today{flex-direction:row!important}.chip{margin:0 8px 0 0!important;width:auto!important}.chip:last-child{margin-right:0!important}.mean{white-space:normal}}
 @media (max-width:1100px){.machines{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:860px){
   .nav{padding-top:8px;padding-bottom:8px}.nav a{font-size:14px;padding:7px 11px}
   .about{padding:50px 0 10px}h1{font-size:46px}.lead{font-size:19px}
   .why,.suggest{grid-template-columns:1fr;grid-gap:20px}.why blockquote{font-size:32px}.why p{font-size:17px}
   .machines,.plist{grid-template-columns:1fr}
-  .livehead{display:block;padding-top:60px}.livehead .status{margin:14px 0 0;display:inline-flex}
+  .livehead{display:block;padding-top:84px;margin-bottom:24px}.livehead .status{margin:14px 0 0;display:inline-flex}
   .top{height:76px}.brand{font-size:18px}.brand .mark{width:46px;height:46px}.top .pcol{display:none}
   .today{flex-direction:column}.chip{margin:0 0 8px;width:100%}
   .pgroup{font-size:23px;margin-top:40px}.suggest{padding:24px}.fields li{display:block}.fields b{display:block;width:auto}
 }
+
+/* first screen: what we do on the left, the practices card on the right */
+.about{display:grid;grid-template-columns:7fr 5fr;grid-gap:48px;align-items:center;max-width:none;padding:64px 0 10px}
+.about h1{font-size:68px}
+.about .lead{font-size:20px}
+.pcard{padding:30px 32px;border-radius:28px;background:linear-gradient(140deg,rgba(61,220,151,.2),rgba(214,242,106,.07) 75%);
+  border:1px solid rgba(61,220,151,.4);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.pcard .kicker{margin-bottom:10px}
+.pcard h2{font-size:34px;line-height:1.1;margin:0 0 8px}
+.pcard h2 b{white-space:nowrap}
+.pcsub{margin:0 0 10px;font-size:15px;color:var(--mute);line-height:1.5}
+.pcard .pbandr a{padding:12px 2px}
+.pcard .pbandr b{font-size:17px}
+.pcfoot{display:flex;align-items:center;margin-top:18px}
+.pcfoot .sugg{margin-left:18px;font-size:15px}
+.btn.sm{padding:11px 20px;font-size:15px}
+@media (max-width:1100px){.about h1{font-size:56px}.about{grid-gap:32px}}
+@media (max-width:860px){.about{grid-template-columns:1fr;grid-gap:28px;padding:44px 0 10px}.about h1{font-size:44px}.about .lead{font-size:18px}
+  .pcard{padding:24px 20px}.pcard h2{font-size:28px}}
+/* public site: the live block is as tall as its content, the bench as tall as its drawing */
+.hero{height:auto!important;min-height:0!important}
+.stage{flex:none!important;height:auto!important;aspect-ratio:1200/500;margin-top:26px}
+.stage svg{height:100%}
+@media (max-width:860px){.stage{margin-top:18px}}
 /* animations out of sight (scrolled away, or behind the machine panel) are paused; see updateStill() */
 .still,.still *{animation-play-state:paused!important}
+/* ================= What does an AI model cost to run? (same as the lab website) ================= */
+.llm-head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.llm-head h2{margin:0}
+.llm-head .seg button .sdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:8px;vertical-align:1px}
+.llm-hero{display:flex;align-items:center;justify-content:space-between;gap:36px;padding:22px 30px;margin-bottom:18px}
+.lh-state{display:flex;align-items:center;font-size:15px;color:var(--mint)}
+.ldot{width:10px;height:10px;border-radius:50%;background:var(--leaf);margin-right:11px;flex:none}
+.llm-hero.busy .ldot{background:var(--lime);animation:ping calc(1.8s * var(--slow)) ease-out infinite}
+.llm-hero.busy .lh-state{color:var(--lime)}
+.llm-hero.quiet .ldot{background:var(--mute)}
+.llm-hero.quiet .lh-state{color:var(--mute)}
+.lh-model{font-size:34px;font-weight:300;letter-spacing:-.025em;line-height:1.15;margin:6px 0 4px}
+.lh-model:empty{display:none}
+.lh-sub{font-size:16px;color:var(--mute);line-height:1.5}
+.lh-sub b{color:var(--ink);font-weight:500}
+.lh-num{text-align:right;flex:none}
+.lh-big{display:flex;align-items:baseline;justify-content:flex-end}
+.lh-big strong{font-size:80px;font-weight:250;letter-spacing:-.04em;line-height:1;color:var(--mint)}
+.lh-big em{font-style:normal;font-size:26px;font-weight:300;color:var(--mute);margin-left:8px}
+.lh-big em.cur{font-size:44px;color:var(--mint);margin:0 6px 0 0}
+.lh-ans{font-size:15px;color:var(--ink);margin-top:10px}
+.lh-ans:empty{display:none}
+.lh-ans b{font-weight:600;color:var(--mint)}
+.lh-cap{font-size:15px;color:var(--ink);margin-top:6px}
+.lh-also{font-size:14px;color:var(--mute);margin-top:2px}
+.lh-also:empty,.lc-take:empty,.lh-sub:empty{display:none}
+
+/* Three cards side by side, so the whole section fits on one tablet screen. Each card stacks: title, big number,
+   picture, legend, one sentence. Narrower screens put the picture beside the words instead (see the media queries). */
+.llm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-gap:18px}
+.llm-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}  /* the reuse card is hidden when the server doesn't report reuse */
+.lc{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "b" "p" "l" "k";align-content:start;padding:22px 24px}
+.lc h3{grid-area:t;font-size:15px;font-weight:500;color:var(--mute);margin:0 0 10px}
+.lc-big{grid-area:b;display:flex;align-items:center}
+.lc-big strong{font-size:54px;font-weight:250;letter-spacing:-.04em;line-height:1;color:var(--mint);flex:none;margin-right:14px}
+.lc-big strong small{font-size:26px;font-weight:300;letter-spacing:0;margin-left:2px}
+.lc-big > span{font-size:15px;line-height:1.4;color:var(--ink)}
+.lc-pic{grid-area:p;margin:16px 0 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px}
+.lc-leg{grid-area:l;display:flex;flex-wrap:wrap;font-size:13px;color:var(--mute)}
+.lc-leg span{margin:0 14px 3px 0;white-space:nowrap}
+.lc-leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.lc-leg b{color:var(--ink);font-weight:500;margin-left:5px}
+.lc-take{grid-area:k;margin:8px 0 0;font-size:14.5px;line-height:1.5;color:#cfeedd}
+.lc-take b{color:var(--ink);font-weight:600}
+
+/* Reading vs. writing: the question's word pieces light up together, the answer's appear one at a time, like a
+   chatbot typing. The answer's per-piece keyframes (rwA0..) are written by the script. */
+.rw-line{width:100%;margin-bottom:6px;font-size:12.5px;color:var(--mute)}
+.rw-line label{display:block;margin-bottom:4px}
+.rw-chips{display:flex;flex-wrap:wrap}
+.rw-chips.a{min-height:72px;align-content:flex-start}
+.rw-chips span{margin:0 4px 4px 0;padding:2px 6px;border-radius:5px;font-size:12.5px;line-height:1.35;background:var(--mint);color:#04170f}
+.rw-chips.a span{background:var(--leaf)}
+.rw-chips.q span{animation:rwQ calc(6s * var(--slow)) linear infinite}
+@keyframes rwQ{0%,2%{background:rgba(255,255,255,.07);color:var(--mute)}3%,90%{background:var(--mint);color:#04170f}96%,100%{background:rgba(255,255,255,.07);color:var(--mute)}}
+
+/* Graphics card vs. the whole machine: 100 squares = everything the machine draws at the plug.
+   They fill in one after another when the section scrolls into view. */
+.waf{display:grid;grid-template-columns:repeat(10,13px);grid-gap:2.5px}
+.waf i{width:13px;height:13px;border-radius:3px;background:var(--rest);opacity:0;transform:scale(.4);
+  transition:opacity .35s var(--ease),transform .35s var(--ease),background .6s}
+.waf i.g{background:var(--gpu)}.waf i.c{background:var(--cpu)}
+#llm.in .waf i{opacity:1;transform:none}
+
+/* Not reading the same text twice: the text it was sent, as lines of tokens. Reused ones are lit; a reading
+   sweep runs only over the rest. */
+.page{display:grid;grid-template-columns:repeat(10,16px);grid-gap:6px 3px}
+.page i{height:9px;border-radius:3px;background:var(--lime);opacity:0;transition:opacity .5s var(--ease)}
+#llm.in .page i{opacity:.9}
+.page i.r{background:rgba(255,180,84,.55);animation:rdScan calc(5s * var(--slow)) linear infinite}
+@media (max-width:1100px){
+  .llm-grid,.llm-grid.two{grid-template-columns:minmax(0,1fr)}  /* narrower than a laptop: one AI card per row, words beside the picture */
+  .lc{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t p" "b p" "l p" "k p";column-gap:32px}
+  .lc.rw{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}.lc-pic{margin:0;align-self:center}.lc-leg{margin-top:12px}}
+@media (max-width:860px){
+  .llm-grid,.llm-grid.two{grid-template-columns:1fr}
+  .llm-hero{flex-direction:column;align-items:flex-start;gap:18px;padding:24px}.lh-num{text-align:left}.lh-big{justify-content:flex-start}.lh-big strong{font-size:72px}
+  .lh-model{font-size:32px}.lc-big strong{font-size:48px}.lc,.lc.rw{grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "b" "p" "l" "k"}.lc-pic{margin:16px 0 12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -385,16 +512,27 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
   </header>
 
   <nav class="nav" id="nav">
-    <a href="#about">What we do</a><a href="#live">Live from the lab</a><a href="#practices">Good practices</a>
+    <a href="#about">What we do</a><a href="#live">Live from the lab</a><a href="#ai">What AI costs</a><a class="hl" href="#practices">Good practices<i>13</i></a>
   </nav>
 
   <!-- ================= What we do ================= -->
-  <div id="about">
+  <div id="sec-about">
   <section class="about">
-    <p class="kicker">What we do</p>
+   <div class="intro1">
+    <p class="kicker" id="about">What we do</p>
     <h1>How much energy does AI really use?</h1>
     <p class="lead">The GreenAI Lab at IIIT Hyderabad measures how much electricity our machines really use, where it goes, what it costs and how much CO₂ it causes.</p>
-    <div class="nowline"><i class="dot"></i>Right now the lab is drawing<b><span class="num" id="labW2">—</span> W</b><a href="#live">See it live ↓</a></div>
+    <div class="toplinks">
+      <div class="nowline" id="nowline"><i class="dot"></i><span id="nowTxt">Right now the lab is drawing</span><b><span class="num" id="labW2">—</span> W</b><a href="#live">See it live ↓</a></div>
+    </div>
+   </div>
+   <aside class="pcard" aria-label="Good practices">
+     <p class="kicker">Good practices</p>
+     <h2>Measuring AI energy? <b>Start here.</b></h2>
+     <p class="pcsub">13 practices from running this lab and our own GPU runs.</p>
+     <nav class="pbandr"><a href="#p-setup"><span>01</span><b>Setting up</b><i>4</i><em>→</em></a><a href="#p-running"><span>02</span><b>While it runs</b><i>3</i><em>→</em></a><a href="#p-reporting"><span>03</span><b>Comparing and reporting</b><i>3</i><em>→</em></a><a href="#p-serving"><span>04</span><b>Serving language models efficiently</b><i>3</i><em>→</em></a></nav>
+     <div class="pcfoot"><a class="btn sm" href="#practices">Read all 13 →</a><a class="sugg" href="#suggest">Suggest one</a></div>
+   </aside>
   </section>
 
   <section class="block reveal" id="why">
@@ -430,12 +568,13 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
 
   </div>
 
+  <!-- ================= practices band: points to the full list further down ================= -->
   <!-- ================= Live from the lab ================= -->
-  <div id="live">
+  <div id="sec-live">
   <div class="livehead">
     <div>
-      <h2>Live from the <b>lab</b></h2>
-      <p class="lede">Real readings from the lab’s machines, updated every minute.</p>
+      <h2 id="live">Live from the <b>lab</b></h2>
+      <p class="lede">Real readings from the lab’s machines, updated every few minutes.</p>
     </div>
     <div class="status" id="status" style="display:none"><i class="dot"></i><span id="statusText">Sample data, lab not reachable</span></div>
   </div>
@@ -473,6 +612,120 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
     <div class="card"><svg id="sankey" viewBox="0 0 1200 390"></svg></div>
   </section>
 
+  </div>
+
+  <!-- ================= What does an AI model cost to run? ================= -->
+  <div id="sec-ai">
+  <section class="block reveal" id="llm">
+    <div class="llm-head">
+      <h2 id="ai">What does an <b>AI model</b> cost to run?</h2>
+      <div class="seg per" id="llmSel" style="display:none"></div>
+    </div>
+
+    <div class="card llm-hero quiet" id="llmHero">
+      <div>
+        <div class="lh-state"><i class="ldot"></i><span id="lState">Checking the lab machines…</span></div>
+        <div class="lh-model" id="lModel"></div>
+        <div class="lh-sub" id="lSub"></div>
+      </div>
+      <div class="lh-num" id="lNum" style="display:none">
+        <div class="lh-big"><em class="cur">₹</em><strong class="num" id="lWh1k">—</strong></div>
+        <div class="lh-cap" id="lCap"></div>
+        <div class="lh-also" id="lAlso"></div>
+        <div class="lh-ans" id="lAns"></div>
+      </div>
+    </div>
+
+    <div class="llm-grid" id="llmGrid" style="display:none">
+      <div class="card lc rw">
+        <h3>Reading the question vs. writing the answer</h3>
+        <div class="lc-big"><strong><span class="num" id="lRwBig">—</span><small>×</small></strong><span>faster at reading than writing</span></div>
+        <div class="lc-pic" aria-hidden="true">
+          <div class="rw-line"><label>Question</label><div class="rw-chips q" id="lQChips"></div></div>
+          <div class="rw-line"><label>Answer</label><div class="rw-chips a" id="lAChips"></div></div>
+        </div>
+        <p class="lc-take" id="lRwTake"></p>
+      </div>
+      <div class="card lc">
+        <h3>Graphics card vs. the whole machine</h3>
+        <div class="lc-big"><strong><span class="num" id="lSplitBig">—</span><small>%</small></strong><span>of the electricity goes to the graphics card</span></div>
+        <div class="lc-pic" aria-hidden="true"><div class="waf" id="lWaf"></div></div>
+        <div class="lc-leg" id="lSplitLeg"></div>
+        <p class="lc-take" id="lSplitTake"></p>
+      </div>
+      <div class="card lc">
+        <h3>Not reading the same text twice</h3>
+        <div class="lc-big"><strong><span class="num" id="lCacheBig">—</span><small>%</small></strong><span>of the text was reused, not read again</span></div>
+        <div class="lc-pic" aria-hidden="true"><div class="page" id="lPage"></div></div>
+        <div class="lc-leg" id="lCacheLeg"></div>
+        <p class="lc-take" id="lCacheTake"></p>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <!-- ================= Good practices ================= -->
+  <section class="block" id="sec-practices">
+    <h2 id="practices">Good practices for <b>GreenAI</b> experiments</h2>
+    <p class="lede">How to measure the energy of an AI experiment properly, and how to serve language models with less energy, from what we learned running this lab and our own GPU runs.</p>
+    <div class="pjump"><a href="#p-setup">Setting up<i>4</i></a><a href="#p-running">While it runs<i>3</i></a><a href="#p-reporting">Comparing and reporting<i>3</i></a><a href="#p-serving">Serving language models efficiently<i>3</i></a></div>
+  <div class="reveal" id="p-setup">
+    <h3 class="pgroup"><span>01</span>Setting up</h3>
+    <div class="plist">
+      <article class="pr"><h4>Measure at the plug, not only the chip.</h4><p>Processor and GPU counters (RAPL, NVML) leave out memory, storage, fans and power-supply losses. Say which parts your tools cover, and don’t call a CPU-plus-GPU total whole-machine energy.</p><ul class="ev"><li class="lab"><em>In our lab</em>under load the DGX Spark’s GPU reports about 40 W while its plug reads about 125 W.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>RAPL and NVML report only processor and graphics energy, so their totals are a partial cost, not what the machine draws from the wall.</li></ul></article>
+      <article class="pr"><h4>Record the idle baseline and subtract it.</h4><p>Measure each machine with your workload stopped, then remove that draw from every trace you report.</p><ul class="ev"><li class="lab"><em>In our lab</em>the DGX Spark draws about 25 W idle and about 123 W under load.</li></ul></article>
+      <article class="pr"><h4>Count only your own work.</h4><p>Run on an otherwise idle machine where you can, and track your workload by its process ID so other software isn’t counted against you.</p><ul class="ev"><li class="lab"><em>In our lab</em>several people run experiments on the same machines, sometimes at the same time.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2606.10702" target="_blank" rel="noopener" data-paper="Watts and Debts">Watts and Debts</a> (ESEM 2026)</em>the study follows the model server by its process ID and subtracts its energy from the total to get the framework’s own cost.</li></ul></article>
+      <article class="pr"><h4>Measure what your monitoring itself costs.</h4><p>Don’t start a new process (such as <code>nvidia-smi</code>) for every sample.</p><ul class="ev"><li class="lab"><em>In our lab</em>our reader uses under 0.1% of one CPU core. One GPU reading cost 3–7 ms of CPU per read, about 100 times the rest, so we stopped reading it.</li></ul></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-running">
+    <h3 class="pgroup"><span>02</span>While it runs</h3>
+    <div class="plist">
+      <article class="pr"><h4>Warm up, repeat, then average.</h4><p>Discard warm-up runs and compare the average of several runs, not a single reading.</p></article>
+      <article class="pr"><h4>Record temperature and power limits.</h4><p>A GPU held back by its power limit or by heat runs slower, which changes energy per task.</p><ul class="ev"><li class="lab"><em>In our lab</em>during one experiment the A2000’s GPU sat at its 70 W limit at 85–86 °C, held back by the power limit the whole time.</li></ul></article>
+      <article class="pr"><h4>Where you can’t read energy counters, use stand-ins.</h4><p>On many virtual machines and cloud servers, runtime and output tokens are good proxies for energy.</p><ul class="ev"><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>energy closely tracked wall-clock time (R = 0.89) and output tokens (R = 0.88), while memory use showed almost no link.</li></ul></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-reporting">
+    <h3 class="pgroup"><span>03</span>Comparing and reporting</h3>
+    <div class="plist">
+      <article class="pr"><h4>Compare on the same machine with the same tool, and check across machines.</h4><p>Absolute energy figures don’t carry over between setups, so claim only the effects that hold on every machine you test.</p><ul class="ev"><li class="lab"><em>In our lab</em>we run Arm and Intel machines side by side, so the same experiment can be checked on both.</li></ul></article>
+      <article class="pr"><h4>Report energy per completed task, next to accuracy and time.</h4><p>A cheap run may simply have failed or given up early.</p></article>
+      <article class="pr"><h4>Write down the setup.</h4><p>Hardware, driver version, model, quantization, batch size, power limit, sampling interval, and the tariff and CO₂ factor you used.</p></article>
+    </div>
+  </div>
+  <div class="reveal" id="p-serving">
+    <h3 class="pgroup"><span>04</span>Serving language models efficiently</h3>
+    <p class="pintro">These save energy when you run models for real work. In an energy experiment each one is also a setting that changes what you measure, so choose it on purpose, keep it the same across the runs you compare, and report it.</p>
+    <div class="plist">
+      <article class="pr"><h4>Batch requests when serving.</h4><p>A GPU decoding several requests together gets much more done in the same time, which lowers the energy per token.</p><p class="trade"><em>The trade-off:</em>when you measure energy per task, the GPU’s power can’t be split exactly between requests running together, so run them one at a time or report the batch size.</p><ul class="ev"><li class="run"><em>In our runs</em>two requests at once gave 1.4–1.9 times the throughput of one.</li></ul></article>
+      <article class="pr"><h4>Use lower precision where quality allows.</h4><p>8-bit (FP8) models need less memory and often run on one GPU instead of two.</p><p class="trade"><em>The trade-off:</em>lower precision can cost accuracy, and a model that writes longer answers can use more energy per task, so measure energy and accuracy together and report the precision you used.</p></article>
+      <article class="pr"><h4>Shut down servers you aren’t using.</h4><p>A GPU with a model loaded keeps drawing power while it waits.</p></article>
+    </div>
+  </div>
+    <p class="more">For more, and the papers behind many of these points, see <a href="https://sa4s-serc.github.io/sustaind/practices" target="_blank" rel="noopener">SustAInd: Best Practices</a>.</p>
+  </section>
+
+  <section class="block reveal" id="sec-suggest">
+    <div class="card suggest">
+      <div>
+        <h2 id="suggest">Suggest a <b>practice</b></h2>
+        <p class="lede">Know one we’re missing? Email it to us. We review each one and credit you when it’s added.</p>
+        <a class="btn" href="mailto:sa4sserc@gmail.com?subject=GreenAI%20Lab%3A%20practice%20suggestion&body=The%20practice%20%28one%20line%29%3A%0A%0A%0AWhy%20it%20matters%20%28a%20measurement%2C%20a%20paper%20or%20an%20experience%20that%20supports%20it%29%3A%0A%0A%0ALink%20to%20data%2C%20code%20or%20a%20paper%20%28optional%29%3A%0A%0A%0AYour%20name%20and%20group%20%28optional%2C%20for%20credit%20on%20the%20site%29%3A%0A" id="suggestBtn">Suggest a practice by email</a>
+        <span class="btnnote">Opens an email to <a href="mailto:sa4sserc@gmail.com">sa4sserc@gmail.com</a> with these four questions filled in.</span>
+      </div>
+      <ul class="fields">
+        <li><b>The practice</b>In one line.</li>
+        <li><b>Why it matters</b>A measurement, a paper or an experience that supports it.</li>
+        <li><b>A link</b>To data, code or a paper, if there is one.</li>
+        <li><b>Your name and group</b>Optional, for credit on the site.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= Live from the lab, continued: the grid and what it adds up to ================= -->
+  <div id="sec-live2">
   <section class="block reveal" id="grid">
     <h2>How <b>clean</b> is the electricity right now?</h2>
     <p class="lede">The same job causes more or less CO₂ depending on when it runs, because the mix of solar, wind, hydro and coal on the grid changes through the day.</p>
@@ -520,65 +773,6 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
 
   </div>
 
-  <!-- ================= Good practices ================= -->
-  <section class="block" id="practices">
-    <h2>Good practices for <b>GreenAI</b> experiments</h2>
-    <p class="lede">How to measure the energy of an AI experiment properly, and how to serve language models with less energy, from what we learned running this lab and our own GPU runs.</p>
-    <div class="pjump"><a href="#p-setup">Setting up<i>4</i></a><a href="#p-running">While it runs<i>3</i></a><a href="#p-reporting">Comparing and reporting<i>3</i></a><a href="#p-serving">Serving language models efficiently<i>3</i></a></div>
-  <div class="reveal" id="p-setup">
-    <h3 class="pgroup"><span>01</span>Setting up</h3>
-    <div class="plist">
-      <article class="pr"><h4>Measure at the plug, not only the chip.</h4><p>Processor and GPU counters (RAPL, NVML) leave out memory, storage, fans and power-supply losses. Say which parts your tools cover, and don’t call a CPU-plus-GPU total whole-machine energy.</p><ul class="ev"><li class="lab"><em>In our lab</em>under load the DGX Spark’s GPU reports about 40 W while its plug reads about 125 W.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>RAPL and NVML report only processor and graphics energy, so their totals are a partial cost, not what the machine draws from the wall.</li></ul></article>
-      <article class="pr"><h4>Record the idle baseline and subtract it.</h4><p>Measure each machine with your workload stopped, then remove that draw from every trace you report.</p><ul class="ev"><li class="lab"><em>In our lab</em>the DGX Spark draws about 25 W idle and about 123 W under load.</li></ul></article>
-      <article class="pr"><h4>Count only your own work.</h4><p>Run on an otherwise idle machine where you can, and track your workload by its process ID so other software isn’t counted against you.</p><ul class="ev"><li class="lab"><em>In our lab</em>several people run experiments on the same machines, sometimes at the same time.</li><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2606.10702" target="_blank" rel="noopener" data-paper="Watts and Debts">Watts and Debts</a> (ESEM 2026)</em>the study follows the model server by its process ID and subtracts its energy from the total to get the framework’s own cost.</li></ul></article>
-      <article class="pr"><h4>Measure what your monitoring itself costs.</h4><p>Don’t start a new process (such as <code>nvidia-smi</code>) for every sample.</p><ul class="ev"><li class="lab"><em>In our lab</em>our reader uses under 0.1% of one CPU core. One GPU reading cost 3–7 ms of CPU per read, about 100 times the rest, so we stopped reading it.</li></ul></article>
-    </div>
-  </div>
-  <div class="reveal" id="p-running">
-    <h3 class="pgroup"><span>02</span>While it runs</h3>
-    <div class="plist">
-      <article class="pr"><h4>Warm up, repeat, then average.</h4><p>Discard warm-up runs and compare the average of several runs, not a single reading.</p></article>
-      <article class="pr"><h4>Record temperature and power limits.</h4><p>A GPU held back by its power limit or by heat runs slower, which changes energy per task.</p><ul class="ev"><li class="lab"><em>In our lab</em>during one experiment the A2000’s GPU sat at its 70 W limit at 85–86 °C, held back by the power limit the whole time.</li></ul></article>
-      <article class="pr"><h4>Where you can’t read energy counters, use stand-ins.</h4><p>On many virtual machines and cloud servers, runtime and output tokens are good proxies for energy.</p><ul class="ev"><li class="paper"><em>SustAInd · <a href="https://arxiv.org/abs/2512.09543" target="_blank" rel="noopener" data-paper="SWEnergy">SWEnergy</a> (AGENT 2026)</em>energy closely tracked wall-clock time (R = 0.89) and output tokens (R = 0.88), while memory use showed almost no link.</li></ul></article>
-    </div>
-  </div>
-  <div class="reveal" id="p-reporting">
-    <h3 class="pgroup"><span>03</span>Comparing and reporting</h3>
-    <div class="plist">
-      <article class="pr"><h4>Compare on the same machine with the same tool, and check across machines.</h4><p>Absolute energy figures don’t carry over between setups, so claim only the effects that hold on every machine you test.</p><ul class="ev"><li class="lab"><em>In our lab</em>we run Arm and Intel machines side by side, so the same experiment can be checked on both.</li></ul></article>
-      <article class="pr"><h4>Report energy per completed task, next to accuracy and time.</h4><p>A cheap run may simply have failed or given up early.</p></article>
-      <article class="pr"><h4>Write down the setup.</h4><p>Hardware, driver version, model, quantization, batch size, power limit, sampling interval, and the tariff and CO₂ factor you used.</p></article>
-    </div>
-  </div>
-  <div class="reveal" id="p-serving">
-    <h3 class="pgroup"><span>04</span>Serving language models efficiently</h3>
-    <p class="pintro">These save energy when you run models for real work. In an energy experiment each one is also a setting that changes what you measure, so choose it on purpose, keep it the same across the runs you compare, and report it.</p>
-    <div class="plist">
-      <article class="pr"><h4>Batch requests when serving.</h4><p>A GPU decoding several requests together gets much more done in the same time, which lowers the energy per token.</p><p class="trade"><em>The trade-off:</em>when you measure energy per task, the GPU’s power can’t be split exactly between requests running together, so run them one at a time or report the batch size.</p><ul class="ev"><li class="run"><em>In our runs</em>two requests at once gave 1.4–1.9 times the throughput of one.</li></ul></article>
-      <article class="pr"><h4>Use lower precision where quality allows.</h4><p>8-bit (FP8) models need less memory and often run on one GPU instead of two.</p><p class="trade"><em>The trade-off:</em>lower precision can cost accuracy, and a model that writes longer answers can use more energy per task, so measure energy and accuracy together and report the precision you used.</p></article>
-      <article class="pr"><h4>Shut down servers you aren’t using.</h4><p>A GPU with a model loaded keeps drawing power while it waits.</p></article>
-    </div>
-  </div>
-    <p class="more">For more, and the papers behind many of these points, see <a href="https://sa4s-serc.github.io/sustaind/practices" target="_blank" rel="noopener">SustAInd: Best Practices</a>.</p>
-  </section>
-
-  <section class="block reveal" id="suggest">
-    <div class="card suggest">
-      <div>
-        <h2>Suggest a <b>practice</b></h2>
-        <p class="lede">Anyone can suggest a practice. The lab team reviews each one before it appears, so the list stays checked and short. Accepted practices are added with credit to whoever suggested them.</p>
-        <a class="btn" href="mailto:sa4sserc@gmail.com?subject=GreenAI%20Lab%3A%20practice%20suggestion&body=The%20practice%20%28one%20line%29%3A%0A%0A%0AWhy%20it%20matters%20%28a%20measurement%2C%20a%20paper%20or%20an%20experience%20that%20supports%20it%29%3A%0A%0A%0ALink%20to%20data%2C%20code%20or%20a%20paper%20%28optional%29%3A%0A%0A%0AYour%20name%20and%20group%20%28optional%2C%20for%20credit%20on%20the%20site%29%3A%0A" id="suggestBtn">Suggest a practice by email</a>
-        <span class="btnnote">Opens an email to <a href="mailto:sa4sserc@gmail.com">sa4sserc@gmail.com</a> with these four questions filled in.</span>
-      </div>
-      <ul class="fields">
-        <li><b>The practice</b>In one line.</li>
-        <li><b>Why it matters</b>A measurement, a paper or an experience that supports it.</li>
-        <li><b>A link</b>To data, code or a paper, if there is one.</li>
-        <li><b>Your name and group</b>Optional, for credit on the site.</li>
-      </ul>
-    </div>
-  </section>
-
   <footer>
     <div class="credits">
       <div class="who"><div class="logo"><img src="img/sa4s-tuned.png" alt="SA4S logo"></div>
@@ -589,7 +783,7 @@ h1{font-size:84px;line-height:1.02;font-weight:250;letter-spacing:-.045em;margin
         <div><label>Supported by</label><p>Anusandhan National Research Foundation (ANRF), under the SustAInd project<sup>1</sup></p></div></div>
     </div>
     <p class="fnote"><sup>1</sup> SustAInd, Sustainable AI for India: <a href="https://sa4s-serc.github.io/sustaind/">sa4s-serc.github.io/sustaind</a></p>
-    IIIT Hyderabad GreenAI Lab · live numbers update every minute · inside views of the machines are simplified drawings, not exact layouts
+    IIIT Hyderabad GreenAI Lab · live numbers update every few minutes · inside views of the machines are simplified drawings, not exact layouts
   </footer>
 </div>
 
@@ -648,7 +842,11 @@ var Q = new URLSearchParams(location.search);
 // needs into one file, live.json, once a minute (tools/snapshot.py), and the page reads that. ?prom=<url> reads a
 // Prometheus directly instead, for testing on campus.
 var PROM = Q.get('prom') || '';
-var LIVE = Q.get('live') || 'live.json';
+// Every 5 minutes the lab Pi pushes live.json to the greenailab-live branch (tools/push-live.sh); GitHub serves it
+// from raw.githubusercontent.com, cached for up to 5 minutes. If that can't be reached, the copy next to the page is
+// used; it may be old, and the page says how old. ?live=<url> reads one particular file.
+var LIVE_URLS = Q.get('live') ? [Q.get('live')] : ['https://raw.githubusercontent.com/sa4s-serc/sa4s-serc.github.io/greenailab-live/live.json', 'live.json'];
+var LIVE_STALE_S = 1200;  // older than 20 minutes = the Pi has stopped pushing
 var TABLET = Q.get('tablet') === '1';
 var SLOW = parseFloat(Q.get('slow')) || 2;   // all looping animations run this many times slower (calmer, a little lighter on the tablet)
 document.documentElement.style.setProperty('--slow', SLOW);
@@ -675,7 +873,8 @@ var SAMPLE = {
   a4000:{w:194,today:2247,cpu:51,gpu:128,util:95,temp:80},
   a2000:{w:174,today:1966,cpu:68,gpu:62,util:97,temp:86}
 };
-var S = {m:{}, pi:{}, per:{}, period:'today', grid:null, gridHist:[], live:true, open:null, seen:{}, j:{hist:[]}};
+var S = {m:{}, pi:{}, per:{}, period:'today', grid:null, gridHist:[], live:true, open:null, seen:{}, j:{hist:[]},
+  llmKey:null, llmPickT:0, llmLive:[], llmLastBy:{}, llmAct:{}, llmVllmTps:{}};
 // The Jetson counts in the lab totals and the "which machine" bar. Measured on its DC cable, so its
 // adapter's losses are left out. S.j.last = time of its last reading, for the "not connected" state.
 var JSAMPLE = {w:5.6, v:19.05, a:.29, wh:42, peak:11};
@@ -971,6 +1170,181 @@ function renderFlow(){
   });
 }
 
+/* ================= What does an AI model cost to run? ================= */
+// Same section as the lab website. Here the numbers come from live.json, which the Pi refreshes every 5 minutes.
+function esc(s){ return String(s || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function cleanModel(raw){
+  var s = String(raw || '').replace(/\.gguf$/i, '');
+  var ol = s.match(/^(?:.*\/)?([A-Za-z0-9._-]+):([A-Za-z0-9._-]+)$/);  // Ollama's name:tag, e.g. qwen3.5:4b
+  if (ol) {
+    var on = ol[1].charAt(0).toUpperCase() + ol[1].slice(1), tag = ol[2] === 'latest' ? '' : ol[2].replace(/^(\d+(?:\.\d+)?)b$/i, '$1B');
+    return {name:on + (tag ? ' ' + tag : ''), short:(on + (tag ? ' ' + tag : '')).slice(0, 14), quant:''};
+  }
+  if (s.indexOf('-GGUF_') > -1) s = s.split('-GGUF_').pop();
+  else if (s.indexOf('/') > -1) s = s.split('/').pop();
+  else s = s.replace(/^(unsloth|bartowski|ggml-org|Qwen|meta-llama)_/i, '');
+  var q = '', m = s.match(/[-_]((?:UD[-_])?(?:IQ\d_[A-Z0-9_]+|Q\d_[A-Z0-9_]+|Q\d_\d|BF16|F16|FP16|FP8|MXFP4|NVFP4))$/i);
+  if (m) { q = m[1].replace(/^UD[-_]/i, '').toUpperCase(); s = s.slice(0, m.index); }
+  var short = (s.match(/^[A-Za-z0-9.]+(?:-[0-9.]+[BbMm])?/) || [s])[0];
+  var name = s.replace(/-(Instruct|Thinking|Chat|Coder)(-\d{4})?/gi, ' $1').replace(/_/g, ' ');
+  return {name:name || raw || 'Language model', short:short.slice(0, 14), quant:q};
+}
+function tokWords(n){ return n >= 1e6 ? fmt(n / 1e6, 1) + ' million' : fmt(Math.round(n), 0); }
+function durWords(sec){
+  if (sec == null || isNaN(sec) || sec < 0) return '—';
+  if (sec < 90) return Math.round(sec) + ' s';
+  if (sec < 5400) return Math.round(sec / 60) + ' min';
+  return fmt(sec / 3600, 1) + ' hours';
+}
+function whFmt(v){ return fmt(v, v < 10 ? 2 : 1); }
+// The reading-vs-writing picture. The text is only an illustration (it describes itself); the numbers around it are live.
+(function(){
+  var q = ['How', ' much', ' power', ' does', ' the', ' lab', ' use', '?'];
+  var a = ['It', ' reads', ' your', ' whole', ' question', ' at', ' once', ',', ' then', ' writes', ' one', ' token', ' at', ' a', ' time', '.'];
+  $('lQChips').innerHTML = q.map(function(t){ return '<span>' + esc(t.trim()) + '</span>'; }).join('');
+  $('lAChips').innerHTML = a.map(function(t, i){ return '<span style="animation:rwA' + i + ' calc(6s * var(--slow)) linear infinite">' + esc(t.trim()) + '</span>'; }).join('');
+  var css = '';
+  a.forEach(function(t, i){
+    var at = 6 + i * 5;  // the answer types out between 6% and 81% of the loop; the newest piece shows in lime
+    css += '@keyframes rwA' + i + '{0%,' + at + '%{opacity:0}' + (at + .1) + '%{opacity:1;background:var(--lime)}' +
+      (at + 4) + '%,90%{opacity:1;background:var(--leaf)}96%,100%{opacity:0}}';
+  });
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+})();
+// Until the section has scrolled into view its numbers stay at zero, so they count up then.
+function llmNum(id, v, d){ setNum($(id), S.seen.llm ? v : null, d); }
+function legItem(color, label, val){ return '<span><i style="background:' + color + '"></i>' + label + (val ? '<b class="num">' + val + '</b>' : '') + '</span>'; }
+function cells(id, n){ var el = $(id); if (el.children.length !== n) el.innerHTML = new Array(n + 1).join('<i></i>'); return el; }
+// The machine's power while the model was answering: measured on the Pi (llmAct in live.json, see
+// tools/snapshot.py), else right now if it is writing and nothing is measured yet.
+function writingPower(it, live){
+  var a = S.llmAct[it.key];
+  if (a && a.w) return a;
+  var md = S.m[it.host] || {};
+  if (live && it.busy && md.w) return {w:md.w, gpu:md.gpu, cpu:md.cpu};
+  return null;
+}
+// One entry per machine, in bench order: the model loaded on it now, else the last one that ran on it (30 days back).
+function llmChoices(){
+  var out = [];
+  M.forEach(function(m){
+    var now = S.llmLive.filter(function(x){ return x.host === m.id; }), last = S.llmLastBy[m.id];
+    if (now.length) out = out.concat(now); else if (last && last.genTok > 0) out.push(last);
+  });
+  return out;
+}
+function renderLlm(){
+  var list = llmChoices(), sel = $('llmSel');
+  // Which machine to show: what someone tapped in the last 2 minutes, else a model running now, else the latest run.
+  if (!list.some(function(x){ return x.key === S.llmKey; }) || Date.now() - S.llmPickT > 120000) {
+    var pick = list.filter(function(x){ return x.up; })[0] || list.slice().sort(function(a, b){ return (b.ts || 0) - (a.ts || 0); })[0];
+    S.llmKey = pick ? pick.key : null;
+  }
+  if (list.length > 1) {
+    sel.style.display = '';
+    var h = list.map(function(x){
+      var mh = byId(x.host);
+      return '<button data-k="' + esc(x.key) + '" class="' + (x.key === S.llmKey ? 'on' : '') + '">' + (x.up ? '<i class="sdot"></i>' : '') + esc(mh ? mh.name : x.host) + '</button>';
+    }).join('');
+    if (sel._h !== h) { sel._h = h; sel.innerHTML = h; }  // rebuilt only when it changes, so a tap is never lost mid-rebuild
+  } else sel.style.display = 'none';
+
+  var it = list.filter(function(x){ return x.key === S.llmKey; })[0] || null, cur = it && it.up ? it : null;
+  var hero = $('llmHero'), grid = $('llmGrid');
+  if (!it) {
+    hero.className = 'card llm-hero quiet';
+    $('lState').textContent = 'No AI model is running right now';
+    $('lModel').textContent = '';
+    $('lSub').textContent = 'When someone runs a model on one of the lab machines, what it costs shows up here.';
+    $('lNum').style.display = 'none'; grid.style.display = 'none';
+    return;
+  }
+
+  var mh = byId(it.host), where = mh ? mh.name : it.host, md = S.m[it.host] || {}, nowW = it.curPlugW || md.w || 0, past = !cur;
+  var perSec = it.engine !== 'vllm';  // vLLM's seconds overlap across requests; its speeds come from tickLlm/slowLlm only
+  var writeTps = it.writeTps || (perSec && it.genS > 0 ? it.genTok / it.genS : 0);
+  var readTps = it.readTps || (perSec && it.promptS > 0 ? it.promptTok / it.promptS : 0);
+  var pw = writingPower(it, !!cur), full = !!pw && writeTps > 0;
+  hero.className = 'card llm-hero ' + (cur ? (cur.busy ? 'busy' : 'ready') : 'quiet');
+  $('lModel').textContent = it.info.name;
+  if (past) {
+    $('lState').textContent = 'Nothing running on the ' + where + ' right now · its last run';
+    $('lSub').innerHTML = (it.ts ? 'Ran ' + lastSeen(it.ts) : 'Ran earlier') + (full ? '' : ' · wrote <b class="num">' + fmt(it.genTok, 0) + '</b> tokens');
+  } else if (cur.busy) {
+    var tps = cur.liveWriteTps || writeTps;
+    $('lState').textContent = 'Writing right now on the ' + where;
+    $('lSub').innerHTML = tps ? '<b class="num">' + Math.round(tps) + '</b> tokens a second' : '';
+  } else {
+    $('lState').textContent = 'Loaded on the ' + where + ', waiting for a question';
+    $('lSub').innerHTML = '<b class="num">' + Math.round(nowW) + ' W</b> at the plug while it waits';
+  }
+  if (!full) { $('lNum').style.display = 'none'; grid.style.display = 'none'; return; }
+
+  // The headline: the electricity bill for every million tokens written (the unit AI price lists use), from the
+  // machine's power while answering and the writing speed.
+  var wh1k = pw.w / writeTps / 3.6;   // W / (tokens per s) = J per token; x 1,000 / 3,600 = Wh per 1,000 tokens = kWh per million
+  var rsM = wh1k * TARIFF;
+  $('lNum').style.display = ''; grid.style.display = '';
+  llmNum('lWh1k', rsM, rsM < 10 ? 2 : 1);
+  $('lCap').textContent = 'for every million tokens it ' + (past ? 'wrote' : 'writes');
+  $('lAlso').textContent = '';
+  // Per answer: only servers that count finished answers (vLLM). Others show no line.
+  var aps = it.ansRate || 0;
+  $('lAns').innerHTML = aps > 0
+    ? 'About <b class="num">' + whFmt(pw.w / aps / 3600) + ' Wh</b> per answer'
+    : '';
+
+  // 1. Reading the question vs. writing the answer
+  llmNum('lRwBig', readTps > 0 ? readTps / writeTps : null, readTps / writeTps < 10 ? 1 : 0);
+  var readR = readTps >= 1000 ? Math.round(readTps / 100) * 100 : Math.round(readTps);
+  $('lRwTake').innerHTML = readTps > 0
+    ? 'It ' + (past ? 'read' : 'reads') + ' about <b>' + fmt(readR, 0) + '</b> tokens a second but ' + (past ? 'wrote' : 'writes') + ' only <b>' +
+      Math.round(writeTps) + '</b>.'
+    : 'It has not read enough yet to compare.';
+
+  // 2. Graphics card vs. the whole machine
+  var hasCpu = !mh || mh.cpu !== false;
+  var gpuW = Math.min(pw.w, pw.gpu || 0), cpuW = hasCpu ? Math.min(pw.w - gpuW, pw.cpu || 0) : 0;
+  var gP = gpuW / pw.w * 100, cP = cpuW / pw.w * 100, rP = Math.max(0, 100 - gP - cP);
+  llmNum('lSplitBig', gP, 0);
+  $('lSplitLeg').innerHTML = legItem('var(--gpu)', 'Graphics card', Math.round(gP) + '%') +
+    (hasCpu ? legItem('var(--cpu)', 'Processor', Math.round(cP) + '%') : '') +
+    legItem('var(--rest)', hasCpu ? 'Rest' : 'Rest, incl. processor', Math.round(rP) + '%');
+  $('lSplitTake').innerHTML = gpuW > 1 ? '' : 'The graphics card’s own reading is missing, so this is the plug only.';
+  var gN = Math.round(gP), cN = Math.min(100 - gN, Math.round(cP)), waf = cells('lWaf', 100);
+  if (waf._k !== gN + ':' + cN) {
+    waf._k = gN + ':' + cN;
+    [].forEach.call(waf.children, function(q, i){ q.className = i < gN ? 'g' : i < gN + cN ? 'c' : ''; q.style.transitionDelay = (i * 9) + 'ms'; });
+  }
+
+  // 3. Not reading the same text twice (prompt cache)
+  // Hidden when the server doesn't report reused text (Ollama's bundled llama.cpp): 0% there means not measured.
+  var cacheCard = $('lCacheTake').parentNode, showCache = it.hasCache !== false;
+  cacheCard.style.display = showCache ? '' : 'none'; grid.classList.toggle('two', !showCache);
+  var cached = it.cachedTok || 0, fresh = it.promptTok || 0, allIn = cached + fresh;
+  var cachedP = allIn > 0 ? cached / allIn * 100 : 0, savedS = readTps > 0 ? cached / readTps : 0;
+  llmNum('lCacheBig', allIn > 0 ? cachedP : null, 0);
+  $('lCacheLeg').innerHTML = allIn > 0 ? legItem('var(--lime)', 'Reused') + legItem('var(--warm)', 'Read fresh') : '';
+  $('lCacheTake').innerHTML = !(allIn > 0) ? 'It has not been sent any text yet.'
+    : cachedP >= 5 ? 'Chats resend the whole conversation every time. Reusing it saved about <b>' +
+      durWords(savedS) + '</b> of work (<b>' + whFmt(pw.w * savedS / 3600) + ' Wh</b>).'
+    : '<b>' + tokWords(fresh) + '</b> tokens read fresh. Repeated text, like the same instructions every time, can be reused.';
+  var rN = Math.round(cachedP), page = cells('lPage', 100);
+  if (page._k !== rN) {
+    page._k = rN;
+    var nRead = Math.max(1, 100 - rN);
+    [].forEach.call(page.children, function(q, i){
+      q.className = i < rN ? '' : 'r';
+      q.style.animationDelay = i < rN ? '' : 'calc(' + ((i - rN) / nRead * 3.5).toFixed(2) + 's * var(--slow))';  // the sweep takes 70% of the loop
+    });
+  }
+}
+$('llmSel').addEventListener('click', function(e){
+  var b = up(e.target, 'button'); if (!b) return;
+  S.llmKey = b.getAttribute('data-k'); S.llmPickT = Date.now();
+  renderLlm();
+});
+
 /* ================= render ================= */
 function render(){
   var lab = 0, today = 0;
@@ -988,14 +1362,17 @@ function render(){
   $('equiv').innerHTML = lab ? 'Every hour like this costs <b>₹' + fmt(lab / 1000 * TARIFF, 2) + '</b>, with the CO₂ of driving a petrol car <b>' + fmt(lab / 1000 * CEA / CAR_KG_KM, 1) + ' km</b>' : '&nbsp;';
   M.forEach(function(m){ var d = S.m[m.id]; setNum($('w_' + m.id), d.w); setPulse(m, d.w); });
   setNum($('labW2'), lab);
-  var st = $('status'), old = S.snapT && Date.now() / 1000 - S.snapT > 600;
+  var stale = S.live && S.snapT && Date.now() / 1000 - S.snapT > LIVE_STALE_S;
+  $('nowline').classList.toggle('stale', !!stale || !S.live);
+  $('nowTxt').textContent = !S.live ? 'Sample reading:' : stale ? 'Last reading, ' + clockText(S.snapT) + ':' : 'Right now the lab is drawing';
+  var st = $('status'), old = S.snapT && Date.now() / 1000 - S.snapT > LIVE_STALE_S;
   st.className = 'status' + (!S.live || old ? ' sample' : '');
   $('statusText').textContent = !S.live ? 'Sample data, lab not reachable' : !S.snapT ? 'Live' : (old ? 'Last update ' : 'Live · updated ') + clockText(S.snapT);
   st.style.display = '';
   S.three = three;
   setNum($('w_jetson'), S.j.w, 1); setPulse(JB, S.j.w);
   ['scene','fxUnder','fxOver'].forEach(function(i){ $(i).classList.toggle('joff', S.j.w == null); });
-  renderFlow(); renderGrid(lab); renderImpact();
+  renderFlow(); renderGrid(lab); renderImpact(); renderLlm();
   if (S.open) renderInsp();
 }
 function clockText(t){ var d = new Date(t * 1000), now = new Date();
@@ -1211,8 +1588,13 @@ var snapP = null, snapAt = 0;
 function snapshot(){
   if (!snapP || Date.now() - snapAt > 55000) {
     snapAt = Date.now();
-    snapP = fetch(LIVE + (LIVE.indexOf('?') < 0 ? '?' : '&') + 'm=' + Math.floor(Date.now() / 60000), {cache:'no-store'})
-      .then(function(r){ if (!r.ok) throw new Error('live.json ' + r.status); return r.json(); })
+    var m = 'm=' + Math.floor(Date.now() / 60000);
+    snapP = LIVE_URLS.reduce(function(p, u){   // try each address in turn
+      return p.catch(function(){
+        return fetch(u + (u.indexOf('?') < 0 ? '?' : '&') + m, {cache:'no-store'})
+          .then(function(r){ if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
+      });
+    }, Promise.reject(new Error('start')))
       .then(function(j){ S.snapT = j.t; return j; });
     snapP.catch(function(){ snapAt = 0; });
   }
@@ -1235,7 +1617,101 @@ function qr(expr, secs, step){
   return get('/api/v1/query_range?query=' + encodeURIComponent(expr) + '&start=' + (e - secs) + '&end=' + e + '&step=' + step);
 }
 function put(res, key, field){ res.forEach(function(r){ var d = S.m[r.metric[key]]; if (d) d[field] = parseFloat(r.value[1]); }); }
+function llmKeyOf(m){ return (m.host || '') + ':' + (m.port || '') + ':' + (m.model || ''); }
+// The models loaded now. The page sees a new snapshot only every 5 minutes, so "busy" and the speeds come from
+// 2-minute rates worked out on the Pi, not from the difference between two readings here.
+// vLLM's seconds are summed over requests answered at the same time, so its speed is tokens per clock second;
+// llama.cpp's is tokens per second spent writing.
+function tickLlm(){
+  return Promise.all([
+    q('greenlab_llm_server'),
+    q('greenlab_llm_requests_running'),
+    q('greenlab_llm_generated_tokens_total'),
+    q('greenlab_llm_prompt_tokens_total'),
+    q('greenlab_llm_prompt_cached_tokens_total'),
+    q('greenlab_llm_prompt_seconds_total'),
+    q('greenlab_llm_generation_seconds_total'),
+    q('rate(greenlab_llm_generated_tokens_total[2m])'),
+    q('rate(greenlab_llm_prompt_tokens_total[2m])'),
+    q('rate(greenlab_llm_generation_seconds_total[2m])'),
+    q('greenlab_llm_requests_finished_total'),          // finished answers: vLLM counts them, llama.cpp doesn't
+    q('rate(greenlab_llm_requests_finished_total[2m])')
+  ]).then(function(r){
+    var map = {};
+    function byK(res, f){ res.forEach(function(x){ var k = llmKeyOf(x.metric); (map[k] = map[k] || {m:x.metric})[f] = parseFloat(x.value[1]); }); }
+    byK(r[0], 'up'); byK(r[1], 'req'); byK(r[2], 'genTok'); byK(r[3], 'promptTok'); byK(r[4], 'cachedTok'); byK(r[5], 'promptS');
+    byK(r[6], 'genS'); byK(r[7], 'wRate'); byK(r[8], 'rRate'); byK(r[9], 'gsRate'); byK(r[10], 'answers'); byK(r[11], 'aRate');
+    var out = [];
+    Object.keys(map).forEach(function(k){
+      var o = map[k]; if (!o.up) return;
+      var m = o.m, vllm = m.engine === 'vllm', busy = (o.req > 0) || (o.wRate > 0) || (o.rRate > 0);
+      var liveTps = vllm ? (o.wRate || 0) : o.gsRate > 0 ? o.wRate / o.gsRate : 0;
+      var it = {
+        key:k, host:m.host, port:m.port, model:m.model, engine:m.engine, info:cleanModel(m.model), up:true, busy:busy, liveWriteTps:liveTps,
+        genTok:o.genTok || 0, promptTok:o.promptTok || 0, cachedTok:o.cachedTok || 0, hasCache:o.cachedTok != null, promptS:o.promptS || 0, genS:o.genS || 0,
+        curPlugW:(S.m[m.host] || {}).w
+      };
+      if (vllm) {  // while it writes: the last 2 minutes; between bursts: its average while busy (slowLlm)
+        var avg = S.llmVllmTps[k] || {};
+        it.writeTps = o.wRate > 0 ? o.wRate : avg.w || 0;
+        it.readTps = o.wRate > 0 ? o.rRate || 0 : avg.r || 0;
+        it.answers = o.answers || 0;
+        it.ansRate = o.aRate > 0 ? o.aRate : avg.a || 0;
+      }
+      out.push(it);
+    });
+    S.llmLive = out;
+  }).catch(function(){ S.llmLive = []; });
+}
+// The last model that ran on each machine (30 days back) with its final counters, vLLM's average speeds while busy,
+// and each model's power while answering (worked out on the Pi; with ?prom= there is none, so it is the power now).
+function slowLlm(){
+  return Promise.all([
+    q('max_over_time(timestamp(greenlab_llm_server)[30d:15s])'),
+    q('last_over_time(greenlab_llm_generated_tokens_total[30d])'),
+    q('last_over_time(greenlab_llm_prompt_tokens_total[30d])'),
+    q('last_over_time(greenlab_llm_prompt_cached_tokens_total[30d])'),
+    q('last_over_time(greenlab_llm_prompt_seconds_total[30d])'),
+    q('last_over_time(greenlab_llm_generation_seconds_total[30d])'),
+    q('avg_over_time((rate(greenlab_llm_generated_tokens_total{engine="vllm"}[2m]) and greenlab_llm_requests_running{engine="vllm"} > 0)[30d:2m])'),
+    q('avg_over_time((rate(greenlab_llm_prompt_tokens_total{engine="vllm"}[2m]) and greenlab_llm_requests_running{engine="vllm"} > 0)[30d:2m])'),
+    q('avg_over_time((rate(greenlab_llm_requests_finished_total[2m]) and greenlab_llm_requests_running > 0)[30d:2m])'),
+    q('last_over_time(greenlab_llm_requests_finished_total[30d])'),
+    PROM ? Promise.resolve({}) : snapshot().then(function(j){ return j.llmAct || {}; })
+  ]).then(function(r){
+    var vt = {};
+    function into(res, f){ res.forEach(function(x){ var k = llmKeyOf(x.metric); (vt[k] = vt[k] || {})[f] = parseFloat(x.value[1]); }); }
+    into(r[6], 'w'); into(r[7], 'r'); into(r[8], 'a');
+    S.llmVllmTps = vt;
+    S.llmAct = r[10];
+    var best = {}, out = {};  // per machine, the model that was seen last
+    r[0].forEach(function(x){
+      var ts = parseFloat(x.value[1]), h = x.metric.host;
+      if (!best[h] || ts > best[h].ts) best[h] = {m:x.metric, k:llmKeyOf(x.metric), ts:ts};
+    });
+    function pick(res, k){
+      for (var i = 0; i < res.length; i++) if (llmKeyOf(res[i].metric) === k) return parseFloat(res[i].value[1]);
+      return 0;
+    }
+    Object.keys(best).forEach(function(h){
+      var b = best[h];
+      out[h] = {key:b.k, host:h, port:b.m.port, model:b.m.model, info:cleanModel(b.m.model), ts:b.ts, up:false, busy:false,
+        genTok:pick(r[1], b.k), promptTok:pick(r[2], b.k), cachedTok:pick(r[3], b.k), hasCache:r[3].some(function(x){ return llmKeyOf(x.metric) === b.k; }), promptS:pick(r[4], b.k), genS:pick(r[5], b.k)};
+      if (b.m.engine === 'vllm') {
+        // 0 when the run was too short to measure: the card then shows the token count only, never a per-request speed
+        out[h].writeTps = (vt[b.k] || {}).w || 0;
+        out[h].readTps = (vt[b.k] || {}).r || 0;
+        out[h].engine = 'vllm';
+        out[h].ansRate = (vt[b.k] || {}).a || 0;
+        out[h].answers = pick(r[9], b.k);
+      }
+    });
+    S.llmLastBy = out;
+    render();
+  }).catch(function(){});
+}
 function tick(){
+  tickLlm();
   return Promise.all([
     q('sum by (room) (avg_over_time(tapo_p110_power_consumption_w[30s])) / 1000'),
     q('sum by (room) (tapo_p110_today_energy_wh)'),
@@ -1286,6 +1762,7 @@ function energy(key, win){
   }).catch(function(){});
 }
 function slow(){
+  slowLlm();
   energy('week', '7d'); energy('all', '30d');
   qr('sum by (room) (tapo_p110_power_consumption_w) / 1000', 3600, 60).then(function(res){
     res.forEach(function(r){ var d = S.m[r.metric.room]; if (d) d.hist = r.values.map(function(v){ return [v[0], parseFloat(v[1])]; }); });
@@ -1312,7 +1789,7 @@ if (window.IntersectionObserver) {
 /* ================= only animate what can be seen ================= */
 // The page is taller than the screen. Animations scrolled out of view, or covered by the machine panel,
 // would still cost battery on the tablet, so they are paused and carry on when they come back into view.
-var ANIM = [$('fxUnder'), $('fxOver'), $('scene'), $('sankey'), document.querySelector('.top'), document.querySelector('.hint')].filter(Boolean);
+var ANIM = [$('fxUnder'), $('fxOver'), $('scene'), $('sankey'), $('llm'), document.querySelector('.top'), document.querySelector('.hint')].filter(Boolean);
 // Frame rate. On the tablet's weak chip the cost is drawing frames, not the number of things moving: anything
 // moving makes Chrome redraw 60 times a second (measured 16 Nov: 320% CPU of 800%, vs 60% with nothing moving).
 // The looping animations are slow, so they are stepped by hand FPS times a second instead (20: 140%), which
@@ -1388,8 +1865,10 @@ window.addEventListener('scroll', navStuck, {passive:true}); navStuck();
 if (window.IntersectionObserver) {
   var navLinks = [].slice.call(document.querySelectorAll('#nav a'));
   var nio = new IntersectionObserver(function(es){ es.forEach(function(e){ if (!e.isIntersecting) return;
-    navLinks.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, {rootMargin:'-45% 0px -50% 0px'});
-  ['about','live','practices'].forEach(function(id){ var el = $(id); if (el) nio.observe(el); });
+    navLinks.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target._nav); });
+    if (!e.target._seen) { e.target._seen = true; track('section_view', {section: e.target._nav}); } }); }, {rootMargin:'-45% 0px -50% 0px'});
+  ['about','live','ai','practices'].forEach(function(id){ var el = $('sec-' + id); if (el) { el._nav = id; nio.observe(el); } });
+  var live2 = $('sec-live2'); if (live2) { live2._nav = 'live'; live2._seen = true; nio.observe(live2); }  // below the practices, still "Live from the lab"
 }
 start();
 })();
