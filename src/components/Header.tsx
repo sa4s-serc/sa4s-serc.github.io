@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { publicUrl } from '../lib/utils';
 
 type NavItem = { name: string; path: string; external?: boolean };
@@ -19,13 +19,16 @@ const drawerNav: NavItem[] = [
   { name: 'Agentic AI',      path: '/agenticai' },
   { name: 'AutoSE (Research)', path: '/autose' },
   { name: 'News',            path: '/news' },
-  { name: 'SustAInd ↗',     path: 'https://sa4s-serc.github.io/sustaind/', external: true },
   { name: 'Blogs',           path: '/blogs' },
   { name: 'Projects',        path: '/work' },
   { name: 'Gallery',         path: '/gallery' },
 ];
 
 const autoSeNav: NavItem = { name: 'AutoSE', path: '#autose' };
+
+// Sister sites, shown as coloured links in the header bar (desktop) and near the top of the drawer (phones).
+const sustaindNav: NavItem = { name: 'SustAInd ↗',    path: 'https://sa4s-serc.github.io/sustaind/', external: true };
+const greenAiNav: NavItem  = { name: 'GreenAI Lab ↗', path: 'https://sa4s-serc.github.io/greenailab/', external: true };
 
 /**
  * Scrolls to the AutoSE section on the home page, clearing the fixed header.
@@ -53,8 +56,9 @@ function scrollToAutoSE(delay = 0) {
 }
 
 // Mobile drawer shows every page. The header AutoSE button is hidden on phones,
-// so AutoSE rides near the top of the drawer instead, just under Spotlight.
-const allNav = [primaryNav[0], primaryNav[1], autoSeNav, ...primaryNav.slice(2), ...drawerNav];
+// so AutoSE rides near the top of the drawer instead, just under Spotlight. The same goes for the
+// SustAInd and GreenAI Lab links, which follow the primary pages.
+const allNav = [primaryNav[0], primaryNav[1], autoSeNav, ...primaryNav.slice(2), sustaindNav, greenAiNav, ...drawerNav];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -130,6 +134,26 @@ const Header = () => {
                 className="hidden md:flex items-center px-3.5 py-2 mr-1.5 rounded-lg bg-[#7FD1A0] hover:bg-[#A6E3C0] text-[#0C2118] transition-colors duration-150 shrink-0"
               >
                 <span className="text-sm font-bold tracking-wide">AutoSE</span>
+              </a>
+
+              {/* Sister sites — coloured words, no box. SustAInd keeps its own two colours. */}
+              <a
+                href={sustaindNav.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group hidden md:flex items-center px-2.5 py-2 rounded-md text-[14.5px] font-bold tracking-[0.01em] hover:bg-[#142E1E] transition-colors duration-150 shrink-0"
+              >
+                <span className="text-[#4ADE80]">Sust</span><span className="text-[#FB923C]">AInd</span>
+                <ArrowUpRight size={13} strokeWidth={2.2} className="ml-1 text-[#FB923C] opacity-75 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href={greenAiNav.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group hidden md:flex items-center mr-1.5 px-2.5 py-2 rounded-md text-[14.5px] font-bold tracking-[0.01em] text-[#3DDC97] hover:bg-[#142E1E] transition-colors duration-150 shrink-0"
+              >
+                GreenAI Lab
+                <ArrowUpRight size={13} strokeWidth={2.2} className="ml-1 opacity-75 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
 
               <button
